@@ -1,0 +1,19 @@
+backend:
+  name: git-gateway
+  branch: main 
+editor:
+  preview: false
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "config"
+    label: "Config"
+    files:
+      - file: "content/config/website.json"
+        label: "Site Config"
+        name: "website"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "string" }
