@@ -7,6 +7,9 @@ editor:
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
+site_url: https://nativityofthemotherofgod.netlify.app/
+
+
 collections:
   - name: "config"
     label: "Config"
