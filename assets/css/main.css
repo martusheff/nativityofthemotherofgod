@@ -1,0 +1,31 @@
+
+
+html, body {
+  font-family: 'Cormorant Garamond', serif;
+
+  h1 {
+    font-size: 3.5rem;
+    line-height: 3.5rem;
+    font-weight: 700;
+  }
+}
+
+input:focus {
+  outline: none;
+}
+
+textarea:focus {
+  outline: none;
+}
+
+input {
+    padding: 1.5rem;
+}
+textarea {
+    padding: 1.5rem;
+}
+
+.accentedBg {
+  background: linear-gradient(135deg, rgba(139, 69, 19, 0.05), rgba(146, 64, 14, 0.10));
+  background-color: rgba(139, 69, 19, 0.05);
+}

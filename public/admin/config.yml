@@ -4,6 +4,8 @@ backend:
 editor:
   preview: false
 
+local_backend: true
+
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
@@ -11,12 +13,36 @@ site_url: https://nativityofthemotherofgod.netlify.app/
 
 
 collections:
+  - name: pages
+    label: Pages
+    files:
+      - file: "content/pages/home.md"
+        label: "Home"
+        name: "home"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Sub Title", name: "subTitle", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "Hero Image", name: "heroImage", widget: "image" }
+          - { label: "Hero Image Description", name: "heroImageDescription", widget: "string" }
+          - { label: "Hero Primary CTA Button Label", name: "heroPrimaryCTALabel", widget: "string" }
+          - { label: "Hero Primary CTA Button URL", name: "heroPrimaryCTAURL", widget: "string" }
+          - { label: "Hero Secondary CTA Button Label", name: "heroSecondaryCTALabel", widget: "string" }
+          - { label: "Hero Secondary CTA Button URL", name: "heroSecondaryCTAURL", widget: "string" }
+
+      - file: "content/pages/donate.md"
+        label: "Donate"
+        name: "donate"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+
   - name: "config"
     label: "Config"
     files:
-      - file: "content/config/website.json"
-        label: "Site Config"
-        name: "website"
+      - file: "content/config/meta.json"
+        label: "Meta"
+        name: "meta"
         fields:
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Description", name: "description", widget: "string" }

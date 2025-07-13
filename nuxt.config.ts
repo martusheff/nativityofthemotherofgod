@@ -2,12 +2,28 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
+
+  css: ['~/assets/css/main.css'],
+
   tailwindcss: {
     cssPath: [`$assets/css/tailwind.css`, { injectPosition: "first" }],
     config: {},
     viewer: true,
     exposeConfig: false,
   },
+
+  fonts: {
+    families: [
+      {
+        name: 'Cormorant Garamond',
+        provider: 'google',
+        weights: ['300', '400', '500', '600', '700', '800', '900'],
+        styles: ['normal', 'italic']
+      }
+    ],
+  },
+
+
 
   modules: [
     '@nuxt/content',
@@ -18,6 +34,8 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
     '@nuxt/test-utils',
     '@nuxt/ui',
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    'vue3-carousel-nuxt',
+    'nuxt-swiper'
   ]
 })
