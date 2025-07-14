@@ -56,11 +56,16 @@ useSeoMeta({
           class="mx-auto w-full max-w-4xl max-h-[32rem] h-auto object-cover  shadow-lg" />
       </div>
 
+      <Divider size="text-6xl" iconSize="w-14 h-14" class="my-12" />
+
+
       <article
         class="prose prose-lg text-xl max-w-none px-4 md:px-0"
         style="text-align: justify;">
         <ContentRenderer :value="articleData.body" />
       </article>
+      <Divider size="text-6xl" iconSize="w-14 h-14" class="my-12" />
+      <p class="text-red-700 text-xl text-center pb-12">{{ article?.signature }}</p>
     </div>
   </div>
 </template>
@@ -78,7 +83,7 @@ useSeoMeta({
 
 /* Blockquote styling */
 :deep(blockquote) {
-  border-left: 4px solid oklch(82.8% 0.189 84.429);
+  border-left : 3px solid oklch(82.8% 0.189 84.429);
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   padding-top: 1rem;
