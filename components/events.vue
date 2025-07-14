@@ -11,9 +11,9 @@
             xmlns="http://www.w3.org/2000/svg">
             <path d="M0 5 H50 C75 5 75 0 100 5" stroke="currentColor" stroke-width="2" />
           </svg>
-          <p class="text-lg md:text-xl text-stone-600 leading-relaxed max-w-3xl mx-auto">
+          <!-- <p class="text-lg md:text-xl text-stone-600 leading-relaxed max-w-3xl mx-auto">
             Join us for worship, fellowship, and community events that strengthen our faith and bonds.
-          </p>
+          </p> -->
         </div>
         <div class="overflow-hidden">
           <Swiper :modules="swiperModules" :slides-per-view="1" :space-between="24"
@@ -37,7 +37,6 @@
 </template>
 
 <script setup lang="ts">
-import HomeHero from '~/components/heroes/home-hero.vue';
 import { ref } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Autoplay, Mousewheel, Navigation, Pagination } from 'swiper/modules';

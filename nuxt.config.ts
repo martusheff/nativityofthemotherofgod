@@ -3,6 +3,11 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
 
+  devServer: {
+    host: '0.0.0.0', // Allows access from the local network
+    port: 3000 // Default Nuxt port, adjust if needed
+  },
+
   css: ['~/assets/css/main.css'],
 
   tailwindcss: {

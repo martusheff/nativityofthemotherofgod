@@ -1,94 +1,90 @@
 <template>
-  <footer class="w-full bg-gradient-to-br from-[#8B4513]/5 to-amber-800/10 border-t border-stone-200/30">
-    <div class="container mx-auto max-w-7xl px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-12">
-      <!-- Logo & Identity -->
-       
-      <div class="col-span-2 flex flex-col w-full justify-center items-center md:items-start gap-4 text-center md:text-left">
-        <h3 class="text-3xl max-w-sm font-bold text-stone-800 tracking-tight">
-          Church of the Nativity of the Mother of God
-        </h3>
-        <p class="text-sm text-stone-600">
-          Old Rite Orthodox Church <br />Woodburn, OR
-        </p>
-        <!-- CTA Buttons stacked under logo on mobile -->
-        <div class="flex flex-col sm:flex-row sm:items-center gap-4 mt-4">
-          <RouterLink
+  <footer class="w-full bg-white border-t border-stone-200/30 accentedBg">
+    <div class="container mx-auto max-w-full md:max-w-7xl px-4 sm:px-8 md:px-12 py-6 md:py-12">
+      <!-- Main Content -->
+      <div class="text-center space-y-8">
+        <!-- Logo and Title -->
+        <div class="flex items-center justify-center gap-4">
+          <img src="/logo2.png" class="h-12 object-contain" alt="Parish Logo" />
+          <div class="text-left">
+            <h3 class="text-xl font-bold text-stone-800 leading-tight tracking-tight">
+              Nativity of the Mother of God
+            </h3>
+            <p class="text-sm text-stone-600">
+              Old Rite Orthodox Church in Woodburn, OR
+            </p>
+          </div>
+        </div>
+
+
+        <!-- Service Times -->
+        <div class="max-w-2xl mx-auto">
+          <h4 class="text-xl font-semibold text-stone-800 mb-4">Service Times</h4>
+          <div class="grid grid-cols-1 md:grid-cols-1 gap-4 text-md text-stone-600">
+            <div class="flex justify-between">
+              <span>Divine Liturgy</span>
+              <span>Sundays at 9:00 AM</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Vespers</span>
+              <span>Saturdays at 6:00 PM</span>
+            </div>
+
+            <div class="flex justify-between">
+              <span>Office Hours</span>
+              <span>Mon-Fri, 9:00 AM - 3:00 PM</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Donate Button -->
+        <div>
+          <RouterLink 
             to="/donate"
-            class="inline-block bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-medium py-2 px-6 rounded-full shadow hover:shadow-lg transition-all duration-300 text-lg tracking-wide"
+            class="inline-block bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-medium py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-lg tracking-wide group mb-16"
           >
-            Support Our Parish
-          </RouterLink>
-          <RouterLink
-            to="/contact"
-            class="inline-block border border-stone-300 bg-white/90 hover:bg-white text-stone-700 hover:text-stone-900 font-medium py-2 px-6 rounded-full shadow hover:shadow-md transition-all duration-300 text-lg tracking-wide"
-          >
-            Get in Touch
+            <span class="group-hover:scale-105 transition-transform duration-300">Support Our Parish</span>
           </RouterLink>
         </div>
       </div>
 
-      <!-- Quick Links -->
-      <div class="flex flex-col items-center md:items-start gap-4 text-center md:text-left">
-        <h4 class="text-2xl font-semibold text-stone-800">Quick Links</h4>
-        <RouterLink
-          to="/"
-          class="text-lg text-stone-600 hover:text-amber-600 transition-colors duration-300"
-        >Home</RouterLink>
-        <RouterLink
-          to="/calendar"
-          class="text-lg text-stone-600 hover:text-amber-600 transition-colors duration-300"
-        >Church Calendar</RouterLink>
-        <RouterLink
-          to="/articles"
-          class="text-lg text-stone-600 hover:text-amber-600 transition-colors duration-300"
-        >Articles</RouterLink>
-        <RouterLink
-          to="/donate"
-          class="text-lg text-stone-600 hover:text-amber-600 transition-colors duration-300"
-        >Donate</RouterLink>
-        <RouterLink
-          to="/contact"
-          class="text-lg text-stone-600 hover:text-amber-600 transition-colors duration-300"
-        >Contact</RouterLink>
-      </div>
-
-      <!-- Service Times -->
-      <div class="flex flex-col items-center md:items-start gap-4 text-center md:text-left">
-        <h4 class="text-2xl font-semibold text-stone-800">Service Times</h4>
-        <div class="text-lg text-stone-600">
-          <p><span class="font-medium text-stone-800">Divine Liturgy:</span> Sundays · 8:30 AM</p>
-          <p><span class="font-medium text-stone-800">Vespers:</span> Saturdays · 5:00 PM</p>
+      <!-- Bottom Section -->
+      <div class="border-t border-stone-200/50 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+        <!-- Copyright -->
+        <p class="text-stone-500 text-sm text-center md:text-left">
+          © 2025 Nativity of the Mother of God Orthodox Church. All rights reserved.
+        </p>
+        
+        <!-- Links -->
+        <div class="flex gap-6 text-sm">
+          <RouterLink 
+            to="/privacy" 
+            class="text-stone-500 hover:text-amber-600 transition-colors duration-300"
+          >
+            Privacy
+          </RouterLink>
+          <RouterLink 
+            to="/terms" 
+            class="text-stone-500 hover:text-amber-600 transition-colors duration-300"
+          >
+            Terms
+          </RouterLink>
+          <RouterLink 
+            to="/contact" 
+            class="text-stone-500 hover:text-amber-600 transition-colors duration-300"
+          >
+            Contact
+          </RouterLink>
         </div>
-      </div>
-    </div>
-
-    <!-- Bottom Bar -->
-    <div class="border-t border-stone-200/50 py-6 px-6 flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-4">
-      <p class="text-xs text-stone-500">
-        © 2025 Nativity of the Mother of God Orthodox Church · All rights reserved.
-      </p>
-      <div class="flex gap-6 text-xs text-stone-500">
-        <RouterLink
-          to="/privacy"
-          class="hover:text-amber-600 transition-colors duration-300"
-        >Privacy</RouterLink>
-        <RouterLink
-          to="/terms"
-          class="hover:text-amber-600 transition-colors duration-300"
-        >Terms</RouterLink>
-        <RouterLink
-          to="/contact"
-          class="hover:text-amber-600 transition-colors duration-300"
-        >Contact</RouterLink>
       </div>
     </div>
   </footer>
 </template>
 
 <script setup>
-import { RouterLink } from 'vue-router'
+import { RouterLink } from 'vue-router';
 </script>
 
 <style scoped>
-/* No extra custom CSS needed — Tailwind handles it */
+/* Clean and minimal - no additional styles needed */
 </style>

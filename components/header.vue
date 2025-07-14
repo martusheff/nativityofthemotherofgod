@@ -196,8 +196,8 @@ onUnmounted(() => {
 
         <!-- Mobile Nav -->
         <div :class="[
-            'lg:hidden w-full border-t border-stone-200/30 bg-gradient-to-r from-slate-50 to-stone-50 backdrop-blur-sm overflow-hidden transition-all duration-300 ease-out shadow-lg',
-            isOpen ? 'max-h-[calc(100vh-5rem)] opacity-100' : 'max-h-0 opacity-0',
+            'lg:hidden w-full border-t border-stone-200/30 bg-gradient-to-r from-slate-50 to-stone-50 backdrop-blur-sm overflow-hidden transition-all duration-200 ease-out shadow-lg',
+            isOpen ? 'max-h-[calc(100vh-5rem)]' : 'max-h-0',
         ]">
             <nav class="py-4 px-4 flex flex-col space-y-1 overflow-y-auto max-h-[calc(100vh-5rem)]">
                 <template v-for="(item, index) in navItems" :key="item.label">
@@ -222,14 +222,14 @@ onUnmounted(() => {
 
                         <!-- Animated accordion subsections -->
                         <div :class="[
-                            'ml-2 mt-1 flex flex-col overflow-hidden transition-all duration-300 ease-in-out',
-                            openMobileSection === index ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0',
+                            'ml-2 mt-1 flex flex-col overflow-hidden transition-all duration-200 ease-in-out',
+                            openMobileSection === index ? 'max-h-80' : 'max-h-0',
                         ]">
                             <div v-for="subsection in item.subsections" :key="subsection.label"
                                 class="relative flex items-start transition-all duration-200 ease-in-out mb-4">
                                 <div :class="[
                                     'absolute left-0 top-0 w-0.5 bg-gradient-to-b from-amber-400 to-amber-600 transition-all duration-300 ease-out rounded-full',
-                                    openMobileSection === index ? 'h-full opacity-100' : 'h-0 opacity-0',
+                                    openMobileSection === index ? 'h-full' : 'h-0',
                                 ]" />
                                 <RouterLink :to="subsection.href"
                                     class="flex-1 ml-3 px-3 py-1.5 rounded-lg hover:bg-white/60 transition-all duration-200 group/sub"

@@ -10,26 +10,26 @@
         <div class="w-full">
           <NuxtImg 
             :src="home?.heroImage" 
-            class="w-full h-auto object-cover aspect-[4/3] shadow-md " 
+            class="w-full h-auto max-h-60 object-cover aspect-[4/3] shadow-md " 
             loading="eager"
             alt="Icon of the Nativity of the Mother of God" 
           />
         </div>
 
         <!-- Content Section -->
-        <div class="space-y-4 max-w-xl px-4 md:px-0">
-          <h1 class="text-4xl text-stone-800 font-bold leading-tight tracking-tighter">
+        <div class="space-y-4 px-0 md:px-0">
+          <h1 class="text-xl text-stone-800 font-bold leading-tight tracking-tighter px-2">
             {{ home?.title }}
           </h1>
-          <p class="text-2xl text-amber-600 italic">
+          <p class="text-xl text-amber-600 italic px-4">
             {{ home?.subTitle }}
           </p>
-          <p class="text-lg text-stone-600 leading-relaxed pt-4">
+          <p class="text-lg text-stone-600 leading-relaxed px-4">
             {{ home?.description }}
           </p>
 
           <!-- Buttons -->
-          <div class="flex md:flex-row gap-4 pt-4">
+          <div class="flex md:flex-row gap-4 p-4">
             <UButton
               class="flex-1 w-full text-center flex justify-center bg-amber-500 text-lg hover:bg-amber-600 text-white font-medium py-3 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300"
               :to="home?.heroPrimaryCTAURL" target="_blank">
