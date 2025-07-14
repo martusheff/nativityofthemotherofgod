@@ -23,7 +23,7 @@ useSeoMeta({
         class="flex flex-col md:flex-row items-center justify-between accentedBg rounded-3xl p-8 md:p-12 shadow-sm hover:shadow-md transition-all duration-300 gap-8">
         <div class="flex-1 space-y-3 text-center md:text-left">
           <h3 class="text-2xl md:text-4xl text-stone-800 font-semibold leading-tight">
-            We're Open to Visitors!
+            Want to Visit?
           </h3>
           <p class="text-xl text-stone-600 leading-tight max-w-4xl">
             While our parish is still in its early stages, we are open to visitors. Please contact us in advance if

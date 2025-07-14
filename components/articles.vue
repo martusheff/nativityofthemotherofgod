@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import HomeHero from '~/components/heroes/home-hero.vue';
-import { ref } from 'vue';
+import { computed } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Autoplay, Mousewheel, Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
@@ -11,6 +10,10 @@ const { data: home } = await useAsyncData(() =>
   queryCollection('pages').path('/pages/home').first()
 );
 
+const { data: articles } = await useAsyncData(() => queryCollection('articles').all())
+
+console.log(articles.value)
+
 useSeoMeta({
   title: home.value?.title,
   description: home.value?.description,
@@ -18,36 +21,39 @@ useSeoMeta({
 
 const swiperModules = [Autoplay, Navigation, Pagination, Mousewheel];
 
-const articleItems = ref([
-  {
-    title: 'The Beauty of Old Rite Worship',
-    date: 'June 10, 2025',
-    description:
-      'A reflection on the timeless traditions of the Orthodox Old Rite and their significance in our spiritual lives.',
-    image: '/parish.jpg',
-  },
-  {
-    title: 'Community in Faith',
-    date: 'May 25, 2025',
-    description:
-      'How our parish fosters unity and support through shared worship and fellowship.',
-    image: '/community.jpg',
-  },
-  {
-    title: 'Preparing for the Nativity Feast',
-    date: 'April 15, 2025',
-    description:
-      'A guide to the liturgical and communal preparations for the Nativity of the Mother of God.',
-    image: '/parish.jpg',
-  },
-    {
-    title: 'Preparing for the Nativity Feast',
-    date: 'April 15, 2025',
-    description:
-      'A guide to the liturgical and communal preparations for the Nativity of the Mother of God.',
-    image: '/parish.jpg',
-  },
-]);
+// Function to format date
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  const month = date.toLocaleString('default', { month: 'long' });
+  const day = date.getDate();
+  const year = date.getFullYear();
+  
+  // Add ordinal suffix to day
+  const getOrdinalSuffix = (day: number) => {
+    if (day > 3 && day < 21) return 'th';
+    switch (day % 10) {
+      case 1: return 'st';
+      case 2: return 'nd';
+      case 3: return 'rd';
+      default: return 'th';
+    }
+  };
+  
+  return `${month} ${day}${getOrdinalSuffix(day)}, ${year}`;
+};
+
+// Sort articles by date (newest first) and limit to 7 most recent
+const articleItems = computed(() => {
+  if (!articles.value) return [];
+  
+  return articles.value
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 5)
+    .map(article => ({
+      ...article,
+      formattedDate: formatDate(article.date)
+    }));
+});
 
 </script>
 
@@ -74,34 +80,7 @@ const articleItems = ref([
           :pagination="{ clickable: true }" :autoplay="{ delay: 7500, disableOnInteraction: true }" :loop="false"
           :navigation="false" class="w-full swiper-container-articles">
           <SwiperSlide v-for="(item, index) in articleItems" :key="index">
-            <div
-              class="bg-white/90 backdrop-blur-sm shadow-sm hover:shadow-md transform transition-all duration-300 rounded-3xl overflow-hidden md:h-[500px] flex flex-col group">
-              <div class="relative overflow-hidden h-[170px] md:h-[200px]">
-                <NuxtImg :src="item.image"
-                  class="w-full h-full object-cover "
-                  loading="lazy" :alt="item.title" />
-   
-              </div>
-              <div class="p-4 md:p-6 space-y-2 md:space-y-4 flex-1 flex flex-col">
-                <div class="space-y-2">
-                  <p class="text-amber-600 italic text-lg font-medium">{{ item.date }}</p>
-                  <h3
-                    class="text-2xl text-stone-800 font-semibold leading-tight group-hover:text-amber-700 transition-colors duration-300 line-clamp-2">
-                    {{ item.title }}
-                  </h3>
-                </div>
-                <p class="text-stone-600 text-lg leading-tight text-justify line-clamp-3 flex-1">
-                  {{ item.description }}
-                </p>
-                <div class="pt-4 pb-2 mt-auto">
-                  <UButton
-                    class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-medium py-3 px-8 rounded-full shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 text-xl tracking-wide group flex items-center justify-center gap-2"
-                    to="/articles">
-                    <span class="group-hover/btn:scale-105 transition-transform duration-300">Read More</span>
-                  </UButton>
-                </div>
-              </div>
-            </div>
+            <ArticleCard :article="item" :list="false" />
           </SwiperSlide>
         </Swiper>
       </div>

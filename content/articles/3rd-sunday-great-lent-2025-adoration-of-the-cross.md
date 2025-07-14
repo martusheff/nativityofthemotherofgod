@@ -1,0 +1,54 @@
+---
+title: 3rd Sunday Great Lent 2025, Adoration of the Cross
+description: Dear Brothers and Sisters. I greet you with the third Sunday of
+  Great lent. The midway point of the Great Fast, which is called the Adoration
+  of the Precious Cross.
+author: Fr Nikita
+date: 2025-03-22T20:49:00.000Z
+image: /images/uploads/165240_cozixnlkcq.webp
+----
+  **Dear Brothers and Sisters**. I greet you with the third Sunday of Great
+  lent. The midway point of the Great Fast, which is called the Adoration of the
+  Precious Cross. But Fr Nikita, isn’t the Great Fast seven weeks long and the
+  mid point of Great Lent is on Wednesday. The Fathers of the church count it
+  like this. It is seven weeks long which is 49 days. The fast officially ends
+  on Lazerous Saturday (Starts Friday evening). The last week, Holy week, is
+  like one long day in which we see and feel Christ’s love for humanity. No
+  greater love then for a man to die for his friends. This brings the number
+  down to 41 and minus the Feast of Annunciation, it comes out to 40 days. Who
+  is Jesus the Christ? While He is many things to us, today we heard the Apostle
+  Paul describe Him as a priest. What is the job of a priest? Is he someone to
+  talk to when you are struggling in life or a teacher or a preacher? Is he your
+  accountability partner? If you have sinned this much or that much then do this
+  much number of prostrations. Although the job of priest is a lot of things,
+  the primary reason he was ordained by God is to offer gifts and sacrifices to
+  God for thanks giving or offenses on behalf of people. This is the main reason
+  why you need a priest.
+
+
+
+
+   
+
+
+  **Jesus Christ the King**. This King passed through the heavens. He was on Earth, but ascended into Heaven where he currently reins. But just as He is a King, He is equally a Priest, who has offered a gift or sacrifice on our behalf. He offered Himself. What did Christ use as His throne to offer this wonderful gift or sacrifice on behalf of men, to the Father? His throne was the Cross and His alter was Golgotha. Every alter needs to have alter servers. The priest cant do it all on his own. In this case, the alter servers were the Roman soldiers. He did not have to do it this way, but He willed to do it like this. He did not have to do it this way, but He wanted to show His creation just how much He loves every human soul and that Christ will go the distance for you. His human nature naturally did not want to go through this suffering, but His divine nature desired it, it was for this that He was born. He could have let this pass, walk away and choose a different path to offer this gift just like Isaac could have done. Do you remember the story of Abraham was one hundred years old and went up on a mountain to sacrifice his son to God. Along the way, Isaac learned that he was to be the sacrifice. If Isaac at that point decided to run away, his father Abraham would not be able to catch him. But he didn’t run away. He was obedient to his father Abraham. In the same way Christ is obedient to His Father and gave an example how to be obedient to His Fathers will.
+
+
+   
+
+
+   
+
+
+  **Let us listen** to the Apostle Paul describe in today's epistle reading, how to come to this throne that was foreordained before the world began and part of Gods plan to help those that choose to follow Christ, to receive power to struggle here on earth. “Let us therefore come boldly to the throne of grace, that we may obtain mercy and find grace to help in time of need.” What was once and instrument of death and disgrace by nature, has been changed and is now become life giving and grace bestowing by nature. You see, everything Christ touches He sanctifies. Let me give you an example. Christ borrowed His flesh from the Virgin Mary and came forth in a manner that she retained her virginity, she always was, but especially after Christ was born, becomes holy. John the Baptist put his hand on God in the Jordan, he was always holy, but especially sanctified through that action. The apostles, the saints of old and even saints till this day whom Christ has touched, have become holy. But to the Cross, this instrument that was known for death. When Christ put Himself on it, He not only touched it, but He poured out His blood and transformed the wood into a life giving weapon that conquers even death. Paul describes that this throne that Christ had chosen is the cross and will also help us in our time of need to turn from our former ways of death, to the way of life. Just as it helped the saints, if the Cross of Christ touches us, His mercy and grace sanctifies us also. 
+
+
+
+
+   
+
+
+  **Did you remember** how the Glory verse in the Vespers service describes how Christ used this weapon. “Christ our God, Who of Thine own will didst undergo Crucifixion for the general resurrection of the human race, and Who in Thy love for mankind didst sign the royal writing of remission for us with the Cross as Thy pen, while Thy fingers were stained red with the crimson of Thine own Blood.” This hymn is describing Christ, holding a pen to go and sign a contract for the remission of our sins. But the ink He is going to use, is His own blood. People have been signing contracts in blood ever since the beginning of time and many have signed contracts in blood, with Satan himself. And after such a contract is signed, there is no way to get out of it. And in this way, humans were stuck forever being a slave to Satan. Until the prophecy of Isaiah came to pass, “to proclaim the acceptable year of the Lord.” That man was going to be reconciled to God, through Christ. The weapon that Christ used to accomplish this task, was Himself on the Cross, pouring out His blood on Adam and all those after Adam. This is what and how much the Cross means to you. We see the cost of Love. No greater love then for a man to die for someone else.
+signature: Through the grace of Christ, may we all see the truth of the meaning
+  of the Cross.
+---

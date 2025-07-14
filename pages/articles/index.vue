@@ -1,350 +1,212 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue'
+import { useRouter, useRoute } from '#app'
 
-// Mock articles data
-const articlesData = ref([
-  {
-    id: 'beauty-of-old-rite-worship',
-    title: 'The Beauty of Old Rite Worship',
-    date: 'June 10, 2025',
-    author: 'Fr. Nikita',
-    description: 'A reflection on the timeless traditions of the Orthodox Old Rite and their significance in our spiritual lives.',
-    image: '/parish.jpg',
-    readTime: '8 min read',
-    tags: ['Worship', 'Tradition', 'Old Rite', 'Spirituality'],
-    featured: true
-  },
-  {
-    id: 'community-in-faith',
-    title: 'Community in Faith',
-    date: 'May 25, 2025',
-    author: 'Fr. Nikita',
-    description: 'How our parish fosters unity and support through shared worship and fellowship.',
-    image: '/community.jpg',
-    readTime: '6 min read',
-    tags: ['Community', 'Fellowship', 'Parish Life'],
-    featured: false
-  },
-  {
-    id: 'preparing-for-nativity-feast',
-    title: 'Preparing for the Nativity Feast',
-    date: 'April 15, 2025',
-    author: 'Fr. Nikita',
-    description: 'A guide to the liturgical and communal preparations for the Nativity of the Mother of God.',
-    image: '/parish.jpg',
-    readTime: '10 min read',
-    tags: ['Liturgy', 'Feast Days', 'Preparation'],
-    featured: false
-  },
-  {
-    id: 'prayer-and-contemplation',
-    title: 'Prayer and Contemplation in Daily Life',
-    date: 'March 20, 2025',
-    author: 'Fr. Nikita',
-    description: 'Practical guidance for maintaining a contemplative spirit amidst the demands of modern life.',
-    image: '/parish.jpg',
-    readTime: '7 min read',
-    tags: ['Prayer', 'Contemplation', 'Daily Life'],
-    featured: false
-  },
-  {
-    id: 'icons-windows-to-heaven',
-    title: 'Icons: Windows to Heaven',
-    date: 'February 14, 2025',
-    author: 'Fr. Nikita',
-    description: 'Understanding the theological and spiritual significance of icons in Orthodox worship.',
-    image: '/community.jpg',
-    readTime: '9 min read',
-    tags: ['Icons', 'Theology', 'Art', 'Worship'],
-    featured: false
-  },
-  {
-    id: 'fasting-and-spiritual-discipline',
-    title: 'Fasting and Spiritual Discipline',
-    date: 'January 28, 2025',
-    author: 'Fr. Nikita',
-    description: 'The role of fasting in Orthodox spirituality and its benefits for modern believers.',
-    image: '/parish.jpg',
-    readTime: '8 min read',
-    tags: ['Fasting', 'Discipline', 'Spirituality'],
-    featured: false
-  }
-]);
+// Fetch articles
+const { data: articles } = await useAsyncData(() => queryCollection('articles').all())
 
-// Filter and search functionality
-const searchQuery = ref('');
-const selectedTag = ref('');
+const router = useRouter()
+const route = useRoute()
 
-// Get all unique tags
-const allTags = computed(() => {
-  const tags = new Set();
-  articlesData.value.forEach(article => {
-    article.tags.forEach(tag => tags.add(tag));
-  });
-  return Array.from(tags).sort();
-});
-
-// Filter articles based on search and tag
-const filteredArticles = computed(() => {
-  let filtered = articlesData.value;
-  
-  if (searchQuery.value) {
-    filtered = filtered.filter(article => 
-      article.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      article.description.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      article.tags.some(tag => tag.toLowerCase().includes(searchQuery.value.toLowerCase()))
-    );
-  }
-  
-  if (selectedTag.value) {
-    filtered = filtered.filter(article => 
-      article.tags.includes(selectedTag.value)
-    );
-  }
-  
-  return filtered;
-});
-
-// Featured article (first one)
-const featuredArticle = computed(() => 
-  articlesData.value.find(article => article.featured) || articlesData.value[0]
-);
-
-// Regular articles (excluding featured)
-const regularArticles = computed(() => 
-  filteredArticles.value.filter(article => !article.featured || article.id !== featuredArticle.value.id)
-);
-
-// Clear filters
-const clearFilters = () => {
-  searchQuery.value = '';
-  selectedTag.value = '';
-};
-
-// SEO Meta
 useSeoMeta({
-  title: 'Articles - Orthodox Old Rite Parish',
-  description: 'Read insights and reflections on Orthodox faith, tradition, and parish life from Fr. Nikita and our community.',
-});
+  title: 'Articles - Parish News and Orthodox Teachings',
+  description: 'Browse parish articles on Orthodox life and teachings.',
+})
+
+const itemsPerPage = 9
+const currentPage = ref(1)
+const searchQuery = ref('')
+const viewMode = ref<'grid' | 'list'>('grid')
+
+// Init page + search from URL
+const initFromUrl = () => {
+  const page = parseInt(route.query.page as string)
+  currentPage.value = !isNaN(page) && page > 0 ? page : 1
+
+  const q = route.query.q as string
+  searchQuery.value = q ? q : ''
+}
+initFromUrl()
+
+const formatDate = (dateStr: string) => {
+  const d = new Date(dateStr)
+  const month = d.toLocaleString('default', { month: 'long' })
+  const day = d.getDate()
+  const suffix = day > 3 && day < 21 ? 'th' : ['st', 'nd', 'rd'][((day % 10) - 1)] || 'th'
+  return `${month} ${day}${suffix}, ${d.getFullYear()}`
+}
+
+const filteredArticles = computed(() => {
+  if (!articles.value) return []
+  return articles.value.filter(a =>
+    a.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    a.description.toLowerCase().includes(searchQuery.value.toLowerCase())
+  )
+})
+
+const sortedArticles = computed(() => {
+  return [...filteredArticles.value]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .map(a => ({ ...a, formattedDate: formatDate(a.date) }))
+})
+
+const totalPages = computed(() =>
+  Math.max(1, Math.ceil(sortedArticles.value.length / itemsPerPage))
+)
+
+const paginatedArticles = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  return sortedArticles.value.slice(start, start + itemsPerPage)
+})
+
+// Watch URL -> state
+watch(() => route.query.page, (newPage) => {
+  const page = parseInt(newPage as string)
+  currentPage.value = !isNaN(page) && page > 0 ? page : 1
+})
+
+watch(() => route.query.q, (newQ) => {
+  searchQuery.value = newQ ? String(newQ) : ''
+})
+
+// Push state -> URL
+const pushQuery = () => {
+  const query = { ...route.query }
+
+  if (currentPage.value <= 1) {
+    delete query.page
+  } else {
+    query.page = String(currentPage.value)
+  }
+
+  if (searchQuery.value.trim() === '') {
+    delete query.q
+  } else {
+    query.q = searchQuery.value.trim()
+  }
+
+  router.push({ query })
+}
+
+watch(currentPage, () => {
+  pushQuery()
+})
+
+watch(searchQuery, () => {
+  currentPage.value = 1
+  pushQuery()
+})
+
+watch(totalPages, (newTotal) => {
+  if (currentPage.value > newTotal) {
+    currentPage.value = newTotal
+  }
+})
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen">
     <!-- Header -->
-    <div class="bg-white border-b border-slate-200">
-      <div class="container mx-auto max-w-full md:max-w-7xl px-8 py-16">
-        <div class="text-center space-y-6">
-          <h1 class="text-4xl md:text-5xl text-stone-800 font-bold leading-tight tracking-tight">
-            Articles & Reflections
-          </h1>
-          <svg class="w-32 h-auto mx-auto text-amber-600" viewBox="0 0 100 10" fill="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 5 H50 C75 5 75 0 100 5" stroke="currentColor" stroke-width="2" />
-          </svg>
-          <p class="text-lg md:text-xl text-stone-600 leading-relaxed max-w-3xl mx-auto">
-            Stay informed about our parish life and Orthodox teachings with insights and reflections from Fr. Nikita.
-          </p>
-        </div>
+    <section class="bg-stone-100 border-b border-stone-200 py-12">
+      <div class="container mx-auto max-w-5xl px-4 text-center space-y-6">
+        <h1 class="text-4xl md:text-6xl font-bold text-stone-800">Parish Articles</h1>
+        <svg class="w-28 h-auto mx-auto text-amber-600" viewBox="0 0 100 12" fill="none">
+          <path d="M0 5 H50 C75 5 75 0 100 5" stroke="currentColor" stroke-width="2" />
+        </svg>
+        <p class="text-lg md:text-xl text-stone-600 max-w-2xl mx-auto">
+          News and Orthodox teachings from Fr. Nikita.
+        </p>
       </div>
-    </div>
+    </section>
 
-    <!-- Search and Filters -->
-    <div class="bg-white border-b border-slate-200">
-      <div class="container mx-auto max-w-full md:max-w-7xl px-8 py-8">
-        <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
-          <!-- Search -->
-          <div class="relative flex-1">
-            <UInput
-              v-model="searchQuery"
-              type="text"
-              placeholder="Search articles..."
-              class="w-full px-4 pl-16  bg-gray-50 border border-slate-200 rounded-full text-stone-700 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-300"
-            />
-            <svg class="absolute left-8 top-1/2 transform -translate-y-1/2 w-5 h-5 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </div>
+    <!-- Articles Section -->
+    <section class="container mx-auto max-w-7xl px-4 py-12 space-y-8">
 
-          <!-- Tag Filter -->
-          <div class="flex items-center gap-4">
-            <select
-              v-model="selectedTag"
-              class="px-4 py-3 bg-gray-50 border border-slate-200 rounded-full text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-300"
-            >
-              <option value="">All Topics</option>
-              <option v-for="tag in allTags" :key="tag" :value="tag">{{ tag }}</option>
-            </select>
 
-            <button
-              v-if="searchQuery || selectedTag"
-              @click="clearFilters"
-              class="px-4 py-3 text-stone-600 hover:text-stone-800 font-medium transition-colors duration-300"
-            >
-              Clear Filters
-            </button>
-          </div>
+
+      <!-- Search + Actions Container -->
+      <div class="w-full flex flex-col md:flex-row md:items-center md:justify-between gap-4 max-w-7xl mx-auto pb-4 md:pt-8   md:pb-12">
+
+        <!-- Search input with filter inside for mobile -->
+        <div class="relative w-full max-w-2xl mx-auto flex-1">
+          <UInput v-model="searchQuery" placeholder="Search articles..." size="lg"
+            class="w-full rounded-full border border-stone-200 pr-12" :style="{ padding: '1rem 2rem' }" />
+          <!-- Filter button INSIDE input (mobile) -->
+          <button
+            class="absolute hidden inset-y-0 right-3 flex md:hidden items-center justify-center text-stone-500 hover:text-stone-700"
+            aria-label="Open filters">
+            <Icon name="heroicons:adjustments-horizontal" size="22" />
+          </button>
         </div>
-      </div>
-    </div>
 
-    <!-- Featured Article -->
-    <div v-if="!searchQuery && !selectedTag" class="bg-white">
-      <div class="container mx-auto max-w-full md:max-w-7xl px-8 py-16">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl text-stone-800 font-bold mb-4">Featured Article</h2>
+        <!-- Actions: Toggle + Filter (desktop only) -->
+        <div class="hidden md:flex items-center justify-end gap-3 md:pr-2 h-14">
+          <!-- View toggle -->
+          <UButton @click="viewMode = viewMode === 'grid' ? 'list' : 'grid'"
+            class="relative h-full text-stone-400 aspect-square rounded-full border border-stone-200 hover:bg-stone-100 flex items-center justify-center transition-all duration-300"
+            aria-label="Toggle view mode">
+            <Icon name="heroicons:squares-2x2" size="20" class="absolute transition-all duration-300"
+              :class="viewMode === 'grid' ? 'opacity-100 scale-100' : 'opacity-0 scale-75'" />
+            <Icon name="heroicons:bars-3" size="20" class="absolute transition-all duration-300"
+              :class="viewMode === 'list' ? 'opacity-100 scale-100' : 'opacity-0 scale-75'" />
+          </UButton>
+
+          <!-- Filter button desktop -->
+          <button
+            class="w-10 h-10 flex hidden rounded-full border border-stone-300 hover:bg-stone-200  items-center justify-center transition-all duration-300"
+            aria-label="Open filters">
+            <Icon name="heroicons:adjustments-horizontal" size="20" />
+          </button>
         </div>
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-          <!-- Image -->
-          <div class="relative overflow-hidden rounded-2xl shadow-lg group">
-            <NuxtImg :src="featuredArticle.image" 
-              class="w-full h-auto max-h-96 object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-              loading="eager"
-              :alt="featuredArticle.title" />
-            <div class="absolute top-4 right-4">
-              <div class="bg-amber-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-md">
-                Featured
-              </div>
-            </div>
-          </div>
 
-          <!-- Content -->
-          <div class="space-y-6">
-            <div class="flex flex-wrap items-center gap-4 text-sm text-stone-600">
-              <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full font-medium">
-                {{ featuredArticle.date }}
-              </span>
-              <span>By {{ featuredArticle.author }}</span>
-              <span>{{ featuredArticle.readTime }}</span>
-            </div>
-
-            <h3 class="text-3xl text-stone-800 font-bold leading-tight">
-              {{ featuredArticle.title }}
-            </h3>
-
-            <p class="text-lg text-stone-600 leading-relaxed">
-              {{ featuredArticle.description }}
-            </p>
-
-            <div class="flex flex-wrap gap-2">
-              <span v-for="tag in featuredArticle.tags" :key="tag"
-                class="bg-stone-100 text-stone-700 px-3 py-1 rounded-full text-sm">
-                {{ tag }}
-              </span>
-            </div>
-
-            <div class="pt-4">
-              <UButton
-                class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-medium py-4 px-8 rounded-full shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 text-lg tracking-wide group/btn"
-                :to="`/articles/${featuredArticle.id}`">
-                <span class="group-hover/btn:scale-105 transition-transform duration-300">Read Full Article</span>
-              </UButton>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Articles Grid -->
-    <div class="container mx-auto max-w-full md:max-w-7xl px-8 py-16">
-      <div class="flex items-center justify-between mb-12">
-        <h2 class="text-3xl text-stone-800 font-bold">
-          {{ searchQuery || selectedTag ? 'Search Results' : 'All Articles' }}
-        </h2>
-        <div class="text-stone-600">
-          {{ filteredArticles.length }} article{{ filteredArticles.length !== 1 ? 's' : '' }}
-        </div>
       </div>
 
-      <!-- No Results -->
-      <div v-if="filteredArticles.length === 0" class="text-center py-16">
-        <div class="text-stone-400 text-6xl mb-4">📝</div>
-        <h3 class="text-xl text-stone-700 font-medium mb-2">No articles found</h3>
-        <p class="text-stone-600 mb-6">Try adjusting your search or filters</p>
-        <UButton
-          @click="clearFilters"
-          class="bg-amber-500 hover:bg-amber-600 text-white font-medium py-3 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300">
-          Clear Filters
+
+
+      <!-- Grid/List -->
+      <div v-if="paginatedArticles.length" :class="[
+        viewMode === 'grid'
+          ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'
+          : 'flex flex-col gap-8'
+      ]">
+        <ArticleCard v-for="article in paginatedArticles" :key="article.title" :article="article"
+          :list="viewMode === 'list'" />
+      </div>
+
+      <!-- No results -->
+      <div v-else class="text-center py-16">
+        <h3 class="text-2xl font-semibold text-stone-800">No articles found</h3>
+        <p class="text-stone-600">Try a different search or check back later.</p>
+      </div>
+
+      <p class="text-center py-4">
+        Showing {{ paginatedArticles.length }} of {{ sortedArticles.length }} articles
+        (Page {{ currentPage }} of {{ totalPages }})
+      </p>
+
+      <!-- Pagination -->
+      <div class="flex justify-center space-x-2">
+        <UButton @click="currentPage = Math.max(1, currentPage - 1)" :disabled="currentPage === 1"
+          class="p-2 rounded-full border border-stone-300 text-sm hover:bg-stone-200 disabled:opacity-50 flex items-center">
+          <Icon name="heroicons:chevron-left-20-solid" size="20" />
+        </UButton>
+
+        <UButton v-for="page in totalPages" :key="page" @click="currentPage = page" :class="[
+          'p-2 h-10 w-10 rounded-full border text-md font-serif flex items-center justify-center',
+          page === currentPage
+            ? 'bg-amber-600 text-white border-amber-600 font-semibold'
+            : 'border-stone-300 hover:bg-stone-200'
+        ]">
+          {{ page }}
+        </UButton>
+
+        <UButton @click="currentPage = Math.min(totalPages, currentPage + 1)" :disabled="currentPage === totalPages"
+          class="p-2 rounded-full border border-stone-300 text-sm hover:bg-stone-200 disabled:opacity-50 flex items-center">
+          <Icon name="heroicons:chevron-right-20-solid" size="20" />
         </UButton>
       </div>
 
-      <!-- Articles Grid -->
-      <div v-else class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div v-for="article in regularArticles" :key="article.id"
-          class="bg-white/95 backdrop-blur-sm border border-slate-200/50 hover:border-amber-200 shadow-lg hover:shadow-xl transform transition-all duration-500 rounded-2xl overflow-hidden flex flex-col group hover:-translate-y-2">
-          
-          <!-- Image -->
-          <div class="relative overflow-hidden h-48">
-            <NuxtImg :src="article.image"
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-              loading="lazy" :alt="article.title" />
-            <div class="absolute top-4 right-4">
-              <div class="bg-white/90 backdrop-blur-sm text-amber-600 px-3 py-1 rounded-full text-sm font-medium shadow-md">
-                {{ article.date }}
-              </div>
-            </div>
-          </div>
-          
-          <!-- Content -->
-          <div class="p-6 space-y-4 flex-1 flex flex-col">
-            <div class="space-y-2">
-              <div class="flex items-center gap-2 text-sm text-stone-600">
-                <span>By {{ article.author }}</span>
-                <span>•</span>
-                <span>{{ article.readTime }}</span>
-              </div>
-              <h3 class="text-xl text-stone-800 font-bold leading-tight group-hover:text-amber-700 transition-colors duration-300 line-clamp-2">
-                {{ article.title }}
-              </h3>
-            </div>
-            
-            <p class="text-stone-600 text-base leading-relaxed line-clamp-3 flex-1">
-              {{ article.description }}
-            </p>
-
-            <div class="flex flex-wrap gap-2 py-2">
-              <span v-for="tag in article.tags.slice(0, 2)" :key="tag"
-                class="bg-stone-100 text-stone-700 px-2 py-1 rounded-full text-xs">
-                {{ tag }}
-              </span>
-              <span v-if="article.tags.length > 2" class="text-stone-500 text-xs px-2 py-1">
-                +{{ article.tags.length - 2 }} more
-              </span>
-            </div>
-            
-            <div class="pt-4 mt-auto">
-              <UButton
-                class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-medium py-3 px-6 rounded-full shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 text-base tracking-wide group/btn"
-                :to="`/articles/${article.id}`">
-                <span class="group-hover/btn:scale-105 transition-transform duration-300">Read More</span>
-              </UButton>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Newsletter Signup -->
-    <div class="bg-white border-t border-slate-200">
-      <div class="container mx-auto max-w-full md:max-w-7xl px-8 py-16">
-        <div class="text-center max-w-2xl mx-auto">
-          <h2 class="text-3xl text-stone-800 font-bold mb-4">Stay Updated</h2>
-          <p class="text-lg text-stone-600 mb-8">
-            Subscribe to receive the latest articles and updates from our parish community.
-          </p>
-          <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Your email address"
-              class="flex-1 px-4 py-3 bg-gray-50 border border-slate-200 rounded-full text-stone-700 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-300"
-            />
-            <UButton
-              class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-medium py-3 px-8 rounded-full shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 whitespace-nowrap">
-              Subscribe
-            </UButton>
-          </div>
-        </div>
-      </div>
-    </div>
+    </section>
   </div>
 </template>
 

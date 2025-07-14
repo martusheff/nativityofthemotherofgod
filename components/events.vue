@@ -55,29 +55,6 @@ useSeoMeta({
 
 const swiperModules = [Autoplay, Navigation, Pagination, Mousewheel];
 
-const articleItems = ref([
-  {
-    title: 'The Beauty of Old Rite Worship',
-    date: 'June 10, 2025',
-    description:
-      'A reflection on the timeless traditions of the Orthodox Old Rite and their significance in our spiritual lives.',
-    image: '/parish.jpg',
-  },
-  {
-    title: 'Community in Faith',
-    date: 'May 25, 2025',
-    description:
-      'How our parish fosters unity and support through shared worship and fellowship.',
-    image: '/community.jpg',
-  },
-  {
-    title: 'Preparing for the Nativity Feast',
-    date: 'April 15, 2025',
-    description:
-      'A guide to the liturgical and communal preparations for the Nativity of the Mother of God.',
-    image: '/parish.jpg',
-  },
-]);
 
 const eventItems = ref([
   {

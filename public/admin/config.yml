@@ -36,6 +36,24 @@ collections:
         fields:
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Description", name: "description", widget: "text" }
+  
+  - name: "articles"
+    label: "Articles"
+    label_singular: "Article"
+    folder: "/content/articles"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{date | date('MM/DD/YYYY')}} | {{title | upper}}"
+
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "string"}
+      - { label: "Author", name: "author", widget: "string", default: "Fr Nikita" }
+      - { label: "Date", name: "date", widget: "datetime", default: "{{now}}" }
+      - { label: "Featured Image", name: "image", widget: "image" }
+      - { label: 'Content', name: 'body', widget: 'markdown' }
+      - { label: "Signature", name: "signature", widget: "string"}
+
 
   - name: "config"
     label: "Config"

@@ -1,164 +1,145 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, createError } from '#app'
+import { useAsyncData, useSeoMeta } from '#imports'
+import { computed } from 'vue'
 
-const route = useRoute();
+const route = useRoute()
+const slug = route.params.slug as string
 
-// Mock articles data
-const articlesData = ref([
-  {
-    id: 'beauty-of-old-rite-worship',
-    title: 'The Beauty of Old Rite Worship',
-    date: 'June 10, 2025',
-    author: 'Fr. Nikita',
-    description: 'A reflection on the timeless traditions of the Orthodox Old Rite and their significance in our spiritual lives.',
-    image: '/parish.jpg',
-    readTime: '8 min read',
-    content: `
-      <p>Example</>
-    `,
-    tags: ['Worship', 'Tradition', 'Old Rite', 'Spirituality'],
-    relatedArticles: [
-      {
-        title: 'Community in Faith',
-        slug: 'community-in-faith',
-        image: '/community.jpg'
-      },
-      {
-        title: 'Preparing for the Nativity Feast',
-        slug: 'preparing-for-nativity-feast',
-        image: '/parish.jpg'
-      }
-    ]
-  }
-]);
+const { data: article } = await useAsyncData(`article-${slug}`, () =>
+  queryCollection('articles').path(`/articles/${slug}`).first()
+)
 
-// Get current article based on route
-const currentArticle = computed(() => {
-  const slug = route.params.slug || 'beauty-of-old-rite-worship';
-  return articlesData.value.find(article => article.id === slug) || articlesData.value[0];
-});
+if (!article.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Article Not Found'
+  })
+}
 
-// SEO Meta
+// Now unwrap safely
+const articleData = article.value
+
+const formatDate = (date: Date | string) => {
+  const dateObj = date instanceof Date ? date : new Date(date)
+  return dateObj.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+}
+
 useSeoMeta({
-  title: currentArticle.value?.title,
-  description: currentArticle.value?.description,
-});
+  title: articleData.title,
+  description: articleData.description,
+})
+
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <!-- Hero Section -->
-    <div class="relative bg-white border-b border-slate-200">
-      <div class="container mx-auto max-w-4xl px-8 py-16">
-        <!-- Breadcrumb -->
-        <nav class="mb-8">
-          <ol class="flex items-center space-x-2 text-sm text-stone-600">
-            <li><NuxtLink to="/" class="hover:text-amber-600 transition-colors">Home</NuxtLink></li>
-            <li class="text-stone-400">/</li>
-            <li><NuxtLink to="/articles" class="hover:text-amber-600 transition-colors">Articles</NuxtLink></li>
-            <li class="text-stone-400">/</li>
-            <li class="text-stone-800 font-medium">{{ currentArticle.title }}</li>
-          </ol>
-        </nav>
-
-        <!-- Article Meta -->
-        <div class="flex flex-wrap items-center gap-4 mb-6">
-          <div class=" text-amber-700 py-1 rounded-full text-sm font-medium">
-            {{ currentArticle.date }}
-          </div>
-          <div class="text-stone-600 text-sm">
-            By {{ currentArticle.author }}
-          </div>
-          <div class="text-stone-600 text-sm">
-            {{ currentArticle.readTime }}
-          </div>
+  <div class="w-full bg-white">
+    <div class="container mx-auto px-0 md:px-4 sm:px-6 pt-8 md:pt-12 max-w-3xl">
+      <header class="mb-8 text-center">
+        <div class="mb-4 md:mb-6 flex justify-center space-x-2 text-sm text-gray-500">
+          <span>{{ formatDate(articleData.date) }}</span>
+          <span>•</span>
+          <span>{{ articleData.author }}</span>
         </div>
 
-        <!-- Title -->
-        <h1 class="text-4xl md:text-5xl text-stone-800 font-bold leading-tight tracking-tight mb-6">
-          {{ currentArticle.title }}
+        <h1 class="text-5xl md:text-7xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight tracking-tight">
+          {{ articleData.title }}
         </h1>
+      </header>
 
-            <!-- Article Image -->
-    <div class="bg-white">
-      <div class="container mx-auto py-8">
-        <div class="relative overflow-hidden rounded-2xl shadow-lg">
-          <NuxtImg :src="currentArticle.image" 
-            class="w-full h-auto max-h-96 object-cover" 
-            loading="eager"
-            :alt="currentArticle.title" />
-        </div>
+      <div v-if="articleData.image" class="mb-10">
+        <NuxtImg :src="articleData.image" :alt="articleData.title"
+          class="mx-auto w-full max-w-4xl max-h-[32rem] h-auto object-cover  shadow-lg" />
       </div>
-    </div>
 
-        <!-- Description -->
-        <p class="text-xl text-stone-600 leading-relaxed mb-8">
-          {{ currentArticle.description }}
-        </p>
-
-        <!-- Tags -->
-        <div class="flex flex-wrap gap-2 mb-8">
-          <span v-for="tag in currentArticle.tags" :key="tag"
-            class="bg-stone-100 text-stone-700 px-3 py-1 rounded-full text-sm hover:bg-stone-200 transition-colors">
-            {{ tag }}
-          </span>
-        </div>
-      </div>
-    </div>
-
-
-
-    <!-- Article Content -->
-    <div class="bg-white">
-      <div class="container mx-auto max-w-4xl px-8 py-16">
-        <div class="prose prose-lg prose-stone max-w-none">
-          <div v-html="currentArticle.content" class="article-content"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Related Articles -->
-    <div class="bg-gray-50 border-t border-slate-200">
-      <div class="container mx-auto max-w-4xl px-8 py-16">
-        <h2 class="text-3xl text-stone-800 font-bold mb-8">Related Articles</h2>
-        <div class="grid md:grid-cols-2 gap-8">
-          <div v-for="article in currentArticle.relatedArticles" :key="article.slug"
-            class="bg-white/95 backdrop-blur-sm border border-slate-200/50 hover:border-amber-200 shadow-lg hover:shadow-xl transform transition-all duration-500 rounded-2xl overflow-hidden group hover:-translate-y-2">
-            <div class="relative overflow-hidden h-48">
-              <NuxtImg :src="article.image"
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                loading="lazy" :alt="article.title" />
-            </div>
-            <div class="p-6">
-              <h3 class="text-xl text-stone-800 font-bold leading-tight group-hover:text-amber-700 transition-colors duration-300 mb-4">
-                {{ article.title }}
-              </h3>
-              <UButton
-                class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-medium py-3 px-6 rounded-full shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 text-base tracking-wide group/btn"
-                :to="`/articles/${article.slug}`">
-                <span class="group-hover/btn:scale-105 transition-transform duration-300">Read Article</span>
-              </UButton>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Back to Articles -->
-    <div class="bg-white border-t border-slate-200">
-      <div class="container mx-auto max-w-4xl px-8 py-12">
-        <div class="text-center">
-          <UButton
-            class="bg-white/90 backdrop-blur-sm border border-slate-200 hover:border-slate-300 text-stone-700 hover:text-stone-800 font-medium py-4 px-10 rounded-full shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 text-lg tracking-wide group"
-            to="/articles">
-            <span class="group-hover:scale-105 transition-transform duration-300">← Back to All Articles</span>
-          </UButton>
-        </div>
-      </div>
+      <article
+        class="prose prose-lg text-xl max-w-none px-4 md:px-0"
+        style="text-align: justify;">
+        <ContentRenderer :value="articleData.body" />
+      </article>
     </div>
   </div>
 </template>
 
 <style scoped>
+/* Header styling */
+:deep(h2) {
+  text-align: center;
+  padding-top: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+/* Blockquote styling */
+:deep(blockquote) {
+  border-left: 4px solid oklch(82.8% 0.189 84.429);
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 0.005rem;
+  font-style: italic;
+  color: #5e5f58;
+  background-color: #f8fafc;
+  position: relative;
+}
+
+:deep(blockquote::before) {
+  display: none;
+}
+
+
+
+/* Paragraph spacing */
+:deep(p) {
+  margin-bottom: 1.25rem;
+  line-height: 1.2;
+}
+
+/* Ensure proper spacing between elements */
+:deep(h2 + p),
+:deep(blockquote + p),
+:deep(p + blockquote) {
+  margin-top: 1.5rem;
+}
+
+/* Strong text in Russian sections */
+:deep(strong) {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* Additional content styling */
+:deep(h3) {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+/* Preserve line breaks and spacing */
+:deep(pre) {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  :deep(blockquote) {
+    margin: 1rem 0;
+    padding: 0.75rem 1rem;
+  }
+  
+  :deep(blockquote::before) {
+    font-size: 2rem;
+    left: 0.25rem;
+    top: -0.25rem;
+  }
+}
 </style>
