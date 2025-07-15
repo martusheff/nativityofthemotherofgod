@@ -7,6 +7,9 @@ export default defineNuxtConfig({
     host: '0.0.0.0',
     port: 3000 
   },
+  nitro: {
+    preset: "cloudflare-pages"
+  },
 
   css: ['~/assets/css/main.css'],
 
