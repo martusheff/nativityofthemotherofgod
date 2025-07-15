@@ -7,7 +7,7 @@
       <div class="flex-shrink-0 bg-stone-100 rounded-xl p-3 border border-stone-200 group-hover:bg-stone-200 transition-colors">
         <div class="text-center min-w-[3rem]">
           <div class="text-xs font-semibold uppercase tracking-wide text-stone-500">{{ event.shortMonth }}</div>
-          <div class="text-xl font-bold text-stone-700 mt-1">{{ event.dayNumber }}</div>
+          <div class="text-2xl font-bold text-stone-700">{{ event.dayNumber }}</div>
         </div>
       </div>
 
@@ -15,20 +15,20 @@
       <div class="flex-1 min-w-0">
         <div class="flex items-start justify-between gap-4">
           <div class="flex-1 min-w-0">
-            <h3 class="text-lg font-semibold text-stone-800 truncate">
+            <h3 class="text-xl font-semibold text-stone-800 truncate">
               {{ event.title }}
             </h3>
-            <p class="text-sm text-stone-600 mt-1 line-clamp-2">
+            <p class="text-md text-stone-600 mt-1 line-clamp-2">
               {{ event.description }}
             </p>
           </div>
 
           <!-- Time & Day - Right Side -->
           <div class="flex-shrink-0 text-right">
-            <div class="text-lg font-semibold text-stone-800">
+            <div class="text-xl font-semibold text-stone-800">
               {{ event.time }}
             </div>
-            <div class="text-sm text-stone-500">
+            <div class="text-md text-stone-500">
               {{ event.dayOfWeek }}
             </div>
           </div>
