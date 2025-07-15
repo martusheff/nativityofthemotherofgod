@@ -4,8 +4,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   devServer: {
-    host: '0.0.0.0', // Allows access from the local network
-    port: 3000 // Default Nuxt port, adjust if needed
+    host: '0.0.0.0',
+    port: 3000 
   },
 
   css: ['~/assets/css/main.css'],
@@ -28,8 +28,9 @@ export default defineNuxtConfig({
     ],
   },
 
-
-
+  gtag: {
+    id: process.env.GA4ID
+  },
   modules: [
     '@nuxt/content',
     '@nuxt/eslint',
@@ -41,6 +42,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxtjs/tailwindcss',
     'vue3-carousel-nuxt',
-    'nuxt-swiper'
+    'nuxt-swiper',
+    'nuxt-gtag'
   ]
 })
