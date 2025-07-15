@@ -1,90 +1,92 @@
 <template>
-  <footer class="w-full bg-white border-t border-stone-200/30 accentedBg">
-    <div class="container mx-auto max-w-full md:max-w-7xl px-4 sm:px-8 md:px-12 py-6 md:py-12">
-      <!-- Main Content -->
-      <div class="text-center space-y-8">
-        <!-- Logo and Title -->
-        <div class="flex items-center justify-center gap-4">
-          <img src="/logo2.png" class="h-12 object-contain" alt="Parish Logo" />
-          <div class="text-left">
-            <h3 class="text-xl font-bold text-stone-800 leading-tight tracking-tight">
-              Nativity of the Mother of God
-            </h3>
-            <p class="text-sm text-stone-600">
-              Old Rite Orthodox Church in Woodburn, OR
-            </p>
-          </div>
-        </div>
+    <footer class="w-full bg-stone-50 border-t border-stone-200/50">
+        <div class="w-full mx-auto max-w-5xl px-4 sm:px-8 md:px-12 py-12 space-y-12">
+            <!-- Main Content -->
+            <div class="flex flex-col md:flex-row justify-around gap-12 md:gap-40">
+                <!-- Parish Info -->
+                <div class="space-y-6">
+                    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4">
+                        <img src="/logo2.png" class="h-14 object-contain" alt="Parish Logo" />
+                        <div class="text-center sm:text-left">
+                            <h3 class="text-2xl font-bold text-stone-800 leading-tight">
+                                Nativity of the Mother of God
+                            </h3>
+                            <p class="text-stone-600 text-sm">
+                                Old Rite Orthodox Church · Woodburn, OR
+                            </p>
+                        </div>
+                    </div>
 
+                    <div class="text-center sm:text-left">
+                        <p class="text-stone-600 leading-relaxed text-md px-4">
+                            A traditional Orthodox community celebrating the ancient faith with reverence and devotion.
+                            Join us for worship, fellowship, and spiritual growth in the heart of Woodburn.
+                        </p>
+                    </div>
 
-        <!-- Service Times -->
-        <div class="max-w-2xl mx-auto">
-          <h4 class="text-xl font-semibold text-stone-800 mb-4">Service Times</h4>
-          <div class="grid grid-cols-1 md:grid-cols-1 gap-4 text-md text-stone-600">
-            <div class="flex justify-between">
-              <span>Divine Liturgy</span>
-              <span>Sundays at 9:00 AM</span>
-            </div>
-            <div class="flex justify-between">
-              <span>Vespers</span>
-              <span>Saturdays at 6:00 PM</span>
-            </div>
-
-            <div class="flex justify-between">
-              <span>Office Hours</span>
-              <span>Mon-Fri, 9:00 AM - 3:00 PM</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Donate Button -->
-        <div>
-          <RouterLink 
-            to="/donate"
-            class="inline-block bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-medium py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-lg tracking-wide group mb-16"
-          >
-            <span class="group-hover:scale-105 transition-transform duration-300">Support Our Parish</span>
-          </RouterLink>
-        </div>
-      </div>
-
-      <!-- Bottom Section -->
-      <div class="border-t border-stone-200/50 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-        <!-- Copyright -->
-        <p class="text-stone-500 text-sm text-center md:text-left">
-          © 2025 Nativity of the Mother of God Orthodox Church. All rights reserved.
-        </p>
         
-        <!-- Links -->
-        <div class="flex gap-6 text-sm">
-          <RouterLink 
-            to="/privacy" 
-            class="text-stone-500 hover:text-amber-600 transition-colors duration-300"
-          >
-            Privacy
-          </RouterLink>
-          <RouterLink 
-            to="/terms" 
-            class="text-stone-500 hover:text-amber-600 transition-colors duration-300"
-          >
-            Terms
-          </RouterLink>
-          <RouterLink 
-            to="/contact" 
-            class="text-stone-500 hover:text-amber-600 transition-colors duration-300"
-          >
-            Contact
-          </RouterLink>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="space-y-6  w-full md:w-48 flex flex-col justify-center items-center md:items-end md:justify-end text-center md:text-right  ">
+                    <h4 class="text-lg font-semibold text-stone-800">Quick Links</h4>
+                    <nav class="space-y-3">
+                                                <RouterLink to="/"
+                            class="block text-stone-600 hover:text-amber-600 transition-colors duration-300 text-lg">
+                            Home
+                        </RouterLink>
+                        <RouterLink to="/schedule"
+                            class="block text-stone-600 hover:text-amber-600 transition-colors duration-300 text-lg">
+                            Service Schedule
+                        </RouterLink>
+                        <RouterLink to="/articles"
+                            class="block text-stone-600 hover:text-amber-600 transition-colors duration-300 text-lg">
+                            Articles
+                        </RouterLink>
+                        <RouterLink to="/contact"
+                            class="block text-stone-600 hover:text-amber-600 transition-colors duration-300 text-lg">
+                            Contact Us
+                        </RouterLink>
+
+                    </nav>
+                </div>
+
+
+            </div>
+
+
+
+            <!-- Bottom Bar -->
+            <div class="border-t border-stone-200 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-stone-500 text-center md:text-left">
+                    © 2025 Nativity of the Mother of God Orthodox Church · All rights reserved.
+                </p>
+                <div class="flex gap-6 text-sm">
+                    <RouterLink to="/privacy"
+                        class="text-stone-500 hover:text-amber-600 transition-colors duration-300">
+                        Privacy Policy
+                    </RouterLink>
+                    <RouterLink to="/terms" class="text-stone-500 hover:text-amber-600 transition-colors duration-300">
+                        Terms of Service
+                    </RouterLink>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </footer>
+    </footer>
 </template>
 
 <script setup>
-import { RouterLink } from 'vue-router';
+import { RouterLink } from 'vue-router'
 </script>
 
 <style scoped>
-/* Clean and minimal - no additional styles needed */
+/* Optional: Add a subtle gradient background */
+footer {
+    background: linear-gradient(to bottom, #fafaf9, #f7f7f6);
+}
+
+/* Ensure consistent hover effects */
+nav a:hover {
+    transform: translateX(2px);
+}
 </style>
