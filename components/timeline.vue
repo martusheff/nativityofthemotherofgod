@@ -49,9 +49,9 @@
     </div>
 
     <!-- Timeline Container -->
-    <div class="relative max-w-7xl mx-auto px-4 md:px-8 pb-16">
+    <div class="relative max-w-7xl mx-auto px-4 md:px-8 md:pb-16">
       <!-- Timeline Items Container -->
-      <div class="relative md:py-12 md:pt-16">
+      <div class="relative md:py-12 md:pt-16" :class="expanded && 'py-12'">
         <!-- Central Line - only extends through timeline items -->
         <div
           class="absolute left-2.5 md:left-1/2 md:transform md:-translate-x-1/2 w-1 bg-gradient-to-b from-amber-500 to-amber-600 rounded-full shadow-sm top-0 bottom-0"
