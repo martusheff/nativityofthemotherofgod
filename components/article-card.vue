@@ -15,7 +15,7 @@ defineProps<{
 <template>
   <div :class="[
     'bg-white/90 backdrop-blur-sm shadow-sm hover:shadow-md transform transition-all duration-300 rounded-3xl overflow-hidden flex group',
-    list ? 'flex-col md:flex-row md:h-[250px]' : 'flex-col md:h-[500px]'
+    list ? 'flex-col md:flex-row md:h-[250px]' : 'flex-col  min-h-[500px] md:h-[500px]'
   ]">
     <div :class="[
       'relative overflow-hidden',
@@ -41,7 +41,7 @@ defineProps<{
           {{ article.title }}
         </h3>
       </div>
-<p class="text-stone-600 text-lg leading-tight text-justify line-clamp-3">
+<p class="text-stone-600 text-lg leading-tight text-justify line-clamp-5">
   {{ article.description }}
 </p>
       <div class="pt-4 pb-2 mt-auto">

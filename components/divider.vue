@@ -8,9 +8,9 @@ const props = withDefaults(defineProps<{
 </script>
 
 <template>
-  <div :class="['flex items-center justify-center w-full my-12', props.class]">
+  <div :class="['flex items-center justify-center w-full', props.class]">
     <!-- Left curved line -->
-    <svg class="flex-1 h-4" viewBox="0 0 200 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="flex-1 h-6" viewBox="0 0 200 10" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 5 H100 C150 5 150 0 200 5" stroke="url(#gradL)" stroke-width="1" />
       <defs>
         <linearGradient id="gradL" x1="0" y1="0" x2="200" y2="0">
@@ -31,7 +31,7 @@ const props = withDefaults(defineProps<{
     </span>
 
     <!-- Right curved line (mirrored) -->
-    <svg class="flex-1 h-4" viewBox="0 0 200 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="flex-1 h-6" viewBox="0 0 200 10" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 5 C50 0 50 5 100 5 H200" stroke="url(#gradR)" stroke-width="1" />
       <defs>
         <linearGradient id="gradR" x1="0" y1="0" x2="200" y2="0">

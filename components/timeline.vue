@@ -1,6 +1,6 @@
 <template>
   
-  <div class="w-full bg-gradient-to-br py-12">
+  <div class="w-full bg-gradient-to-br py-8">
     <div class="mx-auto  md:px-8 md:max-w-7xl">
       <!-- Section Header -->
       <div class="flex flex-col items-center text-center gap-6 pb-12">
@@ -134,7 +134,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 // Configuration
-const MAX_TIMELINE_ITEMS = 3;
+const MAX_TIMELINE_ITEMS = 5;
 
 // Service times and contact info constants (you may need to define these in your app)
 const SERVICE_TIMES = {

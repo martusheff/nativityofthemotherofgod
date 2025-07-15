@@ -1,7 +1,7 @@
 <template>
   <!-- About the Parish -->
   <div class="mx-auto max-w-full md:max-w-7xl px-4">
-    <div class="flex flex-col items-center text-center gap-8 py-16">
+    <div class="flex flex-col items-center text-center gap-8 py-8">
       <h2 class="text-4xl md:text-5xl text-stone-800 font-bold leading-tight tracking-tight">
         About Our Parish
       </h2>
@@ -15,7 +15,7 @@
     </div>
 
     <div class="flex flex-col gap-16 ">
-      <div class="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12 md:items-center bg-white/70 p-8 md:p-12 md:px-16 rounded-3xl shadow-lg/2">
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12 md:items-center bg-white/80 p-8 md:p-12 md:px-16 rounded-4xl shadow-lg/2">
         <div class="md:col-span-3 space-y-2 text-center md:text-left">
           <h3 class="text-3xl md:text-5xl text-amber-600 italic font-semibold text-center">Our Faith</h3>
           <p class="text-lg md:text-2xl text-stone-600 leading-relaxed text-center">
@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12 md:items-center bg-white/0  p-8 md:p-12 md:px-16 rounded-3xl shadow-lg/2">
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12 md:items-center bg-white/80  p-8 md:p-12 md:px-16 rounded-4xl shadow-lg/2">
         <div class="md:col-span-2 w-full order-2 md:order-1 flex justify-center">
           <NuxtImg src="/community.jpg" class="w-80 h-80 object-cover rounded-full shadow-lg" loading="lazy"
             alt="Our Community Gathering" />

@@ -37,36 +37,48 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="w-full bg-white">
-    <div class="container mx-auto px-0 md:px-4 sm:px-6 pt-8 md:pt-12 max-w-3xl">
-      <header class="mb-8 text-center">
-        <div class="mb-4 md:mb-6 flex justify-center space-x-2 text-sm text-gray-500">
+  <div class="w-full">
+    <div class="container mx-auto px-0 md:px-12 sm:px-6 max-w-4xl bg-white">
+
+      <div class="flex flex-col-reverse  gap-2 md:gap-4">
+        <div class="text-center">
+          <h1 class="text-5xl md:text-7xl px-4 font-bold text-gray-900 tracking-tight">
+            {{ articleData.title }}
+          </h1>
+        </div>
+
+        <div class="flex justify-center space-x-2 text-md text-gray-500 pt-4">
           <span>{{ formatDate(articleData.date) }}</span>
           <span>•</span>
           <span>{{ articleData.author }}</span>
         </div>
 
-        <h1 class="text-5xl md:text-7xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight tracking-tight">
-          {{ articleData.title }}
-        </h1>
-      </header>
+        <div v-if="articleData.image">
+          <NuxtImg :src="articleData.image" :alt="articleData.title"
+            class="mx-auto w-full max-w-4xl max-h-[32rem] h-auto object-cover  shadow-sm" />
+        </div>
 
-      <div v-if="articleData.image" class="mb-10">
-        <NuxtImg :src="articleData.image" :alt="articleData.title"
-          class="mx-auto w-full max-w-4xl max-h-[32rem] h-auto object-cover  shadow-lg" />
       </div>
 
-      <Divider size="text-6xl" iconSize="w-14 h-14" class="my-12" />
+      <Divider size="text-6xl" iconSize="w-14 h-14" class="my-10 mb-4" />
 
 
-      <article
-        class="prose prose-lg text-xl max-w-none px-4 md:px-0"
-        style="text-align: justify;">
+      <article class="prose prose-lg font-medium text-xl max-w-none px-4 md:px-0 mt-0" style="text-align: justify;">
         <ContentRenderer :value="articleData.body" />
       </article>
+
+      <p class="text-xl md:text-2xl italic text-stone-700 px-4 pt-4 text-center">
+        {{ articleData.signature }} — {{ articleData.author }}
+      </p>
+
+
       <Divider size="text-6xl" iconSize="w-14 h-14" class="my-12" />
-      <p class="text-red-700 text-xl text-center pb-12">{{ article?.signature }}</p>
+
+
+
     </div>
+
+
   </div>
 </template>
 
@@ -83,7 +95,7 @@ useSeoMeta({
 
 /* Blockquote styling */
 :deep(blockquote) {
-  border-left : 3px solid oklch(82.8% 0.189 84.429);
+  border-left: 3px solid oklch(82.8% 0.189 84.429);
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   padding-top: 1rem;
@@ -115,8 +127,8 @@ useSeoMeta({
 
 /* Strong text in Russian sections */
 :deep(strong) {
-  font-weight: 600;
-  color: #1f2937;
+  font-weight: 800;
+  color: #b91c1c;
 }
 
 /* Additional content styling */
@@ -140,7 +152,7 @@ useSeoMeta({
     margin: 1rem 0;
     padding: 0.75rem 1rem;
   }
-  
+
   :deep(blockquote::before) {
     font-size: 2rem;
     left: 0.25rem;

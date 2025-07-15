@@ -6,77 +6,92 @@ const isOpen = ref(false);
 const openMobileSection = ref(null);
 
 const navItems = [
-    {
-        href: '#',
-        label: 'Our Parish',
-        subsections: [
+    // {
+    //     href: '#',
+    //     label: 'Our Parish',
+    //     subsections: [
+    //         {
+    //             href: '/schedule',
+    //             label: 'Service Schedule',
+    //             description: 'Up to date times for our services',
+    //         },
+    //         {
+    //             href: '/clergy',
+    //             label: 'Clergy',
+    //             description: 'Get familiar with our Clergy',
+    //         },
+    //         {
+    //             href: '/singing',
+    //             label: 'Singing',
+    //             description: 'The Znamenny chant, in english',
+    //         },
+    //         {
+    //             href: '/visit',
+    //             label: 'Visit',
+    //             description: 'Curious? Come and visit!',
+    //         },
+    //     ],
+    // },
+    // {
+    //     href: '#',
+    //     label: 'Orthodoxy',
+    //     subsections: [
+    //         {
+    //             href: '/orthodoxy',
+    //             label: 'What is Orthodoxy?',
+    //             description: 'Learn more about Orthodoxy',
+    //         },
+    //         {
+    //             href: '/old-rite',
+    //             label: 'The Old-Rite',
+    //             description: 'Learn about the Old Rite Faith',
+    //         },
+    //         {
+    //             href: '/prayers',
+    //             label: 'Prayers',
+    //             description: 'Daily Orthodox Devotions',
+    //         },
+    //         {
+    //             href: '/faq',
+    //             label: 'FAQs',
+    //             description: 'Answers to Common Questions',
+    //         },
+    //     ],
+    // },
+    // {
+    //     href: '#',
+    //     label: 'Media',
+    //     subsections: [
+    //         {
+    //             href: '/gallery',
+    //             label: 'Gallery',
+    //             description: 'Photos and videos from parish life',
+    //         },
+    //         {
+    //             href: '/choir',
+    //             label: 'Choir',
+    //             description: 'The beautiful chants of our choir',
+    //         },
+    //     ],
+    // },
             {
-                href: '/schedule',
-                label: 'Service Schedule',
-                description: 'Up to date times for our services',
-            },
-            {
-                href: '/clergy',
-                label: 'Clergy',
-                description: 'Get familiar with our Clergy',
-            },
-            {
-                href: '/singing',
-                label: 'Singing',
-                description: 'The Znamenny chant, in english',
-            },
-            {
-                href: '/visit',
-                label: 'Visit',
-                description: 'Curious? Come and visit!',
-            },
-        ],
+        href: '/schedule',
+        label: 'Service Schedule',
+        subsections: []
     },
-    {
-        href: '#',
-        label: 'Orthodoxy',
-        subsections: [
-            {
-                href: '/orthodoxy',
-                label: 'What is Orthodoxy?',
-                description: 'Learn more about Orthodoxy',
-            },
-            {
-                href: '/old-rite',
-                label: 'The Old-Rite',
-                description: 'Learn about the Old Rite Faith',
-            },
-            {
-                href: '/prayers',
-                label: 'Prayers',
-                description: 'Daily Orthodox Devotions',
-            },
-            {
-                href: '/faq',
-                label: 'FAQs',
-                description: 'Answers to Common Questions',
-            },
-        ],
-    },
-    {
-        href: '#',
-        label: 'Media',
-        subsections: [
-            {
-                href: '/gallery',
-                label: 'Gallery',
-                description: 'Photos and videos from parish life',
-            },
-            {
-                href: '/choir',
-                label: 'Choir',
-                description: 'The beautiful chants of our choir',
-            },
-        ],
-    },
+    //     {
+    //     href: '/timeline',
+    //     label: 'Timeline',
+    //     subsections: []
+    // },
     {
         href: '/articles',
         label: 'Articles',
+        subsections: []
+    },
+        {
+        href: '/contact',
+        label: 'Contact',
         subsections: []
     },
 ];

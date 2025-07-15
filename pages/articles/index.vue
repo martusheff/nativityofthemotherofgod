@@ -5,6 +5,7 @@ import { useRouter, useRoute } from '#app'
 // Fetch articles
 const { data: articles } = await useAsyncData(() => queryCollection('articles').all())
 
+console.log(articles.value)
 const router = useRouter()
 const route = useRoute()
 

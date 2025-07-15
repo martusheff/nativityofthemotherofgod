@@ -28,6 +28,15 @@ export default defineContentConfig({
         image: z.string(),
         signature: z.string()
       })
+    }),
+    events: defineCollection({
+      type: "data",
+      source: "events/*.json",
+      schema: z.object({
+        title: z.string(),
+        description: z.string(),
+        date: z.date()
+      })
     })
   }
 })

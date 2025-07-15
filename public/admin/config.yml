@@ -54,6 +54,20 @@ collections:
       - { label: 'Content', name: 'body', widget: 'markdown' }
       - { label: "Signature", name: "signature", widget: "string"}
 
+  - name: "events"
+    label: "Schedule"
+    label_singular: "Event"
+    folder: "/content/events"
+    create: true
+    slug: "{{date | date('YYYY-MM-DDTHH-mm-ss')}}"
+    extension: "json"
+    summary: "{{date | date('MM/DD/YYYY')}} | {{title | upper}}"
+    format: "json"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ssZ", default: "{{now}}" }
+
 
   - name: "config"
     label: "Config"
@@ -61,6 +75,12 @@ collections:
       - file: "content/config/meta.json"
         label: "Meta"
         name: "meta"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "string" }
+      - file: "content/config/weekly-services.json"
+        label: "Weekly Services"
+        name: "weekly-services"
         fields:
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Description", name: "description", widget: "string" }
