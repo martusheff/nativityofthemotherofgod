@@ -79,11 +79,11 @@ const navItems = [
         label: 'Service Schedule',
         subsections: []
     },
-    //     {
-    //     href: '/timeline',
-    //     label: 'Timeline',
-    //     subsections: []
-    // },
+        {
+        href: '/timeline',
+        label: 'Timeline',
+        subsections: []
+    },
     {
         href: '/articles',
         label: 'Articles',

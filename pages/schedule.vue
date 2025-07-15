@@ -166,9 +166,9 @@ const sortedWeeklyServices = computed(() => {
       <div class="container mx-auto max-w-5xl px-4">
         <div class="space-y-8">
           <div class="text-center space-y-4">
-            <h2 class="text-3xl md:text-4xl font-bold text-stone-800">Upcoming Events</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-stone-800">Upcoming Services</h2>
             <p class="text-lg text-stone-600 max-w-2xl mx-auto">
-              Special services and community gatherings.
+              All of our upcoming services and community gatherings.
             </p>
           </div>
 

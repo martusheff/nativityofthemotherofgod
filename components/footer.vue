@@ -35,10 +35,15 @@
                             class="block text-stone-600 hover:text-amber-600 transition-colors duration-300 text-lg">
                             Home
                         </RouterLink>
+                                                <RouterLink to="/timeline"
+                            class="block text-stone-600 hover:text-amber-600 transition-colors duration-300 text-lg">
+                            Timeline
+                        </RouterLink>
                         <RouterLink to="/schedule"
                             class="block text-stone-600 hover:text-amber-600 transition-colors duration-300 text-lg">
                             Service Schedule
                         </RouterLink>
+                        
                         <RouterLink to="/articles"
                             class="block text-stone-600 hover:text-amber-600 transition-colors duration-300 text-lg">
                             Articles
@@ -62,11 +67,11 @@
                     © 2025 Nativity of the Mother of God Orthodox Church · All rights reserved.
                 </p>
                 <div class="flex gap-6 text-sm">
-                    <RouterLink to="/privacy"
+                    <RouterLink to="#"
                         class="text-stone-500 hover:text-amber-600 transition-colors duration-300">
                         Privacy Policy
                     </RouterLink>
-                    <RouterLink to="/terms" class="text-stone-500 hover:text-amber-600 transition-colors duration-300">
+                    <RouterLink to="#" class="text-stone-500 hover:text-amber-600 transition-colors duration-300">
                         Terms of Service
                     </RouterLink>
                 </div>
