@@ -22,6 +22,10 @@ logo_url: https://decapbridge.com/decapcms-with-bridge.svg
 # Add site links in DecapCMS (optional)
 site_url: https://nativityofthemotherofgod.com
 
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+
 collections:
   - name: pages
     label: Pages
