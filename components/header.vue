@@ -214,10 +214,10 @@ onUnmounted(() => {
             'lg:hidden w-full border-t border-stone-200/30 bg-gradient-to-r from-slate-50 to-stone-50 backdrop-blur-sm overflow-hidden transition-all duration-200 ease-out shadow-lg',
             isOpen ? 'max-h-[calc(100vh-5rem)]' : 'max-h-0',
         ]">
-            <nav class="py-4 px-4 flex flex-col space-y-1 overflow-y-auto max-h-[calc(100vh-5rem)]">
+            <nav class="py-2 px-4 flex flex-col space-y-1 overflow-y-auto max-h-[calc(100vh-5rem)]">
                 <template v-for="(item, index) in navItems" :key="item.label">
                     <div class="border-b border-stone-200/20 pb-2 last:border-b-0">
-                        <button
+                        <UButton
                             v-if="item.subsections.length > 0"
                             class="w-full text-left text-lg font-medium text-stone-800 py-3 px-3 rounded-lg hover:bg-white/60 transition-all duration-200 flex items-center justify-between group"
                             @click="handleMobileSectionToggle(index)">
@@ -226,18 +226,18 @@ onUnmounted(() => {
                                 :name="openMobileSection === index ? 'heroicons:chevron-up-20-solid' : 'heroicons:chevron-down-20-solid'"
                                 size="24" class="w-7 h-7 text-amber-500 transition-transform duration-200"
                             />
-                        </button>
+                        </UButton>
                         <RouterLink 
                             v-else 
                             :to="item.href" 
-                            class="w-full text-left text-lg font-medium text-stone-800 py-3 px-3 rounded-lg hover:bg-white/60 hover:text-amber-600 transition-all duration-200 block"
+                            class="w-full text-left text-xl font-medium text-stone-800 py-3 px-3 rounded-lg hover:bg-white/60 hover:text-amber-600 transition-all duration-200 block"
                             @click="isOpen = false">
                             {{ item.label }}
                         </RouterLink>
 
                         <!-- Animated accordion subsections -->
                         <div :class="[
-                            'ml-2 mt-1 flex flex-col overflow-hidden transition-all duration-200 ease-in-out',
+                            'ml-2 flex flex-col overflow-hidden transition-all duration-200 ease-in-out',
                             openMobileSection === index ? 'max-h-80' : 'max-h-0',
                         ]">
                             <div v-for="subsection in item.subsections" :key="subsection.label"
@@ -264,7 +264,7 @@ onUnmounted(() => {
                 </template>
                 
                 <!-- Donate button -->
-                <div class="pt-3 mt-2 border-t border-stone-200/30 flex-shrink-0">
+                <div class="py-3 flex-shrink-0">
                     <RouterLink to="/donate"
                         class="w-full text-center text-lg font-medium bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white py-3 px-6 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 block"
                         @click="isOpen = false">

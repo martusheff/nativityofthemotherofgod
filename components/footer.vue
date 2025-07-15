@@ -2,12 +2,12 @@
     <footer class="w-full bg-stone-50 border-t border-stone-200/50">
         <div class="w-full mx-auto max-w-5xl px-4 sm:px-8 md:px-12 py-12 space-y-12">
             <!-- Main Content -->
-            <div class="flex flex-col md:flex-row justify-around gap-12 md:gap-40">
+            <div class="flex flex-col md:flex-row justify-around gap-12 sm:gap-24 md:gap-40">
                 <!-- Parish Info -->
                 <div class="space-y-6">
-                    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4">
+                    <div class="flex flex-col md:flex-row items-center md:items-start gap-4">
                         <img src="/logo2.png" class="h-14 object-contain" alt="Parish Logo" />
-                        <div class="text-center sm:text-left">
+                        <div class="text-center md:text-left">
                             <h3 class="text-2xl font-bold text-stone-800 leading-tight">
                                 Nativity of the Mother of God
                             </h3>
@@ -28,7 +28,7 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="space-y-6  w-full md:w-48 flex flex-col justify-center items-center md:items-end md:justify-end text-center md:text-right  ">
+                <div class="space-y-6  w-full md:w-64 flex flex-col justify-center items-center md:items-end md:justify-end text-center md:text-right  ">
                     <h4 class="text-lg font-semibold text-stone-800">Quick Links</h4>
                     <nav class="space-y-3">
                                                 <RouterLink to="/"

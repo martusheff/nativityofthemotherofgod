@@ -37,6 +37,15 @@ export default defineContentConfig({
         description: z.string(),
         date: z.date()
       })
+    }),
+    timeline: defineCollection({
+      type: "data",
+      source: "timeline/*.json",
+      schema: z.object({
+        title: z.string(),
+        description: z.string(),
+        date: z.date()
+      })
     })
   }
 })

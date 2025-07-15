@@ -30,16 +30,16 @@
 
           <!-- Buttons -->
           <div class="flex md:flex-row gap-4 p-4">
-            <UButton
+            <RouterLink
               class="flex-1 w-full text-center flex justify-center bg-amber-500 text-lg hover:bg-amber-600 text-white font-medium py-3 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300"
-              :to="home?.heroPrimaryCTAURL" target="_blank">
+              :to="home?.heroPrimaryCTAURL ?? '#'" >
               {{home?.heroPrimaryCTALabel}}
-            </UButton>
-            <UButton
+            </RouterLink>
+            <RouterLink
               class="flex-1  w-full text-center flex justify-center bg-white border text-lg border-stone-300 hover:border-stone-400 text-stone-700 font-medium py-3 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300"
-              :to="home?.heroSecondaryCTAURL" target="_blank">
+              :to="home?.heroSecondaryCTAURL ?? '#'" >
               {{home?.heroSecondaryCTALabel}}
-            </UButton>
+            </RouterLink>
           </div>
         </div>
       </div>
@@ -73,16 +73,16 @@
 
           <!-- Buttons -->
           <div class="flex gap-6 pt-8">
-            <UButton
+            <RouterLink
               :v-if="home?.heroPrimaryCTALabel && home?.heroPrimaryCTAURL" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-medium py-5 px-10 rounded-full shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 text-xl tracking-wide group"
-              :to="home?.heroPrimaryCTAURL" target="_blank">
+              :to="home?.heroPrimaryCTAURL ?? '#'">
               <span class="group-hover:scale-105 transition-transform duration-300">{{home?.heroPrimaryCTALabel}}</span>
-            </UButton>
-            <UButton
+            </RouterLink>
+            <RouterLink
               :v-if="home?.heroSecondaryCTALabel && home?.heroSecondaryCTAURL" class="bg-white/90 backdrop-blur-sm border border-slate-200 hover:border-slate-300 text-slate-700 hover:text-slate-800 font-medium py-5 px-10 rounded-full shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 text-xl tracking-wide group"
-              :to="home?.heroSecondaryCTAURL" target="_blank">
+              :to="home?.heroSecondaryCTAURL ?? '#'">
               <span class="group-hover:scale-105 transition-transform duration-300 text-lg">{{home?.heroSecondaryCTALabel}}</span>
-            </UButton>
+            </RouterLink>
           </div>
         </div>
       </div>

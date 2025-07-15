@@ -40,7 +40,7 @@ useSeoMeta({
       </div>
     </div>
 
-    <Timeline />
+    <Timeline :expanded="false"/>
 
     <Events />
 

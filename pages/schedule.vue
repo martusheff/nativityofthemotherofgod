@@ -175,7 +175,7 @@ const sortedWeeklyServices = computed(() => {
           <div v-if="upcomingEvents.length" class="space-y-8">
 
             <div v-if="upcomingEvents.some(e => e.isUpcoming)" class="space-y-4">
-              <h3 class="text-xl font-semibold text-stone-800 border-b border-stone-200 pb-2">This Week</h3>
+              <h3 class="text-xl font-semibold text-stone-800 border-b border-stone-200 pb-2 text-center md:text-left">This Week</h3>
               <div class="space-y-4">
                 <EventRow
                   v-for="event in upcomingEvents.filter(e => e.isUpcoming)"
@@ -186,7 +186,7 @@ const sortedWeeklyServices = computed(() => {
             </div>
 
             <div v-if="upcomingEvents.some(e => !e.isUpcoming)" class="space-y-4">
-              <h3 class="text-xl font-semibold text-stone-800 border-b border-stone-200 pb-2">Coming Up</h3>
+              <h3 class="text-xl font-semibold text-stone-800 border-b border-stone-200 pb-2 text-center md:text-left">Coming Up</h3>
               <div class="space-y-4">
                 <EventRow
                   v-for="event in upcomingEvents.filter(e => !e.isUpcoming)"

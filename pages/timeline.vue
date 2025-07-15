@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen">
+  <div class="">
     <Timeline :expanded="true"/>
   </div>
 </template>
