@@ -31,6 +31,20 @@ export default defineNuxtConfig({
   gtag: {
     id: process.env.GA4ID
   },
+
+    turnstile: {
+    siteKey: process.env.TURNSTYLE_SITEKEY,
+  },
+
+  runtimeConfig: {
+    turnstile: {
+      secretKey: process.env.TURNSTYLE_SECRETKEY,
+    },
+    public: {
+      web3FormsAccessKey: process.env.WEB3_FORMS_ACCESS_KEY
+    }
+  },
+  
   modules: [
     '@nuxt/content',
     '@nuxt/eslint',
@@ -43,6 +57,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'vue3-carousel-nuxt',
     'nuxt-swiper',
-    'nuxt-gtag'
+    'nuxt-gtag',
+    '@nuxtjs/turnstile'
   ]
 })

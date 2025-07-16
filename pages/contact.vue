@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+// Access runtime config
+const config = useRuntimeConfig()
+
 // Fetch contact page data (this would come from your CMS/API)
 const { data: contactData } = await useAsyncData(() =>
   queryCollection('pages').path('/pages/contact').first()
@@ -13,12 +16,18 @@ useSeoMeta({
 
 // Form data
 const form = ref({
+  access_key: config.public.web3FormsAccessKey, // Use runtime config
+  subject: 'New Contact Submission from nativityofthemotherofgod.com',
   name: '',
   email: '',
   phone: '',
-  subject: '',
   message: '',
+  'cf-turnstile-response': ''
 })
+
+const onTurnstileSuccess = (token: string) => {
+  form.value['cf-turnstile-response'] = token
+}
 
 // Form validation
 const errors = ref({})
@@ -46,6 +55,11 @@ const validateForm = () => {
     newErrors.message = 'Message is required'
   }
 
+  // Check for Turnstile token
+  if (!form.value['cf-turnstile-response']) {
+    newErrors.turnstile = 'Please complete the CAPTCHA verification'
+  }
+
   errors.value = newErrors
   return Object.keys(newErrors).length === 0
 }
@@ -56,21 +70,23 @@ const submitForm = async () => {
   isSubmitting.value = true
 
   try {
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500))
-
-    // Here you would typically send the form data to your backend
-    console.log('Form submitted:', form.value)
+    const response = await $fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: form.value,
+    })
 
     isSubmitted.value = true
 
     // Reset form
     form.value = {
+      access_key: config.public.web3FormsAccessKey, // Use runtime config
+      subject: 'New Contact Submission from nativityofthemotherofgod.com',
       name: '',
       email: '',
       phone: '',
-      subject: '',
       message: '',
+      'cf-turnstile-response': ''
     }
   } catch (error) {
     console.error('Form submission error:', error)
@@ -78,7 +94,6 @@ const submitForm = async () => {
     isSubmitting.value = false
   }
 }
-
 
 const resetSuccessMessage = () => {
   isSubmitted.value = false
@@ -102,7 +117,7 @@ const resetSuccessMessage = () => {
 
     <!-- Contact Section -->
     <section class="container mx-auto max-w-4xl px-4 py-12">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div class="grid grid-cols-1 gap-12">
 
         <!-- Contact Form -->
         <div class="space-y-8">
@@ -114,7 +129,7 @@ const resetSuccessMessage = () => {
           </div>
 
           <!-- Success Message -->
-          <div v-if="isSubmitted" class="bg-green-50  accentedBg rounded-3xl p-12">
+          <div v-if="isSubmitted" class="bg-green-50 accentedBg rounded-3xl p-12">
             <div class="flex justify-center items-center gap-3 p-12">
               <div class="p-12">
                 <h3 class="text-2xl text-center pt-8">Message Sent</h3>
@@ -126,39 +141,28 @@ const resetSuccessMessage = () => {
           <!-- Form -->
           <form v-else @submit.prevent="submitForm" class="space-y-6">
             <!-- Name and Email Row -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 gap-4">
               <div class="space-y-2">
                 <UInput v-model="form.name" type="text" placeholder="Your full name"
-                  class="w-full  border border-stone-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  class="w-full border border-stone-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                   :class="{ 'border-red-500': errors.name }" />
                 <p v-if="errors.name" class="text-red-500 text-sm">{{ errors.name }}</p>
               </div>
               <div class="space-y-2">
                 <UInput v-model="form.email" type="email" placeholder="your@email.com"
-                  class="w-full  border border-stone-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  class="w-full border border-stone-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                   :class="{ 'border-red-500': errors.email }" />
                 <p v-if="errors.email" class="text-red-500 text-sm">{{ errors.email }}</p>
               </div>
             </div>
 
             <!-- Phone and Inquiry Type Row -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 gap-4">
               <div class="space-y-2">
                 <UInput v-model="form.phone" type="tel" placeholder="(555) 123-4567 - (optional)"
-                  class="w-full  border border-stone-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent" />
+                  class="w-full border border-stone-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent" />
               </div>
-
-              <!-- Subject -->
-              <div class="space-y-2">
-                <UInput v-model="form.subject" type="text" placeholder="Brief description of your inquiry"
-                  class="w-full border border-stone-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                  :class="{ 'border-red-500': errors.subject }" />
-                <p v-if="errors.subject" class="text-red-500 text-sm">{{ errors.subject }}</p>
-              </div>
-
             </div>
-
-
 
             <!-- Message -->
             <div class="space-y-2">
@@ -167,6 +171,12 @@ const resetSuccessMessage = () => {
                 class="w-full border border-stone-300 rounded-3xl focus:outline-0 focus:ring-none focus:ring-0 focus:border-transparent resize-none"
                 :class="{ 'border-red-500': errors.message }"></textarea>
               <p v-if="errors.message" class="text-red-500 text-sm">{{ errors.message }}</p>
+            </div>
+
+            <!-- Turnstile Widget -->
+            <div class="space-y-2">
+              <NuxtTurnstile ref="turnstile" @success="onTurnstileSuccess" class="mx-auto" />
+              <p v-if="errors.turnstile" class="text-red-500 text-sm text-center">{{ errors.turnstile }}</p>
             </div>
 
             <!-- Submit Button -->
@@ -186,7 +196,6 @@ const resetSuccessMessage = () => {
             </button>
           </form>
         </div>
-
       </div>
     </section>
   </div>
