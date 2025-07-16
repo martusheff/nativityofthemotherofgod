@@ -6,31 +6,11 @@ const { data: scheduleEvents } = await useAsyncData(() =>
   queryCollection('events').all()
 )
 
-console.log(scheduleEvents.value)
-
 // SEO Meta
 useSeoMeta({
   title: 'Service Schedule - Orthodox Parish Services',
   description: 'View our weekly service schedule and upcoming special events at our Orthodox parish.',
 })
-
-// Weekly recurring services
-const weeklyServices = ref([
-  {
-    day: 'Saturdays',
-    time: '5:00 PM',
-    service: 'Vespers Service',
-    description: 'Evening prayers to prepare our hearts for the Lord\'s Day, filled with chant and reflection.',
-    recurring: true
-  },
-  {
-    day: 'Sundays',
-    time: '8:30 AM',
-    service: 'Divine Liturgy',
-    description: 'The heart of our worship, celebrating the Eucharist in the Old Rite tradition.',
-    recurring: true
-  },
-])
 
 // Helpers to format date & time
 const formatDate = (dateStr: string) => {
@@ -94,19 +74,40 @@ const upcomingEvents = computed(() => {
     }))
 })
 
+// Define a type for the valid days
+type DayOfWeek = 'Sunday' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday';
+
+// Weekly recurring services
+const weeklyServices = ref([
+  {
+    day: 'Saturdays' as DayOfWeek, // Explicitly type the day property
+    time: '5:00 PM',
+    service: 'Vespers Service',
+    description: 'Evening prayers to prepare our hearts for the Lord\'s Day, filled with chant and reflection.',
+    recurring: true
+  },
+  {
+    day: 'Sundays' as DayOfWeek, // Explicitly type the day property
+    time: '8:30 AM',
+    service: 'Divine Liturgy',
+    description: 'The heart of our worship, celebrating the Eucharist in the Old Rite tradition.',
+    recurring: true
+  },
+]);
+
 // Sort weekly services by day
-const getDayOfWeek = (day: string) => {
-  const days = {
-    'Sunday': 0,
-    'Monday': 1,
-    'Tuesday': 2,
-    'Wednesday': 3,
-    'Thursday': 4,
-    'Friday': 5,
-    'Saturday': 6
-  }
-  return days[day] ?? 0
-}
+const getDayOfWeek = (day: DayOfWeek): number => {
+  const days: Record<DayOfWeek, number> = {
+    Sunday: 0,
+    Monday: 1,
+    Tuesday: 2,
+    Wednesday: 3,
+    Thursday: 4,
+    Friday: 5,
+    Saturday: 6
+  };
+  return days[day] ?? 0; // Return 0 if day is not found
+};
 
 const sortedWeeklyServices = computed(() => {
   return [...weeklyServices.value].sort((a, b) =>

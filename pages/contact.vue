@@ -230,7 +230,7 @@ const resetSuccessMessage = (): void => {
             </div>
 
             <!-- Turnstile Widget -->
-            <div class="space-y-2">
+            <div class="space-y-2 w-full mx-auto">
               <NuxtTurnstile ref="turnstile" @success="onTurnstileSuccess" @error="onTurnstileError"
                 @expired="onTurnstileExpired" @load="onTurnstileLoad" class="mx-auto" />
               <p v-if="errors.turnstile" class="text-red-500 text-sm text-center">{{ errors.turnstile }}</p>
