@@ -1,6 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+// Define error types
+interface FormErrors {
+  name?: string;
+  email?: string;
+  message?: string;
+  turnstile?: string;
+  general?: string;
+  [key: string]: string | undefined;
+}
+
 // Access runtime config
 const config = useRuntimeConfig()
 
@@ -25,17 +35,15 @@ const form = ref({
   'cf-turnstile-response': ''
 })
 
-const onTurnstileSuccess = (token: string) => {
-  form.value['cf-turnstile-response'] = token
-}
-
 // Form validation
-const errors = ref({})
+const errors = ref<FormErrors>({})
 const isSubmitting = ref(false)
 const isSubmitted = ref(false)
+const turnstile = ref<any>(null) // Using any here because NuxtTurnstile type may not be available
+const turnstileLoaded = ref(false)
 
-const validateForm = () => {
-  const newErrors = {}
+const validateForm = (): boolean => {
+  const newErrors: FormErrors = {}
 
   if (!form.value.name.trim()) {
     newErrors.name = 'Name is required'
@@ -47,16 +55,12 @@ const validateForm = () => {
     newErrors.email = 'Please enter a valid email address'
   }
 
-  if (!form.value.subject.trim()) {
-    newErrors.subject = 'Subject is required'
-  }
-
   if (!form.value.message.trim()) {
     newErrors.message = 'Message is required'
   }
 
-  // Check for Turnstile token
-  if (!form.value['cf-turnstile-response']) {
+  // Check for Turnstile token only if the widget is loaded
+  if (turnstileLoaded.value && !form.value['cf-turnstile-response']) {
     newErrors.turnstile = 'Please complete the CAPTCHA verification'
   }
 
@@ -64,8 +68,42 @@ const validateForm = () => {
   return Object.keys(newErrors).length === 0
 }
 
-const submitForm = async () => {
-  if (!validateForm()) return
+const onTurnstileSuccess = (token: string): void => {
+  form.value['cf-turnstile-response'] = token
+  if (errors.value.turnstile) {
+    delete errors.value.turnstile
+  }
+}
+
+const onTurnstileError = (error: any): void => {
+  form.value['cf-turnstile-response'] = ''
+  errors.value.turnstile = 'CAPTCHA verification failed. Please try again.'
+}
+
+const onTurnstileExpired = (): void => {
+  form.value['cf-turnstile-response'] = ''
+  errors.value.turnstile = 'CAPTCHA verification expired. Please complete it again.'
+}
+
+const onTurnstileLoad = (): void => {
+  turnstileLoaded.value = true
+}
+
+const resetTurnstile = (): void => {
+  if (turnstile.value) {
+    try {
+      turnstile.value.reset()
+      form.value['cf-turnstile-response'] = ''
+    } catch (error) {
+      console.error('Error resetting Turnstile:', error)
+    }
+  }
+}
+
+const submitForm = async (): Promise<void> => {
+  if (!validateForm()) {
+    return
+  }
 
   isSubmitting.value = true
 
@@ -80,22 +118,35 @@ const submitForm = async () => {
 
     // Reset form
     form.value = {
-      access_key: config.public.web3FormsAccessKey, // Use runtime config
-      subject: 'New Contact Submission from nativityofthemotherofgod.com',
+      ...form.value,
       name: '',
       email: '',
       phone: '',
       message: '',
       'cf-turnstile-response': ''
     }
-  } catch (error) {
+
+    // Reset turnstile
+    resetTurnstile()
+
+  } catch (error: unknown) {
     console.error('Form submission error:', error)
+
+    // Reset turnstile on error
+    resetTurnstile()
+
+    // Type-safe error handling
+    if (error instanceof Error && error.message.includes('captcha')) {
+      errors.value.turnstile = 'CAPTCHA verification failed. Please try again.'
+    } else {
+      errors.value.general = 'Failed to send message. Please try again.'
+    }
   } finally {
     isSubmitting.value = false
   }
 }
 
-const resetSuccessMessage = () => {
+const resetSuccessMessage = (): void => {
   isSubmitted.value = false
 }
 </script>
@@ -118,7 +169,6 @@ const resetSuccessMessage = () => {
     <!-- Contact Section -->
     <section class="container mx-auto max-w-4xl px-4 py-12">
       <div class="grid grid-cols-1 gap-12">
-
         <!-- Contact Form -->
         <div class="space-y-8">
           <div class="space-y-4">
@@ -133,13 +183,19 @@ const resetSuccessMessage = () => {
             <div class="flex justify-center items-center gap-3 p-12">
               <div class="p-12">
                 <h3 class="text-2xl text-center pt-8">Message Sent</h3>
-                <p class="text-lg text-center pb-8">Thank you for contacting us. We'll respond when we receive your message.</p>
+                <p class="text-lg text-center pb-8">Thank you for contacting us. We'll respond when we receive your
+                  message.</p>
               </div>
             </div>
           </div>
 
           <!-- Form -->
           <form v-else @submit.prevent="submitForm" class="space-y-6">
+            <!-- General Error Message -->
+            <div v-if="errors.general" class="bg-red-50 border border-red-200 rounded-lg p-4">
+              <p class="text-red-600 text-sm">{{ errors.general }}</p>
+            </div>
+
             <!-- Name and Email Row -->
             <div class="grid grid-cols-1 gap-4">
               <div class="space-y-2">
@@ -175,24 +231,16 @@ const resetSuccessMessage = () => {
 
             <!-- Turnstile Widget -->
             <div class="space-y-2">
-              <NuxtTurnstile ref="turnstile" @success="onTurnstileSuccess" class="mx-auto" />
+              <NuxtTurnstile ref="turnstile" @success="onTurnstileSuccess" @error="onTurnstileError"
+                @expired="onTurnstileExpired" @load="onTurnstileLoad" class="mx-auto" />
               <p v-if="errors.turnstile" class="text-red-500 text-sm text-center">{{ errors.turnstile }}</p>
             </div>
 
             <!-- Submit Button -->
             <button type="submit" :disabled="isSubmitting"
               class="w-full text-center text-lg font-medium bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white py-3 px-6 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 block">
-              <span v-if="isSubmitting">
-                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
-                  viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                  </path>
-                </svg>
-                Sending Message...
-              </span>
-              <span v-else>Send Message</span>
+
+              <span>Send Message</span>
             </button>
           </form>
         </div>
@@ -200,30 +248,3 @@ const resetSuccessMessage = () => {
     </section>
   </div>
 </template>
-
-<style scoped>
-/* Custom focus styles for form elements */
-input:focus,
-select:focus,
-textarea:focus {
-  outline: none;
-  border-color: #d97706;
-  box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.1);
-}
-
-/* Error state styling */
-.border-red-500 {
-  border-color: #ef4444;
-}
-
-/* Loading spinner animation */
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-spin {
-  animation: spin 1s linear infinite;
-}
-</style>
