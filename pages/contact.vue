@@ -224,7 +224,7 @@ const resetSuccessMessage = (): void => {
             <div class="space-y-2">
               <textarea v-model="form.message" placeholder="Please share your questions or how we can help you..."
                 rows="6"
-                class="w-full border border-stone-300 rounded-3xl focus:outline-0 focus:ring-none focus:ring-0 focus:border-transparent resize-none"
+                class="w-full border border-stone-300 rounded-3xl focus:outline-0 focus:ring-none focus:ring-0  resize-none"
                 :class="{ 'border-red-500': errors.message }"></textarea>
               <p v-if="errors.message" class="text-red-500 text-sm">{{ errors.message }}</p>
             </div>
