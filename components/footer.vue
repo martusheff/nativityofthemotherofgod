@@ -24,29 +24,29 @@
                         </p>
                     </div>
 
-        
+
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="space-y-6  w-full md:w-64 flex flex-col justify-center items-center md:items-end md:justify-end text-center md:text-right  ">
+                <div
+                    class="space-y-6  w-full md:w-64 flex flex-col justify-center items-center md:items-end md:justify-end text-center md:text-right  ">
                     <h4 class="text-lg font-semibold text-stone-800">Quick Links</h4>
                     <nav class="space-y-3">
-                                                <RouterLink to="/"
+                        <RouterLink to="/"
                             class="block text-stone-600 hover:text-amber-600 transition-colors duration-300 text-lg">
                             Home
                         </RouterLink>
-                                                <RouterLink to="/timeline"
+                        <RouterLink to="/videos"
+                            class="block text-stone-600 hover:text-amber-600 transition-colors duration-300 text-lg">
+                            Videos
+                        </RouterLink>
+                        <RouterLink to="/timeline"
                             class="block text-stone-600 hover:text-amber-600 transition-colors duration-300 text-lg">
                             Timeline
                         </RouterLink>
                         <RouterLink to="/schedule"
                             class="block text-stone-600 hover:text-amber-600 transition-colors duration-300 text-lg">
                             Service Schedule
-                        </RouterLink>
-                        
-                        <RouterLink to="/articles"
-                            class="block text-stone-600 hover:text-amber-600 transition-colors duration-300 text-lg">
-                            Articles
                         </RouterLink>
                         <RouterLink to="/contact"
                             class="block text-stone-600 hover:text-amber-600 transition-colors duration-300 text-lg">
@@ -67,8 +67,7 @@
                     © 2025 Nativity of the Mother of God Orthodox Church · All rights reserved.
                 </p>
                 <div class="flex gap-6 text-sm">
-                    <RouterLink to="#"
-                        class="text-stone-500 hover:text-amber-600 transition-colors duration-300">
+                    <RouterLink to="#" class="text-stone-500 hover:text-amber-600 transition-colors duration-300">
                         Privacy Policy
                     </RouterLink>
                     <RouterLink to="#" class="text-stone-500 hover:text-amber-600 transition-colors duration-300">
