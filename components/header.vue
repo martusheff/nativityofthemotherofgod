@@ -1,7 +1,8 @@
 <script setup>
 import { ref, watch, onMounted, onUnmounted } from 'vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRoute } from 'vue-router';
 
+const route = useRoute();
 const isOpen = ref(false);
 const openMobileSection = ref(null);
 
@@ -75,7 +76,11 @@ const navItems = [
     //     ],
     // },
 
-
+    {
+        href: '/',
+        label: 'Home',
+        subsections: []
+    },
     {
         href: '/articles',
         label: 'Articles',
@@ -102,6 +107,20 @@ const navItems = [
         subsections: []
     },
 ];
+
+// Function to check if a route is active
+const isActiveRoute = (href) => {
+    // Handle home route - check for both '/' and '/home'
+    if (href === '/home') {
+        return route.path === '/' || route.path === '/home';
+    }
+    return route.path === href;
+};
+
+// Function to check if any subsection is active
+const hasActiveSubsection = (subsections) => {
+    return subsections.some(subsection => isActiveRoute(subsection.href));
+};
 
 const handleMobileSectionToggle = (index) => {
     openMobileSection.value = openMobileSection.value === index ? null : index;
@@ -161,7 +180,10 @@ onUnmounted(() => {
                 <div v-for="item in navItems" :key="item.label" class="relative group">
                     <template v-if="item.subsections.length > 0">
                         <div
-                            class="flex gap-1 items-center cursor-pointer text-xl transition-colors group-hover:text-amber-600 text-stone-700 font-medium">
+                            :class="[
+                                'flex gap-1 items-center cursor-pointer text-xl transition-colors group-hover:text-amber-600 font-medium',
+                                hasActiveSubsection(item.subsections) ? 'text-amber-600' : 'text-stone-700'
+                            ]">
                             <span>{{ item.label }}</span>
                             <Icon name="material-symbols:keyboard-arrow-down" />
                         </div>
@@ -171,11 +193,20 @@ onUnmounted(() => {
                             <div class="p-1">
                                 <RouterLink v-for="subsection in item.subsections" :key="subsection.label"
                                     :to="subsection.href"
-                                    class="block relative p-4 hover:bg-amber-50/70 transition-colors rounded-md m-1 group/subsection">
+                                    :class="[
+                                        'block relative p-4 hover:bg-amber-50/70 transition-colors rounded-md m-1 group/subsection',
+                                        isActiveRoute(subsection.href) ? 'bg-amber-50/70' : ''
+                                    ]">
                                     <div
-                                        class="absolute left-0 top-0 w-0.5 h-0 bg-amber-500 group-hover/subsection:h-full transition-all duration-300 ease-out rounded-l-md">
+                                        :class="[
+                                            'absolute left-0 top-0 w-0.5 bg-amber-500 transition-all duration-300 ease-out rounded-l-md',
+                                            isActiveRoute(subsection.href) ? 'h-full' : 'h-0 group-hover/subsection:h-full'
+                                        ]">
                                     </div>
-                                    <div class="text-base font-medium mb-1 text-stone-800">
+                                    <div :class="[
+                                        'text-base font-medium mb-1',
+                                        isActiveRoute(subsection.href) ? 'text-amber-600' : 'text-stone-800'
+                                    ]">
                                         {{ subsection.label }}
                                     </div>
                                     <div class="text-sm text-stone-600">
@@ -187,7 +218,10 @@ onUnmounted(() => {
                     </template>
                     <template v-else>
                         <RouterLink :to="item.href"
-                            class="text-xl transition-colors hover:bg-transparent hover:text-amber-600 p-0 h-auto text-stone-700 font-medium">
+                            :class="[
+                                'text-xl transition-colors hover:bg-transparent hover:text-amber-600 p-0 h-auto font-medium',
+                                isActiveRoute(item.href) ? 'text-amber-600' : 'text-stone-700'
+                            ]">
                             {{ item.label }}
                         </RouterLink>
                     </template>
@@ -229,17 +263,26 @@ onUnmounted(() => {
         ]">
             <nav class="py-2 px-4 flex flex-col space-y-1 overflow-y-auto max-h-[calc(100vh-5rem)]">
                 <template v-for="(item, index) in navItems" :key="item.label">
-                    <div class="border-b border-stone-200/20 pb-2 last:border-b-0">
+                    <div class="border-b border-stone-200/40 pb-1 ">
                         <UButton v-if="item.subsections.length > 0"
-                            class="w-full text-left text-lg font-medium text-stone-800 py-3 px-3 rounded-lg hover:bg-white/60 transition-all duration-200 flex items-center justify-between group"
+                            :class="[
+                                'w-full text-left text-lg font-medium py-3 px-3 rounded-lg transition-all duration-200 flex items-center justify-between group',
+                                hasActiveSubsection(item.subsections) ? 'text-amber-600' : 'text-stone-800'
+                            ]"
                             @click="handleMobileSectionToggle(index)">
-                            <span class="group-hover:text-amber-600 transition-colors">{{ item.label }}</span>
+                            <span :class="[
+                                'transition-colors',
+                                hasActiveSubsection(item.subsections) ? 'text-amber-600' : 'group-hover:text-amber-600'
+                            ]">{{ item.label }}</span>
                             <Icon
                                 :name="openMobileSection === index ? 'heroicons:chevron-up-20-solid' : 'heroicons:chevron-down-20-solid'"
                                 size="24" class="w-7 h-7 text-amber-500 transition-transform duration-200" />
                         </UButton>
                         <RouterLink v-else :to="item.href"
-                            class="w-full text-left text-xl font-medium text-stone-800 py-3 px-3 rounded-lg hover:bg-white/60 hover:text-amber-600 transition-all duration-200 block"
+                            :class="[
+                                'w-full text-left text-xl font-medium py-3 px-3 rounded-lg hover:text-amber-600 transition-all duration-200 block',
+                                isActiveRoute(item.href) ? 'text-amber-600 ' : 'text-stone-800'
+                            ]"
                             @click="isOpen = false">
                             {{ item.label }}
                         </RouterLink>
@@ -253,14 +296,20 @@ onUnmounted(() => {
                                 class="relative flex items-start transition-all duration-200 ease-in-out mb-4">
                                 <div :class="[
                                     'absolute left-0 top-0 w-0.5 bg-gradient-to-b from-amber-400 to-amber-600 transition-all duration-300 ease-out rounded-full',
-                                    openMobileSection === index ? 'h-full' : 'h-0',
+                                    isActiveRoute(subsection.href) ? 'h-full' : (openMobileSection === index ? 'h-full' : 'h-0'),
                                 ]" />
                                 <RouterLink :to="subsection.href"
-                                    class="flex-1 ml-3 px-3 py-1.5 rounded-lg hover:bg-white/60 transition-all duration-200 group/sub"
+                                    :class="[
+                                        'flex-1 ml-3 px-3 py-1.5 rounded-lg hover:bg-white/60 transition-all duration-200 group/sub',
+                                        isActiveRoute(subsection.href) ? 'bg-white/60' : ''
+                                    ]"
                                     @click="isOpen = false; openMobileSection = null">
                                     <div class="flex flex-col">
                                         <span
-                                            class="text-base font-medium text-stone-800 group-hover/sub:text-amber-600 transition-colors">
+                                            :class="[
+                                                'text-base font-medium transition-colors',
+                                                isActiveRoute(subsection.href) ? 'text-amber-600' : 'text-stone-800 group-hover/sub:text-amber-600'
+                                            ]">
                                             {{ subsection.label }}
                                         </span>
                                         <span class="text-sm text-stone-600 mt-0.5 leading-relaxed">
