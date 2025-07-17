@@ -186,7 +186,7 @@ watch(totalPages, (newTotal) => {
       </p>
 
       <!-- Pagination -->
-      <div class="flex justify-center space-x-2">
+      <div class="flex justify-center gap-4">
         <UButton @click="currentPage = Math.max(1, currentPage - 1)" :disabled="currentPage === 1"
           class="p-2 rounded-full border border-stone-300 text-sm hover:bg-stone-200 disabled:opacity-50 flex items-center">
           <Icon name="heroicons:chevron-left-20-solid" size="20" />

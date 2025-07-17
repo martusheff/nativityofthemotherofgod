@@ -46,6 +46,15 @@ export default defineContentConfig({
         description: z.string(),
         date: z.date()
       })
+    }),
+    videos: defineCollection({
+      type: "data",
+      source: "videos/*.json",
+      schema: z.object({
+        title: z.string(),
+        url: z.string(),
+        category: z.enum(['liturgy', 'vespers', 'sermon', 'other'])
+      })
     })
   }
 })

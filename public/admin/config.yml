@@ -1,11 +1,12 @@
 # Use DecapBridge auth (required)
+local_backend: true
+
 backend:
   name: git-gateway
   repo: martusheff/nativityofthemotherofgod
   branch: main
   identity_url: https://auth.decapbridge.com/sites/71fd480a-4bbf-4d86-aea5-45d2b70a1764
   gateway_url: https://gateway.decapbridge.com
-  local_backend: true
 
   # Quickly see who did what (optional)
   commit_messages:
@@ -95,6 +96,20 @@ collections:
       - { label: "Description", name: "description", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ssZ", default: "{{now}}" }
 
+  - name: "videos"
+    label: "Videos"
+    label_singular: "Video"
+    slug: "{{url}}"
+    folder: '/content/videos'
+    create: true
+    extension: 'json'
+    summary: "{{category | upper}} | {{title}}"
+
+    format: 'json'
+    fields: 
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "YouTube Video URL", name: "url", widget: "string" }
+      - { label: "Category", name: "category", widget: "select", options: ["liturgy", "vespers", "sermon", "other"] }
 
 
   - name: "config"

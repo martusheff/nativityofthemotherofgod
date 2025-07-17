@@ -41,9 +41,9 @@ defineProps<{
           {{ article.title }}
         </h3>
       </div>
-<p class="text-stone-600 text-lg leading-tight text-justify line-clamp-5">
-  {{ article.description }}
-</p>
+      <p :class="['text-stone-600 text-lg leading-tight text-justify', list ? 'line-clamp-1' : 'line-clamp-5']">
+        {{ article.description }}
+      </p>
       <div class="pt-4 pb-2 mt-auto">
         <UButton
           class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-medium py-3 px-8 rounded-full shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 text-xl tracking-wide group flex items-center justify-center gap-2"
@@ -69,6 +69,4 @@ defineProps<{
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
-
 </style>
