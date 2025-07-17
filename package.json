@@ -32,6 +32,7 @@
     "vue3-carousel-nuxt": "^1.1.6"
   },
   "devDependencies": {
-    "@nuxt/ui": "^3.2.0"
+    "@nuxt/ui": "^3.2.0",
+    "@types/youtube": "^0.1.2"
   }
 }

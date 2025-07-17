@@ -74,9 +74,16 @@ const navItems = [
     //         },
     //     ],
     // },
-            {
-        href: '/schedule',
-        label: 'Service Schedule',
+
+
+    {
+        href: '/articles',
+        label: 'Articles',
+        subsections: []
+    },
+        {
+        href: '/videos',
+        label: 'Videos',
         subsections: []
     },
         {
@@ -84,12 +91,12 @@ const navItems = [
         label: 'Timeline',
         subsections: []
     },
-    {
-        href: '/articles',
-        label: 'Articles',
+        {
+        href: '/schedule',
+        label: 'Schedule',
         subsections: []
     },
-        {
+    {
         href: '/contact',
         label: 'Contact',
         subsections: []
@@ -124,18 +131,25 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <header class="sticky top-0 z-50 w-full border-b border-stone-200/30 bg-gradient-to-r from-slate-50 to-stone-50 backdrop-blur-sm shadow-sm">
+    <header
+        class="sticky top-0 z-50 w-full border-b border-stone-200/30 bg-gradient-to-r from-slate-50 to-stone-50 backdrop-blur-sm shadow-sm">
         <div class="px-4 flex h-20 items-center">
             <!-- Logo and title section -->
             <div class="flex items-center flex-shrink-0">
-                <img src="/logo2.png" class="h-[4.25rem] pr-2 sm:pr-4 object-contain self-center" alt="Logo" />
-                <RouterLink to="/" class="flex flex-col justify-center">
-                    <span class="text-base sm:text-lg md:text-2xl font-bold tracking-tight line-clamp-1 text-stone-800">
-                        Nativity of the Mother of God
-                    </span>
-                    <span class="text-xs md:text-sm text-stone-600 line-clamp-1">
-                        Old Rite Orthodox Church in Woodburn, OR
-                    </span>
+                <RouterLink to="/" class="flex justify-center ">
+
+                    <img src="/logo2.png" class="h-[4.25rem] pr-2 sm:pr-4 object-contain self-center" alt="Logo" />
+                    <div class="flex flex-col justify-center">
+
+
+                        <span
+                            class="text-base sm:text-lg md:text-2xl font-bold tracking-tight line-clamp-1 text-stone-800">
+                            Nativity of the Mother of God
+                        </span>
+                        <span class="text-xs md:text-sm text-stone-600 line-clamp-1">
+                            Old Rite Orthodox Church in Woodburn, OR
+                        </span>
+                    </div>
                 </RouterLink>
             </div>
 
@@ -186,8 +200,7 @@ onUnmounted(() => {
             </nav>
 
             <!-- Mobile Toggle -->
-            <button
-                class="lg:hidden ml-4 p-2 text-stone-700 relative w-10 h-10 flex items-center justify-center"
+            <button class="lg:hidden ml-4 p-2 text-stone-700 relative w-10 h-10 flex items-center justify-center"
                 @click="isOpen = !isOpen">
                 <div class="w-6 h-6 relative flex flex-col justify-center items-center">
                     <!-- Top line -->
@@ -217,19 +230,15 @@ onUnmounted(() => {
             <nav class="py-2 px-4 flex flex-col space-y-1 overflow-y-auto max-h-[calc(100vh-5rem)]">
                 <template v-for="(item, index) in navItems" :key="item.label">
                     <div class="border-b border-stone-200/20 pb-2 last:border-b-0">
-                        <UButton
-                            v-if="item.subsections.length > 0"
+                        <UButton v-if="item.subsections.length > 0"
                             class="w-full text-left text-lg font-medium text-stone-800 py-3 px-3 rounded-lg hover:bg-white/60 transition-all duration-200 flex items-center justify-between group"
                             @click="handleMobileSectionToggle(index)">
                             <span class="group-hover:text-amber-600 transition-colors">{{ item.label }}</span>
-                            <Icon 
+                            <Icon
                                 :name="openMobileSection === index ? 'heroicons:chevron-up-20-solid' : 'heroicons:chevron-down-20-solid'"
-                                size="24" class="w-7 h-7 text-amber-500 transition-transform duration-200"
-                            />
+                                size="24" class="w-7 h-7 text-amber-500 transition-transform duration-200" />
                         </UButton>
-                        <RouterLink 
-                            v-else 
-                            :to="item.href" 
+                        <RouterLink v-else :to="item.href"
                             class="w-full text-left text-xl font-medium text-stone-800 py-3 px-3 rounded-lg hover:bg-white/60 hover:text-amber-600 transition-all duration-200 block"
                             @click="isOpen = false">
                             {{ item.label }}
@@ -250,7 +259,8 @@ onUnmounted(() => {
                                     class="flex-1 ml-3 px-3 py-1.5 rounded-lg hover:bg-white/60 transition-all duration-200 group/sub"
                                     @click="isOpen = false; openMobileSection = null">
                                     <div class="flex flex-col">
-                                        <span class="text-base font-medium text-stone-800 group-hover/sub:text-amber-600 transition-colors">
+                                        <span
+                                            class="text-base font-medium text-stone-800 group-hover/sub:text-amber-600 transition-colors">
                                             {{ subsection.label }}
                                         </span>
                                         <span class="text-sm text-stone-600 mt-0.5 leading-relaxed">
@@ -262,7 +272,7 @@ onUnmounted(() => {
                         </div>
                     </div>
                 </template>
-                
+
                 <!-- Donate button -->
                 <div class="py-3 flex-shrink-0">
                     <RouterLink to="/donate"
