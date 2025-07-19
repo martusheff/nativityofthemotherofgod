@@ -1,75 +1,27 @@
-# Nuxt Minimal Starter
+# Church of the Nativity of the Mother
+This website is built using **Nuxt4** with **DecapCMS** as the content manager and is **dedicated to the Church of the Nativity of the Mother of God**, an Old Rite Orthodox Church in ROCOR.
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Project Frameworks & Tools
+- [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction): to learn more about the websites architecture.
 
-## Setup
+- [DecapCMS](https://decapcms.org/): to learn more about the chosen CMS solution.
 
-Make sure to install dependencies:
+## Code Use
+Feel free to copy this code / clone this repository for use for your Orthodox Parish. If you require any assistance feel free to reach out to me, I would be happy to offer any support I can.
 
+## Project Setup & Launch
+
+Install Dependencies
 ```bash
-# npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
+Run DecapCMS
 ```bash
-# npm
+npx decap-server
+```
+
+Launch Dev Server
+```bash
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
