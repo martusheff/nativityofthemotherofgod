@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import LowImpactHero from '~/components/heroes/low-impact-hero.vue'
 import EventRow from './_components/event-row.vue';
 
 const { data: scheduleEvents } = await useAsyncData(() =>
@@ -16,6 +15,29 @@ useSeoMeta({
   title: 'Service Schedule - Orthodox Parish Services',
   description: 'View our weekly service schedule and upcoming special events at our Orthodox parish.',
 })
+
+// Define types
+type DayOfWeek = 'Sunday' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday';
+
+interface Event {
+  title: string;
+  description: string;
+  date: string;
+  formattedDate: string;
+  time: string;
+  shortMonth: string;
+  dayNumber: number;
+  dayOfWeek: string;
+  isUpcoming: boolean;
+}
+
+interface WeeklyService {
+  day: DayOfWeek;
+  time: string;
+  service: string;
+  description: string;
+  recurring: boolean;
+}
 
 // Helpers to format date & time
 const formatDate = (dateStr: string) => {
@@ -57,7 +79,7 @@ const isUpcoming = (dateStr: string) => {
   return eventDate >= today && eventDate <= nextWeek
 }
 
-const upcomingEvents = computed(() => {
+const upcomingEvents = computed<Event[]>(() => {
   const today = new Date()
   today.setHours(0, 0, 0, 0)
 
@@ -79,20 +101,17 @@ const upcomingEvents = computed(() => {
     }))
 })
 
-// Define a type for the valid days
-type DayOfWeek = 'Sunday' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday';
-
 // Weekly recurring services
-const weeklyServices = ref([
+const weeklyServices = ref<WeeklyService[]>([
   {
-    day: 'Saturdays' as DayOfWeek, // Explicitly type the day property
+    day: 'Saturday' as DayOfWeek,
     time: '5:00 PM',
     service: 'Vespers Service',
     description: 'Evening prayers to prepare our hearts for the Lord\'s Day, filled with chant and reflection.',
     recurring: true
   },
   {
-    day: 'Sundays' as DayOfWeek, // Explicitly type the day property
+    day: 'Sunday' as DayOfWeek,
     time: '8:30 AM',
     service: 'Divine Liturgy',
     description: 'The heart of our worship, celebrating the Eucharist in the Old Rite tradition.',
@@ -111,10 +130,10 @@ const getDayOfWeek = (day: DayOfWeek): number => {
     Friday: 5,
     Saturday: 6
   };
-  return days[day] ?? 0; // Return 0 if day is not found
+  return days[day] ?? 0;
 };
 
-const sortedWeeklyServices = computed(() => {
+const sortedWeeklyServices = computed<WeeklyService[]>(() => {
   return [...weeklyServices.value].sort((a, b) =>
     getDayOfWeek(a.day) - getDayOfWeek(b.day)
   )
@@ -124,7 +143,7 @@ const sortedWeeklyServices = computed(() => {
 <template>
   <div class="min-h-screen">
 
-    <LowImpactHero :title="schedulePage?.title" :subtitle="schedulePage?.subTitle"/>
+    <HeroLowImpact :title="schedulePage?.title" :subtitle="schedulePage?.subTitle"/>
 
     <!-- Weekly Services -->
     <section class="mx-auto max-w-5xl px-4 mt-12">
@@ -144,7 +163,7 @@ const sortedWeeklyServices = computed(() => {
           >
             <div class="space-y-4">
               <div class="flex items-center justify-between">
-                <span class="text-lg font-medium text-amber-600 py-1 rounded-full">{{ service.day }}</span>
+                <span class="text-lg font-medium text-amber-600 py-1 rounded-full">{{ service.day }}s</span>
                 <span class="text-lg font-semibold text-stone-800">{{ service.time }}</span>
               </div>
               <div class="space-y-2">
@@ -170,22 +189,22 @@ const sortedWeeklyServices = computed(() => {
 
           <div v-if="upcomingEvents.length" class="space-y-8">
 
-            <div v-if="upcomingEvents.some(e => e.isUpcoming)" class="space-y-4">
+            <div v-if="upcomingEvents.some((event: Event) => event.isUpcoming)" class="space-y-4">
               <h3 class="text-xl font-semibold text-stone-800 border-b border-stone-200 pb-2 text-center md:text-left">This Week</h3>
               <div class="space-y-4">
                 <EventRow
-                  v-for="event in upcomingEvents.filter(e => e.isUpcoming)"
+                  v-for="event in upcomingEvents.filter((event: Event) => event.isUpcoming)"
                   :key="`thisweek-${event.title}-${event.date}`"
                   :event="event"
                 />
               </div>
             </div>
 
-            <div v-if="upcomingEvents.some(e => !e.isUpcoming)" class="space-y-4">
+            <div v-if="upcomingEvents.some((event: Event) => !event.isUpcoming)" class="space-y-4">
               <h3 class="text-xl font-semibold text-stone-800 border-b border-stone-200 pb-2 text-center md:text-left">Coming Up</h3>
               <div class="space-y-4">
                 <EventRow
-                  v-for="event in upcomingEvents.filter(e => !e.isUpcoming)"
+                  v-for="event in upcomingEvents.filter((event: Event) => !event.isUpcoming)"
                   :key="`coming-${event.title}-${event.date}`"
                   :event="event"
                 />

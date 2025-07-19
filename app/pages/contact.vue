@@ -150,7 +150,7 @@ const submitForm = async (): Promise<void> => {
 
 <template>
   <div class="min-h-screen">
-    <HeroesLowImpactHero :title="contactPage?.title" :subtitle="contactPage?.subTitle"/>
+    <HeroLowImpact :title="contactPage?.title" :subtitle="contactPage?.subTitle"/>
 
     <!-- Contact Section -->
     <section class="container mx-auto max-w-4xl px-4 py-12">
