@@ -1,21 +1,16 @@
 <script setup lang="ts">
-import LowImpactHero from '~/components/heroes/low-impact-hero.vue';
-
-
 const { data: donatePage } = await useAsyncData(() =>
   queryCollection('pages').path('/pages/donate').first()
 )
-
 useSeoMeta({
   title: 'Support Our Parish - Donations Coming Soon',
   description: 'Learn about upcoming donation opportunities to support our Orthodox parish community.',
 })
-
 </script>
 
 <template>
   <div>
-    <LowImpactHero :title="donatePage?.title" :subtitle="donatePage?.subTitle"/>
+    <HeroLowImpact :title="donatePage?.title" :subtitle="donatePage?.subTitle"/>
     <!-- Donations Status -->
     <section class="container mx-auto max-w-4xl px-4 py-16">
       <div class="bg-white border border-stone-200 rounded-3xl p-8 md:p-12 shadow-sm space-y-8">

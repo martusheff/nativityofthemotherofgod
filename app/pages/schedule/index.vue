@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import LowImpactHero from '~/components/heroes/low-impact-hero.vue'
 import EventRow from './_components/event-row.vue';
 
 const { data: scheduleEvents } = await useAsyncData(() =>
@@ -124,7 +123,7 @@ const sortedWeeklyServices = computed(() => {
 <template>
   <div class="min-h-screen">
 
-    <LowImpactHero :title="schedulePage?.title" :subtitle="schedulePage?.subTitle"/>
+    <HeroLowImpact :title="schedulePage?.title" :subtitle="schedulePage?.subTitle"/>
 
     <!-- Weekly Services -->
     <section class="mx-auto max-w-5xl px-4 mt-12">

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import LowImpactHero from '~/components/heroes/low-impact-hero.vue';
 import Timeline from './_components/timeline.vue';
 
 const { data: timelinePage } = await useAsyncData(() =>
@@ -10,7 +9,7 @@ const { data: timelinePage } = await useAsyncData(() =>
 
 <template>
   <div>
-    <LowImpactHero :title="timelinePage?.title" :subtitle="timelinePage?.subTitle"/>
+    <HeroLowImpact :title="timelinePage?.title" :subtitle="timelinePage?.subTitle"/>
     <Timeline :expanded="true"/>
   </div>
 </template>

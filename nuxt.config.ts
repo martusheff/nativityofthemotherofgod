@@ -5,7 +5,7 @@ export default defineNuxtConfig({
 
   devServer: {
     host: '0.0.0.0',
-    port: 3000 
+    port: 3000
   },
 
   css: ['~/assets/css/main.css'],
@@ -45,48 +45,48 @@ export default defineNuxtConfig({
     }
   },
 
-pwa: {
-  registerType: 'autoUpdate',
-  manifest: {
-    name: 'Nativity of the Mother of God',
-    short_name: 'NMOG',
-    description: 'ROCOR Old Rite Russian Orthodox Church in Woodburn, OR',
-    
-    
-    
-    theme_color: '#ffffff',
-    background_color: '#ffffff',
-    display: 'standalone',
-    scope: '/',
-    start_url: '/',
-    icons: [
-      {
-        src: '/favicon.ico',
-        sizes: '192x192',
-        type: 'image/png'
-      },
-      {
-        src: '/favicon.ico', 
-        sizes: '512x512',
-        type: 'image/png'
-      }
-    ]
+  pwa: {
+    registerType: 'autoUpdate',
+    manifest: {
+      name: 'Nativity of the Mother of God',
+      short_name: 'NMOG',
+      description: 'ROCOR Old Rite Russian Orthodox Church in Woodburn, OR',
+
+
+
+      theme_color: '#ffffff',
+      background_color: '#ffffff',
+      display: 'standalone',
+      scope: '/',
+      start_url: '/',
+      icons: [
+        {
+          src: '/favicon.ico',
+          sizes: '192x192',
+          type: 'image/png'
+        },
+        {
+          src: '/favicon.ico',
+          sizes: '512x512',
+          type: 'image/png'
+        }
+      ]
+    },
+    workbox: {
+      navigateFallback: '/',
+      globPatterns: ['**/*.{js,css,html,png,svg,ico}']
+    },
+    client: {
+      installPrompt: true,
+    },
+    devOptions: {
+      enabled: true,
+      suppressWarnings: true,
+      navigateFallbackAllowlist: [/^\/$/],
+      type: 'module'
+    }
   },
-  workbox: {
-    navigateFallback: '/',
-    globPatterns: ['**/*.{js,css,html,png,svg,ico}']
-  },
-  client: {
-    installPrompt: true, 
-  },
-  devOptions: {
-    enabled: true,
-    suppressWarnings: true,
-    navigateFallbackAllowlist: [/^\/$/],
-    type: 'module'
-  }
-},
-  
+
   modules: [
     '@nuxt/content',
     '@nuxt/eslint',
