@@ -9,7 +9,6 @@ const { data: articlePage } = await useAsyncData(() =>
   queryCollection('pages').path('/pages/articles').first()
 );
 
-console.log(articles.value)
 const router = useRouter()
 const route = useRoute()
 

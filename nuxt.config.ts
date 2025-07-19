@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
   tailwindcss: {
-    cssPath: [`$assets/css/tailwind.css`, { injectPosition: "first" }],
+    cssPath: [`~/assets/css/tailwind.css`, { injectPosition: "first" }],
     config: {},
     viewer: true,
     exposeConfig: false,
@@ -32,7 +32,7 @@ export default defineNuxtConfig({
     id: process.env.GA4ID
   },
 
-    turnstile: {
+  turnstile: {
     siteKey: process.env.TURNSTYLE_SITEKEY,
   },
 
@@ -44,6 +44,48 @@ export default defineNuxtConfig({
       web3FormsAccessKey: process.env.WEB3_FORMS_ACCESS_KEY
     }
   },
+
+pwa: {
+  registerType: 'autoUpdate',
+  manifest: {
+    name: 'Nativity of the Mother of God',
+    short_name: 'NMOG',
+    description: 'ROCOR Old Rite Russian Orthodox Church in Woodburn, OR',
+    
+    
+    
+    theme_color: '#ffffff',
+    background_color: '#ffffff',
+    display: 'standalone',
+    scope: '/',
+    start_url: '/',
+    icons: [
+      {
+        src: '/favicon.ico',
+        sizes: '192x192',
+        type: 'image/png'
+      },
+      {
+        src: '/favicon.ico', 
+        sizes: '512x512',
+        type: 'image/png'
+      }
+    ]
+  },
+  workbox: {
+    navigateFallback: '/',
+    globPatterns: ['**/*.{js,css,html,png,svg,ico}']
+  },
+  client: {
+    installPrompt: true, 
+  },
+  devOptions: {
+    enabled: true,
+    suppressWarnings: true,
+    navigateFallbackAllowlist: [/^\/$/],
+    type: 'module'
+  }
+},
   
   modules: [
     '@nuxt/content',
@@ -58,6 +100,7 @@ export default defineNuxtConfig({
     'vue3-carousel-nuxt',
     'nuxt-swiper',
     'nuxt-gtag',
-    '@nuxtjs/turnstile'
+    '@nuxtjs/turnstile',
+    '@vite-pwa/nuxt'
   ]
 })

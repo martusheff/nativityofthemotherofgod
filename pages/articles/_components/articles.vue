@@ -13,8 +13,6 @@ const { data: home } = await useAsyncData(() =>
 
 const { data: articles } = await useAsyncData(() => queryCollection('articles').all())
 
-console.log(articles.value)
-
 useSeoMeta({
   title: home.value?.title,
   description: home.value?.description,
