@@ -5,6 +5,7 @@ import { Autoplay, Mousewheel, Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import ArticleCard from './article-card.vue';
 
 const { data: home } = await useAsyncData(() =>
   queryCollection('pages').path('/pages/home').first()

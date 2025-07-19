@@ -7,96 +7,38 @@ const isOpen = ref(false);
 const openMobileSection = ref(null);
 
 const navItems = [
-    // {
-    //     href: '#',
-    //     label: 'Our Parish',
-    //     subsections: [
-    //         {
-    //             href: '/schedule',
-    //             label: 'Service Schedule',
-    //             description: 'Up to date times for our services',
-    //         },
-    //         {
-    //             href: '/clergy',
-    //             label: 'Clergy',
-    //             description: 'Get familiar with our Clergy',
-    //         },
-    //         {
-    //             href: '/singing',
-    //             label: 'Singing',
-    //             description: 'The Znamenny chant, in english',
-    //         },
-    //         {
-    //             href: '/visit',
-    //             label: 'Visit',
-    //             description: 'Curious? Come and visit!',
-    //         },
-    //     ],
-    // },
-    // {
-    //     href: '#',
-    //     label: 'Orthodoxy',
-    //     subsections: [
-    //         {
-    //             href: '/orthodoxy',
-    //             label: 'What is Orthodoxy?',
-    //             description: 'Learn more about Orthodoxy',
-    //         },
-    //         {
-    //             href: '/old-rite',
-    //             label: 'The Old-Rite',
-    //             description: 'Learn about the Old Rite Faith',
-    //         },
-    //         {
-    //             href: '/prayers',
-    //             label: 'Prayers',
-    //             description: 'Daily Orthodox Devotions',
-    //         },
-    //         {
-    //             href: '/faq',
-    //             label: 'FAQs',
-    //             description: 'Answers to Common Questions',
-    //         },
-    //     ],
-    // },
-    // {
-    //     href: '#',
-    //     label: 'Media',
-    //     subsections: [
-    //         {
-    //             href: '/gallery',
-    //             label: 'Gallery',
-    //             description: 'Photos and videos from parish life',
-    //         },
-    //         {
-    //             href: '/choir',
-    //             label: 'Choir',
-    //             description: 'The beautiful chants of our choir',
-    //         },
-    //     ],
-    // },
-
     {
         href: '/',
         label: 'Home',
         subsections: []
     },
     {
+        href: '#',
+        label: 'About',
+        subsections: [
+            {
+                href: '/about',
+                label: 'About Us',
+                description: 'Learn more about our parish',
+            },
+            {
+                href: '/timeline',
+                label: 'Timeline',
+                description: 'Where we are at as a parish',
+            },
+        ],
+    },
+    {
         href: '/articles',
         label: 'Articles',
         subsections: []
     },
-        {
+    {
         href: '/videos',
         label: 'Videos',
         subsections: []
     },
-        {
-        href: '/timeline',
-        label: 'Timeline',
-        subsections: []
-    },
-        {
+    {
         href: '/schedule',
         label: 'Schedule',
         subsections: []
@@ -150,6 +92,12 @@ onUnmounted(() => {
 </script>
 
 <template>
+    <!-- Mobile background overlay -->
+    <div v-if="isOpen" 
+         class="fixed inset-0 bg-black/15 backdrop-blur-xs z-40 lg:hidden transition-all duration-1000"
+         @click="isOpen = false">
+    </div>
+
     <header
         class="sticky top-0 z-50 w-full border-b border-stone-200/30 bg-gradient-to-r from-slate-50 to-stone-50 backdrop-blur-sm shadow-sm">
         <div class="px-4 flex h-20 items-center">
@@ -179,11 +127,10 @@ onUnmounted(() => {
             <nav class="hidden lg:flex items-center space-x-8">
                 <div v-for="item in navItems" :key="item.label" class="relative group">
                     <template v-if="item.subsections.length > 0">
-                        <div
-                            :class="[
-                                'flex gap-1 items-center cursor-pointer text-xl transition-colors group-hover:text-amber-600 font-medium',
-                                hasActiveSubsection(item.subsections) ? 'text-amber-600' : 'text-stone-700'
-                            ]">
+                        <div :class="[
+                            'flex gap-1 items-center cursor-pointer text-xl transition-colors group-hover:text-amber-600 font-medium',
+                            hasActiveSubsection(item.subsections) ? 'text-amber-600' : 'text-stone-700'
+                        ]">
                             <span>{{ item.label }}</span>
                             <Icon name="material-symbols:keyboard-arrow-down" />
                         </div>
@@ -192,16 +139,14 @@ onUnmounted(() => {
                             <div class="absolute -top-4 left-0 w-full h-4 bg-transparent"></div>
                             <div class="p-1">
                                 <RouterLink v-for="subsection in item.subsections" :key="subsection.label"
-                                    :to="subsection.href"
-                                    :class="[
+                                    :to="subsection.href" :class="[
                                         'block relative p-4 hover:bg-amber-50/70 transition-colors rounded-md m-1 group/subsection',
                                         isActiveRoute(subsection.href) ? 'bg-amber-50/70' : ''
                                     ]">
-                                    <div
-                                        :class="[
-                                            'absolute left-0 top-0 w-0.5 bg-amber-500 transition-all duration-300 ease-out rounded-l-md',
-                                            isActiveRoute(subsection.href) ? 'h-full' : 'h-0 group-hover/subsection:h-full'
-                                        ]">
+                                    <div :class="[
+                                        'absolute left-0 top-0 w-0.5 bg-amber-500 transition-all duration-300 ease-out rounded-l-md',
+                                        isActiveRoute(subsection.href) ? 'h-full' : 'h-0 group-hover/subsection:h-full'
+                                    ]">
                                     </div>
                                     <div :class="[
                                         'text-base font-medium mb-1',
@@ -217,11 +162,10 @@ onUnmounted(() => {
                         </div>
                     </template>
                     <template v-else>
-                        <RouterLink :to="item.href"
-                            :class="[
-                                'text-xl transition-colors hover:bg-transparent hover:text-amber-600 p-0 h-auto font-medium',
-                                isActiveRoute(item.href) ? 'text-amber-600' : 'text-stone-700'
-                            ]">
+                        <RouterLink :to="item.href" :class="[
+                            'text-xl transition-colors hover:bg-transparent hover:text-amber-600 p-0 h-auto font-medium',
+                            isActiveRoute(item.href) ? 'text-amber-600' : 'text-stone-700'
+                        ]">
                             {{ item.label }}
                         </RouterLink>
                     </template>
@@ -264,12 +208,10 @@ onUnmounted(() => {
             <nav class="py-2 px-4 flex flex-col space-y-1 overflow-y-auto max-h-[calc(100vh-5rem)]">
                 <template v-for="(item, index) in navItems" :key="item.label">
                     <div class="border-b border-stone-200/40 pb-1 ">
-                        <UButton v-if="item.subsections.length > 0"
-                            :class="[
-                                'w-full text-left text-lg font-medium py-3 px-3 rounded-lg transition-all duration-200 flex items-center justify-between group',
-                                hasActiveSubsection(item.subsections) ? 'text-amber-600' : 'text-stone-800'
-                            ]"
-                            @click="handleMobileSectionToggle(index)">
+                        <UButton v-if="item.subsections.length > 0" :class="[
+                            'w-full text-left text-xl font-medium py-3 px-3 rounded-lg transition-all duration-200 flex items-center justify-between group',
+                            hasActiveSubsection(item.subsections) ? 'text-amber-600' : 'text-stone-800'
+                        ]" @click="handleMobileSectionToggle(index)">
                             <span :class="[
                                 'transition-colors',
                                 hasActiveSubsection(item.subsections) ? 'text-amber-600' : 'group-hover:text-amber-600'
@@ -278,12 +220,10 @@ onUnmounted(() => {
                                 :name="openMobileSection === index ? 'heroicons:chevron-up-20-solid' : 'heroicons:chevron-down-20-solid'"
                                 size="24" class="w-7 h-7 text-amber-500 transition-transform duration-200" />
                         </UButton>
-                        <RouterLink v-else :to="item.href"
-                            :class="[
-                                'w-full text-left text-xl font-medium py-3 px-3 rounded-lg hover:text-amber-600 transition-all duration-200 block',
-                                isActiveRoute(item.href) ? 'text-amber-600 ' : 'text-stone-800'
-                            ]"
-                            @click="isOpen = false">
+                        <RouterLink v-else :to="item.href" :class="[
+                            'w-full text-left text-xl font-medium py-3 px-3 rounded-lg hover:text-amber-600 transition-all duration-200 block',
+                            isActiveRoute(item.href) ? 'text-amber-600 ' : 'text-stone-800'
+                        ]" @click="isOpen = false">
                             {{ item.label }}
                         </RouterLink>
 
@@ -298,18 +238,15 @@ onUnmounted(() => {
                                     'absolute left-0 top-0 w-0.5 bg-gradient-to-b from-amber-400 to-amber-600 transition-all duration-300 ease-out rounded-full',
                                     isActiveRoute(subsection.href) ? 'h-full' : (openMobileSection === index ? 'h-full' : 'h-0'),
                                 ]" />
-                                <RouterLink :to="subsection.href"
-                                    :class="[
-                                        'flex-1 ml-3 px-3 py-1.5 rounded-lg hover:bg-white/60 transition-all duration-200 group/sub',
-                                        isActiveRoute(subsection.href) ? 'bg-white/60' : ''
-                                    ]"
-                                    @click="isOpen = false; openMobileSection = null">
+                                <RouterLink :to="subsection.href" :class="[
+                                    'flex-1 ml-3 px-3 py-1.5 rounded-lg transition-all duration-200 group/sub',
+                                    isActiveRoute(subsection.href) ? '' : ''
+                                ]" @click="isOpen = false; openMobileSection = null">
                                     <div class="flex flex-col">
-                                        <span
-                                            :class="[
-                                                'text-base font-medium transition-colors',
-                                                isActiveRoute(subsection.href) ? 'text-amber-600' : 'text-stone-800 group-hover/sub:text-amber-600'
-                                            ]">
+                                        <span :class="[
+                                            'text-base font-medium transition-colors',
+                                            isActiveRoute(subsection.href) ? 'text-amber-600' : 'text-stone-800 group-hover/sub:text-amber-600'
+                                        ]">
                                             {{ subsection.label }}
                                         </span>
                                         <span class="text-sm text-stone-600 mt-0.5 leading-relaxed">

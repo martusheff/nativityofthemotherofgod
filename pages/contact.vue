@@ -15,7 +15,7 @@ interface FormErrors {
 const config = useRuntimeConfig()
 
 // Fetch contact page data (this would come from your CMS/API)
-const { data: contactData } = await useAsyncData(() =>
+const { data: contactPage } = await useAsyncData(() =>
   queryCollection('pages').path('/pages/contact').first()
 )
 
@@ -26,7 +26,7 @@ useSeoMeta({
 
 // Form data
 const form = ref({
-  access_key: config.public.web3FormsAccessKey, // Use runtime config
+  access_key: config.public.web3FormsAccessKey, 
   subject: 'New Contact Submission from nativityofthemotherofgod.com',
   name: '',
   email: '',
@@ -146,25 +146,11 @@ const submitForm = async (): Promise<void> => {
   }
 }
 
-const resetSuccessMessage = (): void => {
-  isSubmitted.value = false
-}
 </script>
 
 <template>
   <div class="min-h-screen">
-    <!-- Header -->
-    <section class="bg-stone-100 border-b border-stone-200 py-12">
-      <div class="container mx-auto max-w-5xl px-4 text-center space-y-6">
-        <h1 class="text-4xl md:text-6xl font-bold text-stone-800">Contact Us</h1>
-        <svg class="w-28 h-auto mx-auto text-amber-600" viewBox="0 0 100 12" fill="none">
-          <path d="M0 5 H50 C75 5 75 0 100 5" stroke="currentColor" stroke-width="2" />
-        </svg>
-        <p class="text-lg md:text-xl text-stone-600 max-w-2xl mx-auto">
-          We're here to help with your spiritual journey and answer any questions you may have.
-        </p>
-      </div>
-    </section>
+    <HeroesLowImpactHero :title="contactPage?.title" :subtitle="contactPage?.subTitle"/>
 
     <!-- Contact Section -->
     <section class="container mx-auto max-w-4xl px-4 py-12">

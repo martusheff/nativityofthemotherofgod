@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { useRouter, useRoute } from '#app'
+import LowImpactHero from '~/components/heroes/low-impact-hero.vue'
+import ArticleCard from './_components/article-card.vue';
 
-// Fetch articles
 const { data: articles } = await useAsyncData(() => queryCollection('articles').all())
+const { data: articlePage } = await useAsyncData(() =>
+  queryCollection('pages').path('/pages/articles').first()
+);
 
 console.log(articles.value)
 const router = useRouter()
@@ -106,27 +110,15 @@ watch(totalPages, (newTotal) => {
 </script>
 
 <template>
-  <div class="min-h-screen">
-    <!-- Header -->
-    <section class="bg-stone-100 border-b border-stone-200 py-12">
-      <div class="container mx-auto max-w-5xl px-4 text-center space-y-6">
-        <h1 class="text-4xl md:text-6xl font-bold text-stone-800">Parish Articles</h1>
-        <svg class="w-28 h-auto mx-auto text-amber-600" viewBox="0 0 100 12" fill="none">
-          <path d="M0 5 H50 C75 5 75 0 100 5" stroke="currentColor" stroke-width="2" />
-        </svg>
-        <p class="text-lg md:text-xl text-stone-600 max-w-2xl mx-auto">
-          News and Orthodox teachings from Fr. Nikita.
-        </p>
-      </div>
-    </section>
+  <div>
+
+    <LowImpactHero :title="articlePage?.title" :subtitle="articlePage?.subTitle" />
 
     <!-- Articles Section -->
     <section class="container mx-auto max-w-7xl px-4 py-12 space-y-8">
-
-
-
       <!-- Search + Actions Container -->
-      <div class="w-full flex flex-col md:flex-row md:items-center md:justify-between gap-4 max-w-7xl mx-auto pb-4 md:pt-8   md:pb-12">
+      <div
+        class="w-full flex flex-col md:flex-row md:items-center md:justify-between gap-4 max-w-7xl mx-auto pb-4 md:pt-8   md:pb-12">
 
         <!-- Search input with filter inside for mobile -->
         <div class="relative w-full max-w-2xl mx-auto flex-1">

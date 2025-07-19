@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import LowImpactHero from '~/components/heroes/low-impact-hero.vue';
 
-// Fetch donate page data
-const { data: donateData } = await useAsyncData(() =>
+
+const { data: donatePage } = await useAsyncData(() =>
   queryCollection('pages').path('/pages/donate').first()
 )
 
@@ -14,20 +14,8 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="">
-    <!-- Hero -->
-    <section class="bg-stone-100 border-b border-stone-200 py-12">
-      <div class="container mx-auto max-w-5xl px-4 text-center space-y-6">
-        <h1 class="text-4xl md:text-6xl font-bold text-stone-800">Support Our Parish</h1>
-        <svg class="w-28 h-auto mx-auto text-amber-600" viewBox="0 0 100 12" fill="none">
-          <path d="M0 5 H50 C75 5 75 0 100 5" stroke="currentColor" stroke-width="2" />
-        </svg>
-        <p class="text-lg md:text-xl text-stone-600 max-w-2xl mx-auto">
-          Your generosity sustains our sacred mission and builds up our Orthodox community.
-        </p>
-      </div>
-    </section>
-
+  <div>
+    <LowImpactHero :title="donatePage?.title" :subtitle="donatePage?.subTitle"/>
     <!-- Donations Status -->
     <section class="container mx-auto max-w-4xl px-4 py-16">
       <div class="bg-white border border-stone-200 rounded-3xl p-8 md:p-12 shadow-sm space-y-8">

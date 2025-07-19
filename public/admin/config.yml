@@ -32,7 +32,7 @@ collections:
     label: Pages
     files:
       - file: "content/pages/home.md"
-        label: "Home"
+        label: "Home Page"
         name: "home"
         fields:
           - { label: "Title", name: "title", widget: "string" }
@@ -44,14 +44,37 @@ collections:
           - { label: "Hero Primary CTA Button URL", name: "heroPrimaryCTAURL", widget: "string" }
           - { label: "Hero Secondary CTA Button Label", name: "heroSecondaryCTALabel", widget: "string" }
           - { label: "Hero Secondary CTA Button URL", name: "heroSecondaryCTAURL", widget: "string" }
-
+      - file: "content/pages/articles.md"
+        label: "Articles Page"
+        name: "articles"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Subtitle", name: "subTitle", widget: "string" }
+      - file: "content/pages/timeline.md"
+        label: "Timeline Page"
+        name: "timeline"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Subtitle", name: "subTitle", widget: "string" }
+      - file: "content/pages/schedule.md"
+        label: "Schedule Page"
+        name: "schedule"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Subtitle", name: "subTitle", widget: "string" }
+      - file: "content/pages/contact.md"
+        label: "Contact Page"
+        name: "contact"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Subtitle", name: "subTitle", widget: "string" }
       - file: "content/pages/donate.md"
-        label: "Donate"
+        label: "Donate Page"
         name: "donate"
         fields:
           - { label: "Title", name: "title", widget: "string" }
-          - { label: "Description", name: "description", widget: "text" }
-  
+          - { label: "Subtitle", name: "subTitle", widget: "string" }
+
   - name: "articles"
     label: "Articles"
     label_singular: "Article"
