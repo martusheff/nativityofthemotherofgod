@@ -1,10 +1,10 @@
 <template>
   <div
-    class="bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition-all duration-300 border border-stone-200 group"
-  >
+    class="bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition-all duration-300 border border-stone-200 group">
     <div class="flex items-center gap-4">
       <!-- Calendar Date - Left Side -->
-      <div class="flex-shrink-0 bg-stone-100 rounded-xl p-3 border border-stone-200 group-hover:bg-stone-200 transition-colors">
+      <div
+        class="flex-shrink-0 bg-stone-100 rounded-xl p-3 border border-stone-200 group-hover:bg-stone-200 transition-colors">
         <div class="text-center min-w-[3rem]">
           <div class="text-xs font-semibold uppercase tracking-wide text-stone-500">{{ event.shortMonth }}</div>
           <div class="text-2xl font-bold text-stone-700">{{ event.dayNumber }}</div>
@@ -57,6 +57,7 @@ defineProps<{ event: Event }>()
 <style scoped>
 .line-clamp-2 {
   display: -webkit-box;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;

@@ -1,3 +1,7 @@
+<script setup>
+import { RouterLink } from 'vue-router'
+</script>
+
 <template>
     <footer class="w-full bg-stone-50 border-t border-stone-200/50">
         <div class="w-full mx-auto max-w-5xl px-4 sm:px-8 md:px-12 py-12 space-y-12">
@@ -23,10 +27,7 @@
                             Join us for worship, fellowship, and spiritual growth in the heart of Woodburn.
                         </p>
                     </div>
-
-
                 </div>
-
                 <!-- Navigation Links -->
                 <div
                     class="space-y-6  w-full md:w-64 flex flex-col justify-center items-center md:items-end md:justify-end text-center md:text-right  ">
@@ -35,6 +36,10 @@
                         <RouterLink to="/"
                             class="block text-stone-600 hover:text-amber-600 transition-colors duration-300 text-lg">
                             Home
+                        </RouterLink>
+                        <RouterLink to="/articles"
+                            class="block text-stone-600 hover:text-amber-600 transition-colors duration-300 text-lg">
+                            Articles
                         </RouterLink>
                         <RouterLink to="/videos"
                             class="block text-stone-600 hover:text-amber-600 transition-colors duration-300 text-lg">
@@ -58,9 +63,6 @@
 
 
             </div>
-
-
-
             <!-- Bottom Bar -->
             <div class="border-t border-stone-200 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
                 <p class="text-sm text-stone-500 text-center md:text-left">
@@ -79,18 +81,4 @@
     </footer>
 </template>
 
-<script setup>
-import { RouterLink } from 'vue-router'
-</script>
-
-<style scoped>
-/* Optional: Add a subtle gradient background */
-footer {
-    background: linear-gradient(to bottom, #fafaf9, #f7f7f6);
-}
-
-/* Ensure consistent hover effects */
-nav a:hover {
-    transform: translateX(2px);
-}
-</style>
+<style scoped></style>

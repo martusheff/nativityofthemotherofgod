@@ -43,7 +43,7 @@ const dynamicEvents = computed(() => {
   if (!scheduleEvents.value) return []
   return scheduleEvents.value
     .filter(event => new Date(event.date) >= today)
-    .sort((a, b) => new Date(a.date) - new Date(b.date))
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
     .slice(0, 3)
     .map(event => ({
       title: event.title,
