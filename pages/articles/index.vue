@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { useRouter, useRoute } from '#app'
+import LowImpactHero from '~/components/heroes/low-impact-hero.vue'
 import ArticleCard from './_components/article-card.vue';
 
 const { data: articles } = await useAsyncData(() => queryCollection('articles').all())
@@ -110,7 +111,7 @@ watch(totalPages, (newTotal) => {
 <template>
   <div>
 
-    <HeroLowImpact :title="articlePage?.title" :subtitle="articlePage?.subTitle" />
+    <LowImpactHero :title="articlePage?.title" :subtitle="articlePage?.subTitle" />
 
     <!-- Articles Section -->
     <section class="container mx-auto max-w-7xl px-4 py-12 space-y-8">
