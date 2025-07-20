@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRoute, createError } from '#app'
 import { useAsyncData, useSeoMeta } from '#imports'
+import { computed } from 'vue'
 
 const route = useRoute()
 const slug = route.params.slug as string

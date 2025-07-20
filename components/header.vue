@@ -105,7 +105,7 @@ onUnmounted(() => {
             <div class="flex items-center flex-shrink-0">
                 <RouterLink to="/" class="flex justify-center ">
 
-                    <img src="/logo.png" class="h-[4.25rem] pr-2 sm:pr-4 object-contain self-center" alt="Logo" />
+                    <img src="/logo2.png" class="h-[4.25rem] pr-2 sm:pr-4 object-contain self-center" alt="Logo" />
                     <div class="flex flex-col justify-center">
 
 

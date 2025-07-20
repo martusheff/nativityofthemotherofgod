@@ -10,7 +10,7 @@ import { RouterLink } from 'vue-router'
                 <!-- Parish Info -->
                 <div class="space-y-6">
                     <div class="flex flex-col md:flex-row items-center md:items-start gap-4">
-                        <img src="/logo.png" class="h-14 object-contain" alt="Parish Logo" />
+                        <img src="/logo2.png" class="h-14 object-contain" alt="Parish Logo" />
                         <div class="text-center md:text-left">
                             <h3 class="text-2xl font-bold text-stone-800 leading-tight">
                                 Nativity of the Mother of God
