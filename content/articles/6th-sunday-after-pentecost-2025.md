@@ -33,7 +33,7 @@ else who will bring forth fruit in its season.
 
 **If** we struggle against immoral thoughts
 and deeds, to present God our bodies as a living sacrifice, an interesting
-thing will begin to happen. Listen to St Paul describe what happens, “*Do not
+thing will begin to happen. Listen to St Paul describe this, “*Do not
 be conformed to this world, but be transformed by the renewing of your mind,
 that you may prove what is that good and acceptable and perfect will of God.*”
 By God’s grace, our minds even begin to be renewed, so that it grows in Christ.
@@ -50,13 +50,13 @@ bullock upon Thine alter*.” When we are ready, when we have prepared
 ourselves, then God  prepares us, and we
 are then able to offer our bodies as a living sacrifice, a whole burnt
 offering.  In a state like this, it is
-not difficult for Gods grace to take root in you and produce fruit through you.
+not difficult for Gods grace to take root in us and produce fruit through you.
 “*God has dealt to each one a measure of faith*.” This is one of the
-reasons apostle Paul spent countless hours preparing his flock. So that God
+reasons apostle Paul spent countless hours, days and years preparing his flock. So that God
 would deal to each member more abundantly. This grace is manifested as gifts
 through people. Remember or keep this in mind, grace is invisible. You cannot
 put it into a glass jar and say, “Look at this grace, look how beautiful it
-looks.” You will see nothing. It is manifested through His creation and since
+looks.” You will see nothing. Grace is manifested through His creation and since
 we are Gods creation, it is manifested through us also. We are the living
 container, that grace fills. The first Epistle reading today, “*Having then
 gifts differing according to the grace that is given to us, let us use them: if
@@ -67,7 +67,7 @@ mercy, with cheerfulness. Let love be without hypocrisy, Abhor what is evil.
 Cling to what is good.*” And so on… This is our goal to live by and we
 cannot live this apart from the grace of God. If grace is cut off, then we are
 left without help, alone and ourselves to contend with. It is impossible
-without grace. Apart from grace we become wise in our own opinion and can only
+without grace. Apart from grace we become, as the apostle puts it, wise in our own opinion and can only
 overcome evil with evil, but with grace, we overcome evil with good. 
 
 This is the goal for every member in the
