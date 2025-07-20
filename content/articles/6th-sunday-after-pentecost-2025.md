@@ -14,7 +14,7 @@ How are we supposed to live? These questions were asked in St Paul’s time and 
 often times asked in this present day. 
 
 **We** hear St Paul write to the communities
-that he started, about presenting themselves to God. How? How are we to present
+that he started, about presenting themselves to God. How are we to present
 ourselves to God? The apostle Paul writes to the Christian that are in Rome and
 states that, we must begin our presentation to God, with our bodies, “*By
 presenting our bodies a living sacrifice, holy, acceptable to God, which is
@@ -22,13 +22,13 @@ your reasonable (rational)  service*.”
 (Romans Chapter 12.) This is the start. This is the beginning. To live morally
 correct and to honor God through rational service. Without the struggle to
 morally live correctly and pure, we do not and cannot rise in our spiritual
-understanding and because of this, we do not grow in Christ, but grow in our
-own understanding, whatever that is. It is not that Gods grace cannot help you.
+understanding and because of this, we do not grow in Christ and instead grow in our
+own understanding, whatever that is. It is not that Gods grace cannot help us.
 His energy and power that flows from Him, helps and comforts all that seek it,
 but we will be in danger of having to give an account on that day of not
 growing properly through it and throwing it away. God desires to give His grace
 to all, but we must struggle to prepare ourselves to receive it. He gave it, we
-didn’t want it. We rejected it, it went back to Him and He gave it to someone
+didn’t want it. He offered it, we rejected it. It went back to Him and He gave it to someone
 else who will bring forth fruit in its season. 
 
 **If** we struggle against immoral thoughts
