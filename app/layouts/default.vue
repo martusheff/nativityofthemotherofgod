@@ -1,15 +1,15 @@
 <template>
   <div class="layout">
-    <Header />
+    <Header/>
     <main>
       <slot />
     </main>
-    <Footer />
+    <Footer/>
   </div>
 </template>
 
 <script setup>
-import Header from '~/components/header.vue';
+import { Header, Footer } from '#components';
 
 
 definePageMeta({

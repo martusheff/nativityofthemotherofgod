@@ -41,15 +41,27 @@ export default defineNuxtConfig({
       secretKey: process.env.TURNSTYLE_SECRETKEY,
     },
     public: {
-      web3FormsAccessKey: process.env.WEB3_FORMS_ACCESS_KEY
+      web3FormsAccessKey: process.env.WEB3_FORMS_ACCESS_KEY,
+      firebaseConfig: {
+        apiKey: process.env.FIREBASE_API_KEY,
+        authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+        messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+        appId: process.env.FIREBASE_APP_ID,
+      },
+      fcmPublicVapidKey: process.env.FIREBASE_FCM_VAPID_KEY
     }
   },
 
   pwa: {
     registerType: 'autoUpdate',
+    strategies: 'injectManifest',
+    srcDir: '.',
+    filename: 'sw.js',
     manifest: {
-      name: 'Church of the Nativity of the Mother of God',
-      short_name: 'Nativity of the Mother of God',
+      name: 'Nativity of the Mother of God',
+      short_name: 'NMOG',
       description: 'ROCOR Old Rite Russian Orthodox Church in Woodburn, OR',
 
       theme_color: '#ffffff',
@@ -65,7 +77,7 @@ export default defineNuxtConfig({
         },
         {
           "src": "icons/icon-72x72.png",
-          "sizes": "72x72",
+          "sizes": "app/72x72",
           "type": "image/png"
         },
         {
@@ -108,11 +120,7 @@ export default defineNuxtConfig({
           "sizes": "512x512",
           "type": "image/png"
         }
-      ],
-    },
-    workbox: {
-      navigateFallback: '/',
-      globPatterns: ['**/*.{js,css,html,png,svg,ico}']
+      ]
     },
     client: {
       installPrompt: true,
