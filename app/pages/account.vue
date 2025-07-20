@@ -1,6 +1,6 @@
 <template>
   <div>
-    Account Page
+    Work in Progress, Account Page & Functionality will Appear Here
   </div>
 </template>
 

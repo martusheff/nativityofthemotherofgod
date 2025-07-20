@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
-    <Header/>
-    <main :class="{ 'pb-20': showBottomNav }">
+    <Header v-if="!showBottomNav"/>
+    <main :class="{ 'pb-safe-nav': showBottomNav }">
       <slot />
     </main>
     <Footer v-if="!showBottomNav" />
@@ -10,23 +10,29 @@
 </template>
 
 <script setup>
-import { Header, Footer, BottomNav } from '#components';
+import { Header, Footer, BottomNav } from '#components'
 
-const { $pwa } = useNuxtApp();
+const { $pwa } = useNuxtApp()
 
-// Mobile detection composable or utility
 const isMobile = computed(() => {
   if (process.client) {
     return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth <= 768;
   }
-  return false;
-});
+  return false
+})
 
 const showBottomNav = computed(() => {
-  return process.client && $pwa?.isPWAInstalled && isMobile.value;
-});
+  return process.client && $pwa?.isPWAInstalled && isMobile.value
+})
 
 definePageMeta({
   layout: 'default'
 })
 </script>
+
+<style scoped>
+/* Make a reusable safe-area padding */
+.pb-safe-nav {
+  padding-bottom: calc(80px + env(safe-area-inset-bottom));
+}
+</style>
