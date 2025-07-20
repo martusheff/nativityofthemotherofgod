@@ -4,9 +4,9 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --host",
     "generate": "nuxt generate",
-    "preview": "nuxt preview",
+    "preview": "node .output/server/index.mjs",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
@@ -24,16 +24,20 @@
     "better-sqlite3": "^12.2.0",
     "decap-cms-app": "^3.7.2",
     "eslint": "^9.30.1",
+    "firebase": "^12.0.0",
+    "firebase-admin": "^13.4.0",
     "nuxt": "^4.0.0",
     "nuxt-gtag": "^3.0.3",
     "nuxt-swiper": "^2.0.1",
     "typescript": "^5.8.3",
     "vue": "^3.5.17",
     "vue-router": "^4.5.1",
-    "vue3-carousel-nuxt": "^1.1.6"
+    "vue3-carousel-nuxt": "^1.1.6",
+    "workbox-precaching": "^7.3.0"
   },
   "devDependencies": {
     "@nuxt/ui": "^3.2.0",
-    "@types/youtube": "^0.1.2"
+    "@types/youtube": "^0.1.2",
+    "workbox-core": "^7.3.0"
   }
 }
