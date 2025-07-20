@@ -106,6 +106,7 @@ const directoryItems = [
   { to: '/about', label: 'About Us', icon: 'heroicons:cog-6-tooth' },
   { to: '/videos', label: 'Videos', icon: 'heroicons:video-camera' },
   { to: '/timeline', label: 'Timeline', icon: 'heroicons:shield-check' },
+  { to: '/push', label: 'Push', icon: 'heroicons:shield-check' },
 ]
 
 // Check if given path is active
