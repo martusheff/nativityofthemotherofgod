@@ -46,10 +46,13 @@ sacrifice. This is exactly what King David sings in the end of psalm 50. “*Do
 go O Lord in Thy good pleasure unto Sion and let the walls of Jerusalem be
 builded. Then shalt Thou be pleased with a sacrifice of righteousness, with
 oblation (Preparation) and whole-burnt offerings. Then shall they offer a
-bullock upon Thine alter*.” When we are ready, when we have prepared
+bullock upon Thine alter*.” The prophet is singing about the process that
+God is preparing someone, who then is ready to offer himself as a sacrifice. When we are ready, when we have prepared
 ourselves, then God  prepares us, and we
 are then able to offer our bodies as a living sacrifice, a whole burnt
-offering.  In a state like this, it is
+offering.  
+
+**In** a state like this, it is
 not difficult for Gods grace to take root in us and produce fruit through you.
 “*God has dealt to each one a measure of faith*.” This is one of the
 reasons apostle Paul spent countless hours, days and years preparing his flock. So that God
