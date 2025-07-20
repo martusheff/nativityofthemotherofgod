@@ -3,7 +3,7 @@ title: 6th Sunday after Pentecost (2025)
 description: Presenting ourselves to God
 author: Fr Nikita
 date: 2025-07-18T23:43:00.000-07:00
-image: https://www.youtube.com/watch?v=qFoGVRHH7VY
+image: https://youtu.be/qFoGVRHH7VY?si=SrbtkA_rg3b-JNyA
 signature: May the Lords Blessings be upon all of you!
 ---
 ## **6th Sunday after Pentecost (2025)**
