@@ -15,10 +15,18 @@ clientsClaim()
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/messaging'
 
-const config = useRuntimeConfig()
+const firebaseConfig = {
+  apiKey: "AIzaSyDBMCkuDPNJDHNqN1hPjzgkE2kKF9ehkuM",
+  authDomain: "nativityofthemotherofgod.firebaseapp.com",
+  projectId: "nativityofthemotherofgod",
+  storageBucket: "nativityofthemotherofgod.firebasestorage.app",
+  messagingSenderId: "85083197535",
+  appId: "1:85083197535:web:56f870e083fc3a69828bea",
+  measurementId: "G-ZQ740X8RFC"
+};
 
 if (!firebase.apps.length) {
-  firebase.initializeApp(config.public.firebaseConfig)
+  firebase.initializeApp(firebaseConfig)
 }
 
 try {
