@@ -26,6 +26,7 @@ export default defineContentConfig({
         author: z.string(),
         date: z.date(),
         image: z.string(),
+        youtubeurl: z.string().optional(),
         signature: z.string()
       })
     }),
@@ -34,7 +35,7 @@ export default defineContentConfig({
       source: "events/*.json",
       schema: z.object({
         title: z.string(),
-        description: z.string(),
+        description: z.string().optional(),
         date: z.date()
       })
     }),

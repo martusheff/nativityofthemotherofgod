@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useRoute, createError } from '#app'
+import { ScriptYouTubePlayer } from '#components'
 import { useAsyncData, useSeoMeta } from '#imports'
+import { computed, ref } from 'vue'
 
 const route = useRoute()
 const slug = route.params.slug as string
@@ -26,6 +28,41 @@ const formatDate = (date: Date | string) => {
     month: 'long',
     day: 'numeric'
   })
+}
+
+// Extract YouTube video ID from URL
+const extractYouTubeId = (url: string): string | null => {
+  if (!url) return null
+  
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/,
+    /(?:youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+    /(?:youtu\.be\/)([a-zA-Z0-9_-]{11})/,
+    /(?:youtube\.com\/v\/)([a-zA-Z0-9_-]{11})/
+  ]
+  
+  for (const pattern of patterns) {
+    const match = url.match(pattern)
+    if (match && match[1]) {
+      return match[1]
+    }
+  }
+  
+  return null
+}
+
+const youtubeVideoId = computed(() => {
+  if (articleData.youtubeurl) {
+    return extractYouTubeId(articleData.youtubeurl)
+  }
+  return null
+})
+
+// Video collapse state
+const isVideoOpen = ref(false)
+
+const toggleVideo = () => {
+  isVideoOpen.value = !isVideoOpen.value
 }
 
 useSeoMeta({
@@ -62,6 +99,62 @@ useSeoMeta({
       <Divider size="text-6xl" iconSize="w-14 h-14" class="my-10 mb-4" />
 
 
+      <!-- Updated collapsible container -->
+<div v-if="youtubeVideoId" class="w-full px-4 md:px-0 my-8 md:my-12">
+  <div class="bg-white rounded-3xl border border-stone-200 shadow hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+    <button
+      @click="toggleVideo"
+      class="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors duration-200 group"
+    >
+      <!-- Thumbnail with overlay & icon -->
+      <div class="flex items-center space-x-4">
+        <div class="relative overflow-hidden rounded-2xl w-28 h-16">
+          <img
+            :src="`https://img.youtube.com/vi/${youtubeVideoId}/maxresdefault.jpg`"
+            :alt="`${articleData.title} video thumbnail`"
+            class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+        <div class="text-left flex flex-col gap-1">
+          <span class="text-gray-900 font-semibold">Watch Sermon</span>
+          <span class="text-gray-500 text-sm truncate max-w-[12rem]">{{ articleData.title }}</span>
+        </div>
+      </div>
+
+      <!-- Chevron -->
+      <svg
+        class="w-5 h-5 text-gray-400 group-hover:text-gray-600 transform transition-transform duration-300"
+        :class="{ 'rotate-180': isVideoOpen }"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+
+    <!-- Smooth expand -->
+    <div
+      class="transition-all duration-500 ease-in-out overflow-hidden"
+      :style="{ maxHeight: isVideoOpen ? '600px' : '0px', opacity: isVideoOpen ? '1' : '0' }"
+    >
+      <div class="border-t border-gray-100">
+        <div class="bg-black aspect-video">
+          <ScriptYouTubePlayer
+            v-if="isVideoOpen"
+            :video-id="youtubeVideoId"
+            trigger="immediate"
+            :player-vars="{ autoplay: 0, modestbranding: 1, rel: 0, showinfo: 0 }"
+            class="w-full h-full"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
       <article class="prose prose-lg font-medium text-xl max-w-none px-4 md:px-0 mt-0" style="text-align: justify;">
         <ContentRenderer :value="articleData.body" />
       </article>
@@ -70,13 +163,9 @@ useSeoMeta({
         {{ articleData.signature }} — {{ articleData.author }}
       </p>
 
-
       <Divider size="text-6xl" iconSize="w-14 h-14" class="my-12" />
 
-
-
     </div>
-
 
   </div>
 </template>
@@ -108,8 +197,6 @@ useSeoMeta({
 :deep(blockquote::before) {
   display: none;
 }
-
-
 
 /* Paragraph spacing */
 :deep(p) {

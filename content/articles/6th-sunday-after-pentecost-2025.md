@@ -1,16 +1,13 @@
 ---
-title: 6th Sunday after Pentecost (2025)
+title: 6th Sunday after Pentecost 2025
 description: Presenting ourselves to God
 author: Fr Nikita
 date: 2025-07-18T23:43:00.000-07:00
 image: /images/uploads/male-saints.jpg
+youtubeurl: https://www.youtube.com/watch?v=qFoGVRHH7VY
 signature: May the Lords Blessings be upon all of you!
 ---
-## **6th Sunday after Pentecost (2025)**
-
-Wonderful Brothers and Sisters. What is
-our purpose as a member in a Christian community? What are we supposed to do?
-How are we supposed to live? These questions were asked in St Paul’s time and are
+Wonderful Brothers and Sisters. What is our purpose as a member in a Christian community? What are we supposed to do? How are we supposed to live? These questions were asked in St Paul’s time and are
 often times asked in this present day. 
 
 **We** hear St Paul write to the communities
