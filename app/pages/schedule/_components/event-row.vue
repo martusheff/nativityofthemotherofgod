@@ -13,12 +13,12 @@
 
       <!-- Event Details - Center -->
       <div class="flex-1 min-w-0">
-        <div class="flex items-start justify-between gap-4">
+        <div class="flex items-center justify-between gap-4">
           <div class="flex-1 min-w-0">
             <h3 class="text-xl font-semibold text-stone-800 truncate">
               {{ event.title }}
             </h3>
-            <p class="text-md text-stone-600 mt-1 line-clamp-2">
+            <p v-if="event.description" class="text-md text-stone-600 mt-1 line-clamp-2">
               {{ event.description }}
             </p>
           </div>
@@ -41,7 +41,7 @@
 <script setup lang="ts">
 interface Event {
   title: string
-  description: string
+  description: string | null
   date: string
   formattedDate: string
   time: string

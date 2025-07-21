@@ -26,6 +26,8 @@ site_url: https://nativityofthemotherofgod.com
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
+editor:
+  preview: false
 
 collections:
   - name: pages
@@ -89,6 +91,7 @@ collections:
       - { label: "Author", name: "author", widget: "string", default: "Fr Nikita" }
       - { label: "Date", name: "date", widget: "datetime", default: "{{now}}" }
       - { label: "Featured Image", name: "image", widget: "image" }
+      - { label: "YouTube URL", name: "youtubeurl", widget: "string", required: false }
       - { label: 'Content', name: 'body', widget: 'markdown' }
       - { label: "Signature", name: "signature", widget: "string"}
 
@@ -103,7 +106,7 @@ collections:
     format: "json"
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Description", name: "description", widget: "string", required: false }
       - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ssZ", default: "{{now}}" }
   
   - name: "timeline"

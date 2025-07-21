@@ -28,7 +28,7 @@ const weeklyServices = [
     title: 'Vespers Service',
     date: 'Every Saturday, 5:00 PM',
     description:
-      'Evening prayers to prepare our hearts for the Lord’s Day, filled with chant and reflection.',
+      "Evening prayers to prepare our hearts for the Lord's Day, filled with chant and reflection."
   },
 ]
 
@@ -82,11 +82,20 @@ const eventItems = computed(() => [
           :navigation="false" class="w-full swiper-container-events">
           <SwiperSlide v-for="(item, index) in eventItems" :key="index">
             <UCard
-              class="bg-white/90 backdrop-blur-sm shadow-lg h-40 hover:shadow-xl transition-all duration-300 flex flex-col rounded-3xl items-center justify-start">
-              <div class="p-4 space-y-1 flex-1 flex flex-col text-center">
-                <h3 class="text-xl text-stone-800 font-semibold leading-tight">{{ item.title }}</h3>
-                <p class="text-amber-600 italic text-md">{{ item.date }}</p>
-                <p class="text-stone-600 text-base flex-1 line-clamp-2">{{ item.description }}</p>
+              class="bg-white/90 backdrop-blur-sm shadow-lg h-40 hover:shadow-xl transition-all duration-300 flex flex-col rounded-3xl items-center justify-center">
+              <div class="p-4 space-y-1 flex-1 flex flex-col text-center h-full">
+                <!-- When description is empty or doesn't exist: date first, title with line-clamp-3 -->
+                <template v-if="!item.description || item.description.trim() === ''" class="h-full">
+                  <p class="text-amber-600 italic text-md">{{ item.date }}</p>
+                  <h3 class="text-xl text-stone-800 font-semibold leading-tight line-clamp-3">{{ item.title }}</h3>
+                </template>
+                
+                <!-- When description exists and is not empty: title with line-clamp-1, description with line-clamp-2 -->
+                <template v-else class="h-full">
+                  <p class="text-amber-600 italic text-md">{{ item.date }}</p>
+                  <h3 class="text-xl text-stone-800 font-semibold leading-tight line-clamp-1">{{ item.title }}</h3>
+                  <p class="text-stone-600 text-base flex-1 line-clamp-2">{{ item.description }}</p>
+                </template>
               </div>
             </UCard>
           </SwiperSlide>
@@ -97,9 +106,23 @@ const eventItems = computed(() => [
 </template>
 
 <style scoped>
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

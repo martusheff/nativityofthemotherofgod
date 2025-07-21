@@ -7,6 +7,7 @@ defineProps<{
     image: string
     formattedDate: string
     path?: string
+    youtubeurl?: string
   },
   list?: boolean
 }>()
@@ -15,15 +16,31 @@ defineProps<{
 <template>
   <div :class="[
     'bg-white/90 backdrop-blur-sm shadow-sm hover:shadow-md transform transition-all duration-300 rounded-3xl overflow-hidden flex group',
-    list ? 'flex-col md:flex-row md:h-[250px]' : 'flex-col  min-h-[500px] md:h-[500px]'
+    list ? 'flex-col md:flex-row md:h-[250px]' : 'flex-col min-h-[500px] md:h-[500px]'
   ]">
+    <!-- ✅ Image container -->
     <div :class="[
       'relative overflow-hidden',
       list ? 'w-full md:w-1/3 h-[200px] md:h-full flex-shrink-0' : 'h-[170px] md:h-[200px]'
     ]">
       <NuxtImg :src="article.image" :alt="article.title" class="w-full h-full object-cover" loading="lazy" />
+
+      <!-- ✅ YouTube play badge -->
+      <div
+        v-if="article.youtubeurl"
+        class="absolute top-3 right-3  rounded-full "
+      >
+        <svg
+          class="w-12 h-12 text-white opacity-90"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      </div>
     </div>
 
+    <!-- ✅ Card content -->
     <div :class="[
       'p-4 md:p-6 space-y-2 md:space-y-4 flex-1 flex flex-col',
       list ? 'md:w-2/3' : ''
@@ -34,7 +51,6 @@ defineProps<{
           <span class="mx-2 text-stone-400">•</span>
           <span class="italic">{{ article.author }}</span>
         </div>
-
 
         <h3
           class="text-2xl text-stone-800 font-semibold leading-tight group-hover:text-amber-700 transition-colors duration-300 line-clamp-2">
@@ -54,19 +70,3 @@ defineProps<{
     </div>
   </div>
 </template>
-
-<style scoped>
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-</style>
