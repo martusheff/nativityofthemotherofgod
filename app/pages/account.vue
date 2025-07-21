@@ -1,6 +1,6 @@
 <template>
   <client-only>
-    <div class="min-h-screen bg-gradient-to-br from-stone-100 to-white">
+    <div class="min-h-screen bg-gradient-to-br from-stone-100 to-white mb-24">
       <div class="container mx-auto px-4 py-8">
         <!-- Header -->
         <div class="text-center mb-8">
