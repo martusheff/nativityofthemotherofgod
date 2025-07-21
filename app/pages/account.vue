@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-indigo-50 to-white">
+  <div class="min-h-screen bg-gradient-to-br from-stone-100 to-white">
     <div class="container mx-auto px-4 py-8">
       <!-- Header -->
       <div class="text-center mb-8">
@@ -9,15 +9,15 @@
 
       <!-- Loading State -->
       <div v-if="authLoading" class="flex justify-center items-center py-12">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600"></div>
       </div>
 
       <!-- Not Authenticated -->
       <div v-else-if="!user" class="max-w-md mx-auto">
         <div class="bg-white rounded-xl shadow-lg p-8">
           <div class="text-center mb-6">
-            <div class="mx-auto w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
-              <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+              <svg class="w-8 h-8 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
               </svg>
             </div>
@@ -29,14 +29,14 @@
           <div class="flex mb-6">
             <button
               @click="authMode = 'signin'"
-              :class="authMode === 'signin' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-600'"
+              :class="authMode === 'signin' ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white' : 'bg-gray-100 text-gray-600'"
               class="flex-1 py-2 px-4 rounded-l-lg font-medium transition-colors"
             >
               Sign In
             </button>
             <button
               @click="authMode = 'signup'"
-              :class="authMode === 'signup' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-600'"
+              :class="authMode === 'signup' ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white' : 'bg-gray-100 text-gray-600'"
               class="flex-1 py-2 px-4 rounded-r-lg font-medium transition-colors"
             >
               Sign Up
@@ -51,7 +51,7 @@
                 v-model="authForm.name"
                 type="text"
                 required
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 placeholder="Enter your full name"
               >
             </div>
@@ -62,7 +62,7 @@
                 v-model="authForm.email"
                 type="email"
                 required
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 placeholder="Enter your email"
               >
             </div>
@@ -73,7 +73,7 @@
                 v-model="authForm.password"
                 type="password"
                 required
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 placeholder="Enter your password"
               >
             </div>
@@ -84,7 +84,7 @@
                 v-model="authForm.confirmPassword"
                 type="password"
                 required
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 placeholder="Confirm your password"
               >
             </div>
@@ -97,7 +97,7 @@
             <button
               type="submit"
               :disabled="authSubmitting"
-              class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              class="w-full bg-gradient-to-br from-amber-500 to-amber-600 text-white py-2 px-4 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               <span v-if="authSubmitting">
                 <svg class="animate-spin -ml-1 mr-3 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -147,14 +147,14 @@
           <div class="md:col-span-1">
             <div class="bg-white rounded-xl shadow-lg p-6">
               <div class="text-center">
-                <div class="mx-auto w-24 h-24 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
+                <div class="mx-auto w-24 h-24 bg-amber-100 rounded-full flex items-center justify-center mb-4">
                   <img
                     v-if="user.photoURL"
                     :src="user.photoURL"
                     :alt="user.displayName"
                     class="w-24 h-24 rounded-full object-cover"
                   >
-                  <svg v-else class="w-12 h-12 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg v-else class="w-12 h-12 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                   </svg>
                 </div>
@@ -180,7 +180,7 @@
                 <h3 class="text-xl font-bold text-gray-900">Account Details</h3>
                 <button
                   @click="editMode = !editMode"
-                  class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+                  class="bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition-colors"
                 >
                   {{ editMode ? 'Cancel' : 'Edit Profile' }}
                 </button>
@@ -213,7 +213,7 @@
                   <input
                     v-model="profileForm.displayName"
                     type="text"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                     placeholder="Enter your display name"
                   >
                 </div>
@@ -229,7 +229,7 @@
                 <button
                   type="submit"
                   :disabled="profileSubmitting"
-                  class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  class="bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   <span v-if="profileSubmitting">Updating...</span>
                   <span v-else>Update Profile</span>
@@ -479,16 +479,6 @@ const formatDate = (dateString?: string) => {
   transition: all 0.2s ease-in-out;
 }
 
-/* Focus states */
-input:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-}
-
-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-}
 
 /* Loading animation */
 @keyframes spin {

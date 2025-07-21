@@ -5,12 +5,12 @@ import { getMessaging, getToken, onMessage } from 'firebase/messaging'
 
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyDJhu0HllKsqnAWT3gFyKm_ndr-AdQJzts",
-  authDomain: "testpwa-9f6ad.firebaseapp.com",
-  projectId: "testpwa-9f6ad",
-  storageBucket: "testpwa-9f6ad.firebasestorage.app",
-  messagingSenderId: "631863609293",
-  appId: "1:631863609293:web:483a0c6c52fd594d0f6684",
+  apiKey: "AIzaSyDBMCkuDPNJDHNqN1hPjzgkE2kKF9ehkuM",
+  authDomain: "nativityofthemotherofgod.firebaseapp.com",
+  projectId: "nativityofthemotherofgod",
+  storageBucket: "nativityofthemotherofgod.firebasestorage.app",
+  messagingSenderId: "85083197535",
+  appId: "1:85083197535:web:56f870e083fc3a69828bea",
 };
 
 // Initialize Firebase
