@@ -29,21 +29,32 @@ const props = defineProps<{
   isMenuOpen?: boolean
   isDirectory?: boolean
   directoryRoutes?: string[]
+  authRoutes?: string[] // New prop for auth-related routes
 }>()
 
 const route = useRoute()
 
-// 👇 Split transition: color + bg
+// Base and state classes
 const baseTabClasses = `h-15 aspect-square flex flex-col items-center justify-center py-3 px-3 rounded-xl flex-1`
 const activeTabClasses = 'text-white bg-gradient-to-br from-amber-500 to-amber-600'
 const inactiveTabClasses = 'text-stone-600'
 
-// ✅ Active logic for directory OR normal
+// Active logic with auth routes support
 const isActive = computed(() => {
+  // For auth routes (account/login pages)
+  if (props.authRoutes?.length) {
+    return props.authRoutes.some(path => route.path === path || route.path.startsWith(path + '/'))
+  }
+  
+  // For directory routes
   if (props.isDirectory && props.directoryRoutes?.length) {
     return props.directoryRoutes.some(path => route.path.startsWith(path))
   }
+  
+  // For home page - exact match
   if (props.to === '/') return route.path === '/'
+  
+  // For other pages - starts with match
   return route.path?.startsWith(props.to || '') ?? false
 })
 

@@ -29,12 +29,13 @@
           icon-inactive="heroicons:document-text"
         />
 
-        <!-- Account -->
+        <!-- Account/Sign In -->
         <BottomNavItem
-          to="/account"
-          label="Account"
+          :to="isAuthenticated ? '/account' : '/login'"
+          :label="isAuthenticated ? 'Account' : 'Sign In'"
           icon-active="heroicons:user-solid"
           icon-inactive="heroicons:user"
+          :auth-routes="['/account', '/login']"
         />
 
         <!-- Directory button -->
@@ -88,15 +89,16 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useFirebaseAuth } from '~/composables/useFirebaseAuth'
 
 const route = useRoute()
 const isMenuOpen = ref(false)
+const { isAuthenticated } = useFirebaseAuth()
 
 const directoryItems = [
   { to: '/about', label: 'About Us', icon: 'heroicons:cog-6-tooth' },
   { to: '/videos', label: 'Videos', icon: 'heroicons:video-camera' },
   { to: '/timeline', label: 'Timeline', icon: 'heroicons:shield-check' },
-  { to: '/push', label: 'Push', icon: 'heroicons:shield-check' },
 ]
 
 const directoryRoutes = directoryItems.map(item => item.to)
