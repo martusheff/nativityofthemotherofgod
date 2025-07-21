@@ -30,6 +30,56 @@ export const useFirebasePush = () => {
     }
   }
 
+  const getExistingToken = async () => {
+    if (!process.client) return null
+
+    try {
+      // First check if permission is granted
+      if (Notification.permission !== 'granted') {
+        return null
+      }
+
+      const registration = await navigator.serviceWorker.ready
+      const messaging = getMessaging(app)
+      
+      const token = await getToken(messaging, {
+        vapidKey,
+        serviceWorkerRegistration: registration,
+      })
+      
+      console.log('✅ Existing FCM Token:', token)
+      return token
+    } catch (error) {
+      console.error('Error getting existing token:', error)
+      return null
+    }
+  }
+
+  const getPermissionStatus = () => {
+    if (!process.client || !('Notification' in window)) return 'unsupported'
+    return Notification.permission
+  }
+
+  const resetPermissions = () => {
+    // Note: Browsers don't allow programmatic permission reset
+    // This provides instructions to the user
+    const instructions = {
+      chrome: 'Click the lock icon in the address bar, then reset notifications',
+      firefox: 'Click the shield icon, then manage permissions',
+      safari: 'Go to Safari > Preferences > Websites > Notifications',
+      general: 'Go to your browser settings and reset notification permissions for this site'
+    }
+    
+    const userAgent = navigator.userAgent.toLowerCase()
+    let instruction = instructions.general
+    
+    if (userAgent.includes('chrome')) instruction = instructions.chrome
+    else if (userAgent.includes('firefox')) instruction = instructions.firefox  
+    else if (userAgent.includes('safari')) instruction = instructions.safari
+    
+    return instruction
+  }
+
   const startListening = () => {
     if (!process.client) return
 
@@ -133,5 +183,8 @@ export const useFirebasePush = () => {
   return {
     askPermission,
     startListening,
+    getExistingToken,
+    getPermissionStatus,
+    resetPermissions,
   }
 }
