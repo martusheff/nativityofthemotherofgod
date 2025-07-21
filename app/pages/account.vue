@@ -1,6 +1,6 @@
 <template>
   <client-only>
-    <div class="min-h-screen bg-gradient-to-br from-stone-100 to-white">
+    <div class="min-h-screen bg-gradient-to-br from-stone-100 to-white mb-24">
       <div class="container mx-auto px-4 py-8">
         <!-- Header -->
         <div class="text-center mb-8">
@@ -161,8 +161,8 @@
                   </div>
                   <h3 class="text-xl font-bold text-gray-900">{{ user.displayName || 'User' }}</h3>
                   <p class="text-gray-600">{{ user.email }}</p>
-                  <div class="mt-4 flex flex-col space-y-2">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  <div class=" mt-4 flex flex-col space-y-2">
+                    <span class="inline-flex items-center px-5 py-2.5 rounded-full text-xs font-medium bg-green-100/50 text-green-800">
                       <div class="w-1.5 h-1.5 bg-green-400 rounded-full mr-1"></div>
                       {{ user.emailVerified ? 'Verified' : 'Unverified' }}
                     </span>
