@@ -1,0 +1,268 @@
+<template>
+  <div class="space-y-6">
+    <!-- Support Summary -->
+    <div class="bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl text-white p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-xl font-semibold mb-2">Your Support Impact</h3>
+          <p class="text-amber-100 mb-4">Thank you for supporting our mission</p>
+          <div class="flex items-center space-x-6">
+            <div>
+              <p class="text-2xl font-bold">$125</p>
+              <p class="text-sm text-amber-100">Total Contributed</p>
+            </div>
+            <div>
+              <p class="text-2xl font-bold">3</p>
+              <p class="text-sm text-amber-100">Donations Made</p>
+            </div>
+          </div>
+        </div>
+        <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
+          <Icon name="heroicons:heart" class="w-8 h-8 text-white" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Donation Options -->
+    <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-4">Make a Donation</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+        <button
+          v-for="amount in donationAmounts"
+          :key="amount"
+          @click="selectedAmount = amount"
+          :class="[
+            'p-4 rounded-xl border-2 transition-all text-center',
+            selectedAmount === amount 
+              ? 'border-amber-500 bg-amber-50 text-amber-700' 
+              : 'border-stone-200 hover:border-amber-300'
+          ]"
+        >
+          <p class="font-semibold">${{ amount }}</p>
+        </button>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-2">Custom Amount</label>
+        <div class="relative">
+          <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+          <input
+            v-model="customAmount"
+            type="number"
+            min="1"
+            step="1"
+            class="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-colors"
+            placeholder="Enter custom amount"
+            @input="selectedAmount = null"
+          />
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <label class="block text-sm font-medium text-gray-700 mb-2">Donation Message (Optional)</label>
+        <textarea
+          v-model="donationMessage"
+          rows="3"
+          class="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-colors resize-none"
+          placeholder="Share why you're supporting us..."
+        ></textarea>
+      </div>
+
+      <button
+        @click="processDonation"
+        :disabled="!getDonationAmount() || processing"
+        class="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white py-3 rounded-xl hover:from-amber-600 hover:to-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium"
+      >
+        {{ processing ? 'Processing...' : `Donate ${getDonationAmount() || '0'}` }}
+      </button>
+
+      <div v-if="donationError" class="mt-3 p-3 bg-red-50 border border-red-200 rounded-xl">
+        <p class="text-red-700 text-sm">{{ donationError }}</p>
+      </div>
+
+      <div v-if="donationSuccess" class="mt-3 p-3 bg-green-50 border border-green-200 rounded-xl">
+        <p class="text-green-700 text-sm">{{ donationSuccess }}</p>
+      </div>
+    </div>
+
+    <!-- Donation History -->
+    <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-4">Donation History</h3>
+      <div class="space-y-3">
+        <div
+          v-for="donation in donationHistory"
+          :key="donation.id"
+          class="flex items-center justify-between p-4 rounded-xl border border-stone-200"
+        >
+          <div class="flex items-center">
+            <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center mr-4">
+              <Icon name="heroicons:heart" class="w-5 h-5 text-green-600" />
+            </div>
+            <div>
+              <p class="font-medium text-gray-900">${{ donation.amount }}</p>
+              <p class="text-sm text-gray-600">{{ donation.date }}</p>
+              <p v-if="donation.message" class="text-xs text-gray-500 mt-1 italic">"{{ donation.message }}"</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="flex items-center text-green-600 text-sm">
+              <Icon name="heroicons:check-circle" class="w-4 h-4 mr-1" />
+              <span>Completed</span>
+            </div>
+            <button class="text-xs text-gray-500 hover:text-gray-700 mt-1">
+              View Receipt
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Monthly Support -->
+    <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900">Monthly Support</h3>
+          <p class="text-sm text-gray-600 mt-1">Set up recurring donations to provide consistent support</p>
+        </div>
+        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+          <Icon name="heroicons:arrow-path" class="w-6 h-6 text-purple-600" />
+        </div>
+      </div>
+
+      <div class="bg-purple-50 rounded-xl p-4 border border-purple-200">
+        <div class="flex items-center">
+          <Icon name="heroicons:information-circle" class="w-5 h-5 text-purple-600 mr-2 flex-shrink-0" />
+          <div>
+            <p class="text-sm font-medium text-purple-800">Coming Soon!</p>
+            <p class="text-xs text-purple-700 mt-1">Monthly recurring donations will be available soon. Get notified when it launches!</p>
+          </div>
+        </div>
+        <button class="mt-3 text-purple-600 text-sm font-medium hover:text-purple-700 transition-colors">
+          Notify Me →
+        </button>
+      </div>
+    </div>
+
+    <!-- Impact Stats -->
+    <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-4">Community Impact</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="text-center p-4 rounded-xl bg-blue-50 border border-blue-200">
+          <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+            <Icon name="heroicons:users" class="w-6 h-6 text-blue-600" />
+          </div>
+          <p class="text-2xl font-bold text-blue-700">1,247</p>
+          <p class="text-sm text-blue-600">People Supported</p>
+        </div>
+        <div class="text-center p-4 rounded-xl bg-green-50 border border-green-200">
+          <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+            <Icon name="heroicons:academic-cap" class="w-6 h-6 text-green-600" />
+          </div>
+          <p class="text-2xl font-bold text-green-700">89</p>
+          <p class="text-sm text-green-600">Programs Funded</p>
+        </div>
+        <div class="text-center p-4 rounded-xl bg-amber-50 border border-amber-200">
+          <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+            <Icon name="heroicons:heart" class="w-6 h-6 text-amber-600" />
+          </div>
+          <p class="text-2xl font-bold text-amber-700">$24K</p>
+          <p class="text-sm text-amber-600">Total Raised</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import { ref, computed } from 'vue'
+
+// Donation state
+const donationAmounts = [5, 10, 25, 50]
+const selectedAmount = ref<number | null>(null)
+const customAmount = ref<string>('')
+const donationMessage = ref('')
+const processing = ref(false)
+const donationError = ref('')
+const donationSuccess = ref('')
+
+// Sample donation history
+const donationHistory = ref([
+  {
+    id: 1,
+    amount: 50,
+    date: 'March 15, 2024',
+    message: 'Keep up the great work!',
+    status: 'completed'
+  },
+  {
+    id: 2,
+    amount: 25,
+    date: 'February 10, 2024',
+    message: '',
+    status: 'completed'
+  },
+  {
+    id: 3,
+    amount: 50,
+    date: 'January 5, 2024',
+    message: 'Happy New Year! Supporting your mission.',
+    status: 'completed'
+  }
+])
+
+// Get the donation amount (either selected or custom)
+const getDonationAmount = () => {
+  if (selectedAmount.value) return selectedAmount.value
+  if (customAmount.value) return parseInt(customAmount.value)
+  return null
+}
+
+// Process donation
+const processDonation = async () => {
+  const amount = getDonationAmount()
+  if (!amount || amount < 1) return
+
+  processing.value = true
+  donationError.value = ''
+  donationSuccess.value = ''
+
+  try {
+    // Simulate payment processing
+    await new Promise(resolve => setTimeout(resolve, 2000))
+
+    // In real app, integrate with payment processor (Stripe, PayPal, etc.)
+    console.log('Processing donation:', {
+      amount,
+      message: donationMessage.value
+    })
+
+    // Add to history
+    donationHistory.value.unshift({
+      id: Date.now(),
+      amount,
+      date: new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      }),
+      message: donationMessage.value,
+      status: 'completed'
+    })
+
+    donationSuccess.value = `Thank you for your ${amount} donation! Your support means the world to us.`
+    
+    // Reset form
+    selectedAmount.value = null
+    customAmount.value = ''
+    donationMessage.value = ''
+
+    setTimeout(() => {
+      donationSuccess.value = ''
+    }, 5000)
+  } catch (error) {
+    donationError.value = 'Failed to process donation. Please try again.'
+  } finally {
+    processing.value = false
+  }
+}
+</script>

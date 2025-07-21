@@ -1,7 +1,7 @@
 import { getMessaging, getToken, onMessage } from 'firebase/messaging'
 import { app } from '~/utils/firebase'
 
-export const usePush = () => {
+export const useFirebasePush = () => {
   const vapidKey = "BIa_tnRFKmOdjpbFMjpUMaWd0V8SB5jjVMX6z4OVtVg_HfeQ4jzKiFiFkQRPq-CGoAeHsuTXamsZgjveHzrYKco"
 
   const askPermission = async () => {
@@ -39,7 +39,6 @@ export const usePush = () => {
       if ('Notification' in window && payload.notification) {
         new Notification(payload.notification.title || 'Notification', {
           body: payload.notification.body || '',
-          icon: '/logo.png',
         })
       }
     })

@@ -1,82 +1,59 @@
-import { ref, onMounted, computed, readonly } from 'vue'
+import { ref, computed, readonly } from 'vue'
 import { 
   getAuth, 
   onAuthStateChanged, 
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
   signOut as firebaseSignOut,
   updateProfile as firebaseUpdateProfile,
   sendEmailVerification,
-  sendPasswordResetEmail,
-  deleteUser,
   type User
 } from 'firebase/auth'
 import { auth } from '~/utils/firebase'
 
+// Global state - shared across all composable instances
+const user = ref<User | null>(null)
+const loading = ref(true)
+const error = ref('')
+let authStateInitialized = false
+
+// Initialize auth state listener once globally
+const initializeAuth = () => {
+  if (authStateInitialized) return
+  authStateInitialized = true
+
+  onAuthStateChanged(auth, (firebaseUser) => {
+    console.log('Auth state changed:', firebaseUser ? 'User logged in' : 'User logged out')
+    user.value = firebaseUser
+    loading.value = false
+  }, (error) => {
+    console.error('Auth state error:', error)
+    loading.value = false
+  })
+}
+
 export const useFirebaseAuth = () => {
-  const user = ref<User | null>(null)
-  const loading = ref(true)
-  const error = ref('')
+  // Initialize auth listener if not already done
+  initializeAuth()
 
   // Auth state
   const isAuthenticated = computed(() => !!user.value)
   const isEmailVerified = computed(() => user.value?.emailVerified ?? false)
-
-  // Initialize auth state listener with timeout
-  onMounted(() => {
-    const timeout = setTimeout(() => {
-      if (loading.value) {
-        loading.value = false
-        console.warn('Auth loading timed out')
-      }
-    }, 5000) // 5 seconds
-
-    onAuthStateChanged(auth, (firebaseUser) => {
-      user.value = firebaseUser
-      loading.value = false
-      clearTimeout(timeout)
-    })
-  })
-
-  // Sign in with email and password
-  const signIn = async (email: string, password: string) => {
-    try {
-      error.value = ''
-      const userCredential = await signInWithEmailAndPassword(auth, email, password)
-      return userCredential.user
-    } catch (err: any) {
-      error.value = err.message
-      throw err
-    }
-  }
-
-  // Sign up with email and password
-  const signUp = async (email: string, password: string, displayName?: string) => {
-    try {
-      error.value = ''
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-      
-      if (displayName) {
-        await firebaseUpdateProfile(userCredential.user, { displayName })
-      }
-      
-      return userCredential.user
-    } catch (err: any) {
-      error.value = err.message
-      throw err
-    }
-  }
 
   // Sign in with Google
   const signInWithGoogle = async () => {
     try {
       error.value = ''
       const provider = new GoogleAuthProvider()
+      // Add these scopes for better user info
+      provider.addScope('profile')
+      provider.addScope('email')
+      
       const userCredential = await signInWithPopup(auth, provider)
+      console.log('Google sign-in successful:', userCredential.user.email)
       return userCredential.user
     } catch (err: any) {
+      console.error('Google sign-in error:', err)
       error.value = err.message
       throw err
     }
@@ -87,7 +64,9 @@ export const useFirebaseAuth = () => {
     try {
       error.value = ''
       await firebaseSignOut(auth)
+      console.log('Sign out successful')
     } catch (err: any) {
+      console.error('Sign out error:', err)
       error.value = err.message
       throw err
     }
@@ -100,7 +79,9 @@ export const useFirebaseAuth = () => {
     try {
       error.value = ''
       await firebaseUpdateProfile(user.value, updates)
+      console.log('Profile updated successfully')
     } catch (err: any) {
+      console.error('Profile update error:', err)
       error.value = err.message
       throw err
     }
@@ -113,31 +94,9 @@ export const useFirebaseAuth = () => {
     try {
       error.value = ''
       await sendEmailVerification(user.value)
+      console.log('Verification email sent')
     } catch (err: any) {
-      error.value = err.message
-      throw err
-    }
-  }
-
-  // Send password reset email
-  const resetPassword = async (email: string) => {
-    try {
-      error.value = ''
-      await sendPasswordResetEmail(auth, email)
-    } catch (err: any) {
-      error.value = err.message
-      throw err
-    }
-  }
-
-  // Delete user account
-  const deleteAccount = async () => {
-    if (!user.value) throw new Error('No user logged in')
-    
-    try {
-      error.value = ''
-      await deleteUser(user.value)
-    } catch (err: any) {
+      console.error('Send verification error:', err)
       error.value = err.message
       throw err
     }
@@ -149,13 +108,9 @@ export const useFirebaseAuth = () => {
     error: readonly(error),
     isAuthenticated,
     isEmailVerified,
-    signIn,
-    signUp,
     signInWithGoogle,
     signOut,
     updateProfile,
-    sendVerificationEmail,
-    resetPassword,
-    deleteAccount
+    sendVerificationEmail
   }
 }
