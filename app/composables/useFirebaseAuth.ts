@@ -1,5 +1,4 @@
-// composables/useFirebaseAuth.ts
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, readonly } from 'vue'
 import { 
   getAuth, 
   onAuthStateChanged, 
@@ -14,9 +13,9 @@ import {
   deleteUser,
   type User
 } from 'firebase/auth'
+import { auth } from '~/utils/firebase'
 
 export const useFirebaseAuth = () => {
-  const auth = getAuth()
   const user = ref<User | null>(null)
   const loading = ref(true)
   const error = ref('')
@@ -25,11 +24,19 @@ export const useFirebaseAuth = () => {
   const isAuthenticated = computed(() => !!user.value)
   const isEmailVerified = computed(() => user.value?.emailVerified ?? false)
 
-  // Initialize auth state listener
+  // Initialize auth state listener with timeout
   onMounted(() => {
+    const timeout = setTimeout(() => {
+      if (loading.value) {
+        loading.value = false
+        console.warn('Auth loading timed out')
+      }
+    }, 5000) // 5 seconds
+
     onAuthStateChanged(auth, (firebaseUser) => {
       user.value = firebaseUser
       loading.value = false
+      clearTimeout(timeout)
     })
   })
 
@@ -137,14 +144,11 @@ export const useFirebaseAuth = () => {
   }
 
   return {
-    // State
     user: readonly(user),
     loading: readonly(loading),
     error: readonly(error),
     isAuthenticated,
     isEmailVerified,
-    
-    // Methods
     signIn,
     signUp,
     signInWithGoogle,
