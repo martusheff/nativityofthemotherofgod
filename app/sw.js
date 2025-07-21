@@ -1,5 +1,3 @@
-/// <reference lib="WebWorker" />
-
 import { precacheAndRoute, cleanupOutdatedCaches } from 'workbox-precaching'
 import { clientsClaim } from 'workbox-core'
 
@@ -37,15 +35,49 @@ try {
 
     const title = payload?.notification?.title || 'Notification'
     const options = {
-      title: payload?.notification?.title || '',
       body: payload?.notification?.body || '',
+      icon: payload?.notification?.icon || '/icons/icon-96x96.png',
+      tag: payload?.messageId || 'default-tag', // Use messageId as tag to prevent duplicates
+      requireInteraction: true,
+      data: payload?.data || {}
     }
 
-    self.registration.showNotification(title, options)
+    // Only show notification if it's actually a background message
+    // (app is not visible/focused)
+    return self.registration.showNotification(title, options)
   })
 } catch (err) {
   console.error('[sw.ts] Firebase messaging init error:', err)
 }
+
+// Handle notification clicks
+self.addEventListener('notificationclick', (event) => {
+  console.log('[sw.ts] Notification click received.')
+  
+  event.notification.close()
+  
+  // Handle click actions
+  const urlToOpen = event.notification.data?.url || '/'
+  
+  event.waitUntil(
+    clients.matchAll({
+      type: 'window',
+      includeUncontrolled: true
+    }).then((clientList) => {
+      // Check if there's already a window/tab open with the target URL
+      for (const client of clientList) {
+        if (client.url === urlToOpen && 'focus' in client) {
+          return client.focus()
+        }
+      }
+      
+      // If no window/tab is open, open a new one
+      if (clients.openWindow) {
+        return clients.openWindow(urlToOpen)
+      }
+    })
+  )
+})
 
 // OPTIONAL: Respond to skip waiting messages (for prompt update)
 self.addEventListener('message', (event) => {
