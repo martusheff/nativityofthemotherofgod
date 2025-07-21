@@ -34,7 +34,7 @@ const props = defineProps<{
 const route = useRoute()
 
 // 👇 Split transition: color + bg
-const baseTabClasses = `flex flex-col items-center justify-center py-3 px-3 rounded-xl flex-1`
+const baseTabClasses = `h-15 aspect-square flex flex-col items-center justify-center py-3 px-3 rounded-xl flex-1`
 const activeTabClasses = 'text-white bg-gradient-to-br from-amber-500 to-amber-600'
 const inactiveTabClasses = 'text-stone-600'
 

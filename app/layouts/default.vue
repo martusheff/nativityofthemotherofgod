@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
     <Header v-if="!showBottomNav"/>
-    <main :class="{ 'mb-24': showBottomNav }">
+    <main :class="{ 'pb-24': showBottomNav }">
       <slot />
     </main>
     <Footer v-if="!showBottomNav" />
