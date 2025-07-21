@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { usePush } from '~/composables/usePush'
+import { useFirebasePush } from '~/composables/useFirebasePush'
 
-const { askPermission, startListening } = usePush()
+const { askPermission, startListening } = useFirebasePush()
 
 // Start listening for messages immediately on client side
 startListening()
