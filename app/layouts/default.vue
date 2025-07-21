@@ -9,14 +9,14 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { Header, Footer, BottomNav } from '#components'
 
 const { $pwa } = useNuxtApp()
 
 const isMobile = computed(() => {
   if (process.client) {
-    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth <= 768;
+    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth <= 768
   }
   return false
 })
@@ -31,8 +31,8 @@ definePageMeta({
 </script>
 
 <style scoped>
-/* Make a reusable safe-area padding */
 .pb-safe-nav {
-  padding-bottom: calc(80px + env(safe-area-inset-bottom));
+  /* Adjust to match nav height + gap + safe area */
+  padding-bottom: calc(5rem + env(safe-area-inset-bottom));
 }
 </style>
