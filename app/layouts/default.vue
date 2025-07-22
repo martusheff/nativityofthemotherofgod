@@ -3,9 +3,10 @@
     <Header v-if="!showBottomNav"/>
     <!-- <PwaTopNav v-if="showBottomNav" /> -->
 
-    <!-- Put pt-14 in thing below -->
-    <main :class="{ 'pb-24': showBottomNav }">
+    <!-- Put pt-14 in thing -->
+    <main>
       <slot />
+      <div v-if="showBottomNav" class="pb-24"/>
     </main>
     <Footer v-if="!showBottomNav" />
     <PwaBottomNav v-if="showBottomNav" />
