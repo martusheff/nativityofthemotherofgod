@@ -221,7 +221,7 @@ export const notificationTracker = {
       response.responses.forEach((resp, index) => {
         const token = allTokens[index]
         const userInfo = tokenToUserMap[token]
-        
+
         if (resp.success) {
           deliveries.push({
             userId: userInfo.userId,
@@ -233,8 +233,8 @@ export const notificationTracker = {
         } else {
           const error = resp.error
           const isInvalidToken = error?.code === 'messaging/invalid-registration-token' ||
-                               error?.code === 'messaging/registration-token-not-registered'
-          
+            error?.code === 'messaging/registration-token-not-registered'
+
           if (isInvalidToken) {
             invalidTokens.push(token)
           }
@@ -280,8 +280,8 @@ export const notificationTracker = {
       const existingTracking = existingDoc.exists ? existingDoc.data() as EventNotificationTracking : null
 
       // Merge with existing deliveries
-      const allDeliveries = existingTracking ? 
-        [...existingTracking.deliveries, ...deliveries] : 
+      const allDeliveries = existingTracking ?
+        [...existingTracking.deliveries, ...deliveries] :
         deliveries
 
       // Calculate summary
@@ -320,7 +320,7 @@ export const notificationTracker = {
       if (!trackingDoc.exists) return false
 
       const tracking = trackingDoc.data() as EventNotificationTracking
-      return tracking.deliveries.some(delivery => 
+      return tracking.deliveries.some(delivery =>
         delivery.userId === userId && delivery.status === 'success'
       )
     } catch (error) {
@@ -340,7 +340,7 @@ export const notificationTracker = {
       }
 
       const tracking = trackingDoc.data() as EventNotificationTracking
-      
+
       // Group by user to get unique user statistics
       const userDeliveries = new Map<string, NotificationDelivery[]>()
       tracking.deliveries.forEach(delivery => {
@@ -358,9 +358,9 @@ export const notificationTracker = {
         totalUsersTargeted: tracking.totalUsersTargeted,
         totalTokensTargeted: tracking.totalTokensTargeted,
         usersWithSuccessfulDelivery,
-        userDeliveryRate: tracking.totalUsersTargeted > 0 ? 
+        userDeliveryRate: tracking.totalUsersTargeted > 0 ?
           (usersWithSuccessfulDelivery / tracking.totalUsersTargeted * 100).toFixed(1) + '%' : '0%',
-        tokenDeliveryRate: tracking.totalTokensTargeted > 0 ? 
+        tokenDeliveryRate: tracking.totalTokensTargeted > 0 ?
           (tracking.summary.successCount / tracking.totalTokensTargeted * 100).toFixed(1) + '%' : '0%',
         lastUpdated: tracking.lastUpdated
       }
@@ -397,7 +397,7 @@ export const notificationTracker = {
     try {
       const trackingRef = db.collection('notification_tracking').doc(eventId)
       const existingDoc = await trackingRef.get()
-      
+
       if (!existingDoc.exists) {
         await trackingRef.set({
           eventId,
@@ -425,7 +425,7 @@ export const notificationTracker = {
 
     try {
       console.log(`Cleaning up ${invalidTokens.length} invalid tokens`)
-      
+
       const usersSnapshot = await db.collection('users')
         .where('notifications.enabled', '==', true)
         .get()
@@ -445,7 +445,7 @@ export const notificationTracker = {
             if (tokenData?.fcmToken && invalidTokens.includes(tokenData.fcmToken)) {
               delete updatedTokens[deviceId]
               hasInvalidTokens = true
-              console.log(`Removing invalid token for device ${deviceId} from user ${doc.id}`)
+              // Removes invalid tokens for device.
             }
           })
 
@@ -457,7 +457,7 @@ export const notificationTracker = {
             batchCount++
 
             if (batchCount >= 450) {
-              console.log('Batch limit approaching, committing current batch')
+              console.log('Batch limit approaching, committing current batch.')
               return
             }
           }

@@ -22,24 +22,21 @@
 
       <div class="container mx-auto px-4 py-6">
         <!-- Profile Summary Card -->
-        <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6 mb-6">
+        <div class="bg-white rounded-3xl shadow-sm border border-stone-200 p-4 mb-6">
           <div class="flex items-center space-x-4">
             <div
-              class="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center flex-shrink-0">
+              class="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-600 rounded-3xl flex items-center justify-center flex-shrink-0">
               <img v-if="user?.photoURL" :src="user.photoURL" :alt="user.displayName || 'User'"
                 class="w-16 h-16 rounded-2xl object-cover" />
               <Icon v-else name="heroicons:user" class="w-8 h-8 text-white" />
             </div>
             <div class="flex-1 min-w-0">
-              <h2 class="text-xl font-semibold text-gray-900 truncate">
+              <h3 class="text-xl font-semibold text-gray-900 truncate">
                 {{ user?.displayName || 'Welcome!' }}
-              </h2>
+              </h3>
               <p class="text-sm text-gray-600 truncate">{{ user?.email }}</p>
             </div>
-
           </div>
-
-
         </div>
 
         <!-- Navigation Tabs -->
@@ -66,14 +63,8 @@
             </button>
           </nav>
         </div>
-
-        <!-- Tab Content -->
         <div class="space-y-6">
-
-          <!-- Notifications Tab -->
           <AccountNotificationsTab v-if="activeTab === 'notifications'" />
-
-          <!-- Donations Tab -->
           <AccountDonationsTab v-if="activeTab === 'donations'" />
         </div>
       </div>
@@ -82,7 +73,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, watch, onMounted } from 'vue'
+import { ref, reactive, watch } from 'vue'
 import { useFirebaseAuth } from '~/composables/useFirebaseAuth'
 import { navigateTo } from '#app'
 
@@ -97,7 +88,7 @@ definePageMeta({
 })
 
 // Auth state
-const { user, loading: authLoading, error: authError, isAuthenticated, isEmailVerified, signOut, updateProfile } = useFirebaseAuth()
+const { user, loading: authLoading, error: authError, isAuthenticated, signOut } = useFirebaseAuth()
 
 // Tab state
 const activeTab = ref('notifications')

@@ -29,7 +29,7 @@
             <div class="flex gap-2">
               <button v-if="permissionStatus === 'granted' && !token" @click="enableNotifications" :disabled="loading"
                 class="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-4 py-2 rounded-xl hover:from-amber-600 hover:to-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium text-sm">
-                {{ loading ? 'Loading...' : 'Get Token' }}
+                {{ loading ? 'Loading...' : 'Enable' }}
               </button>
 
               <button v-if="permissionStatus === 'default' || permissionStatus === 'denied'"
@@ -168,27 +168,6 @@
           <p class="text-red-700 text-sm">{{ errorMessage }}</p>
         </div>
 
-        <!-- Token Display (for development) -->
-        <div v-if="token && isDevelopment" class="p-4 rounded-xl bg-stone-50 border border-stone-200">
-          <h5 class="text-sm font-medium text-stone-700 mb-2">FCM Token Status (Debug)</h5>
-          <div class="space-y-2">
-            <div class="bg-white p-3 rounded-lg border border-stone-200">
-              <p class="text-xs text-stone-500 mb-1">Current Token:</p>
-              <code class="text-xs text-stone-600 break-all">{{ token }}</code>
-            </div>
-            <div class="bg-white p-3 rounded-lg border border-stone-200">
-              <p class="text-xs text-stone-500 mb-1">Server Token:</p>
-              <code class="text-xs text-stone-600 break-all">{{ serverToken || 'Not registered' }}</code>
-            </div>
-            <div class="flex items-center text-xs">
-              <div class="w-2 h-2 rounded-full mr-2" :class="isTokenSynced ? 'bg-green-500' : 'bg-red-500'"></div>
-              <span :class="isTokenSynced ? 'text-green-600' : 'text-red-600'">
-                {{ isTokenSynced ? 'Synced' : 'Out of sync' }}
-              </span>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
@@ -227,7 +206,6 @@ const resetInstructions = ref('')
 
 // Mobile detection
 const isMobile = ref(false)
-const isDevelopment = ref(process.env.NODE_ENV === 'development')
 
 // Computed properties
 const isTokenSynced = computed(() => {
