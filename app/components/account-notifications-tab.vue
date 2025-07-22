@@ -47,6 +47,27 @@
                 class="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-4 py-2 rounded-xl hover:from-amber-600 hover:to-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium text-sm">
                 {{ syncing ? 'Syncing...' : 'Sync' }}
               </button>
+
+              <!-- Disable Notifications Button -->
+              <button v-if="token && isTokenSynced" @click="disableNotifications" :disabled="disabling"
+                class="bg-red-500 text-white px-4 py-2 rounded-xl hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium text-sm">
+                {{ disabling ? 'Disabling...' : 'Disable' }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Authentication Required Message -->
+        <div v-if="!isAuthenticated" class="p-4 rounded-xl bg-yellow-50 border border-yellow-200">
+          <div class="flex items-start">
+            <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+              <Icon name="heroicons:exclamation-triangle" class="w-4 h-4 text-yellow-600" />
+            </div>
+            <div class="flex-1">
+              <p class="text-sm font-medium text-yellow-900">Authentication Required</p>
+              <p class="text-xs text-yellow-700 mt-1">
+                You need to be signed in to save notification preferences and sync your device token.
+              </p>
             </div>
           </div>
         </div>
@@ -142,6 +163,11 @@
           <p class="text-green-700 text-sm">{{ saveMessage }}</p>
         </div>
 
+        <!-- Error message display -->
+        <div v-if="errorMessage" class="p-3 bg-red-50 border border-red-200 rounded-xl">
+          <p class="text-red-700 text-sm">{{ errorMessage }}</p>
+        </div>
+
         <!-- Token Display (for development) -->
         <div v-if="token && isDevelopment" class="p-4 rounded-xl bg-stone-50 border border-stone-200">
           <h5 class="text-sm font-medium text-stone-700 mb-2">FCM Token Status (Debug)</h5>
@@ -162,17 +188,22 @@
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted, computed, watch } from 'vue'
 import { useFirebasePush } from '#imports'
+import { useFirebaseAuth } from '#imports'
+import { useNotificationsDb } from '#imports'
 
-// Push notification composable
+// Composables
 const { askPermission, startListening, getExistingToken, getPermissionStatus, resetPermissions } = useFirebasePush()
+const { user, isAuthenticated } = useFirebaseAuth()
+const { saveUserToken, disableUserNotifications, getUserNotifications, saveUserNotificationPreferences } = useNotificationsDb()
 
 // Notification preferences (simplified to 1 type now)
 const notifications = reactive({
@@ -182,8 +213,10 @@ const notifications = reactive({
 
 const saving = ref(false)
 const saveMessage = ref('')
+const errorMessage = ref('')
 const loading = ref(false)
 const syncing = ref(false)
+const disabling = ref(false)
 
 // Push notification state
 const token = ref<string | null>(null)
@@ -196,20 +229,13 @@ const resetInstructions = ref('')
 const isMobile = ref(false)
 const isDevelopment = ref(process.env.NODE_ENV === 'development')
 
-// All notifications toggle state (commented out)
-// const allNotificationsToggle = ref(false)
-
 // Computed properties
 const isTokenSynced = computed(() => {
   return token.value && serverToken.value && token.value === serverToken.value
 })
 
 const canModifyNotifications = computed(() => {
-  return permissionStatus.value === 'granted' && isTokenSynced.value
-})
-
-const allNotificationsEnabled = computed(() => {
-  return Object.values(notifications).every(val => val)
+  return permissionStatus.value === 'granted' && isTokenSynced.value && isAuthenticated.value
 })
 
 // Detect mobile device
@@ -316,42 +342,138 @@ const getStatusDescription = () => {
   return 'Enable to get instant notifications on this device'
 }
 
-// Simulate checking server token
-const checkServerToken = async () => {
-  // Simulate API call to check if token exists on server
-  await new Promise(resolve => setTimeout(resolve, 500))
+// Load user's notification data from Firestore
+const loadUserNotificationData = async () => {
+  if (!isAuthenticated.value) return
 
-  // For demo purposes, randomly decide if token is synced
-  const isSync = Math.random() > 0.3 // 70% chance it's synced
-
-  if (isSync && token.value) {
-    serverToken.value = token.value
-  } else {
-    serverToken.value = token.value ? 'old_token_example_123' : null
+  try {
+    const userData = await getUserNotifications()
+    if (userData) {
+      serverToken.value = userData.fcmToken || null
+      
+      // Load notification preferences if they exist
+      if (userData.preferences) {
+        Object.assign(notifications, userData.preferences)
+      }
+      
+      console.log('Loaded user notification data:', userData)
+    }
+  } catch (error) {
+    console.error('Failed to load user notification data:', error)
   }
 }
 
-// Sync token with server
+// Sync token with server using Firestore
 const syncToken = async () => {
-  if (!token.value) return
+  if (!token.value || !isAuthenticated.value) return
 
   syncing.value = true
+  errorMessage.value = ''
+  
   try {
-    // Simulate API call to register token
-    await new Promise(resolve => setTimeout(resolve, 1500))
-
-    // In real app: await registerTokenWithServer(token.value)
-    console.log('Syncing token with server:', token.value)
-
+    await saveUserToken(token.value)
     serverToken.value = token.value
+    
     saveMessage.value = 'Device synchronized successfully!'
     setTimeout(() => {
       saveMessage.value = ''
     }, 3000)
+    
+    console.log('Token synced to Firestore:', token.value)
   } catch (error) {
     console.error('Failed to sync token:', error)
+    errorMessage.value = 'Failed to sync device. Please try again.'
+    setTimeout(() => {
+      errorMessage.value = ''
+    }, 5000)
   } finally {
     syncing.value = false
+  }
+}
+
+// Disable notifications
+const disableNotifications = async () => {
+  if (!isAuthenticated.value) return
+
+  disabling.value = true
+  errorMessage.value = ''
+
+  try {
+    await disableUserNotifications()
+    
+    // Reset local state
+    token.value = null
+    serverToken.value = null
+    
+    saveMessage.value = 'Notifications disabled successfully!'
+    setTimeout(() => {
+      saveMessage.value = ''
+    }, 3000)
+    
+    console.log('Notifications disabled')
+  } catch (error) {
+    console.error('Failed to disable notifications:', error)
+    errorMessage.value = 'Failed to disable notifications. Please try again.'
+    setTimeout(() => {
+      errorMessage.value = ''
+    }, 5000)
+  } finally {
+    disabling.value = false
+  }
+}
+
+// Save notification preferences to Firestore
+const saveNotificationSettings = async () => {
+  if (!canModifyNotifications.value) return
+
+  saving.value = true
+  saveMessage.value = ''
+  errorMessage.value = ''
+
+  try {
+    await saveUserNotificationPreferences(notifications)
+
+    saveMessage.value = 'Notification preferences saved successfully!'
+    setTimeout(() => {
+      saveMessage.value = ''
+    }, 3000)
+    
+    console.log('Notification preferences saved:', notifications)
+  } catch (error) {
+    console.error('Failed to save preferences:', error)
+    errorMessage.value = 'Failed to save preferences. Please try again.'
+    setTimeout(() => {
+      errorMessage.value = ''
+    }, 5000)
+  } finally {
+    saving.value = false
+  }
+}
+
+const enableNotifications = async () => {
+  loading.value = true
+  errorMessage.value = ''
+  
+  try {
+    token.value = await askPermission()
+    permissionStatus.value = getPermissionStatus()
+    console.log('Notification permission result:', permissionStatus.value, 'Token:', token.value)
+
+    if (token.value && isAuthenticated.value) {
+      // Automatically sync token when we get it
+      await syncToken()
+    } else if (token.value) {
+      // Load existing server token to compare
+      await loadUserNotificationData()
+    }
+  } catch (err) {
+    console.error('Notification permission error:', err)
+    errorMessage.value = 'Failed to enable notifications. Please try again.'
+    setTimeout(() => {
+      errorMessage.value = ''
+    }, 5000)
+  } finally {
+    loading.value = false
   }
 }
 
@@ -369,14 +491,17 @@ onMounted(async () => {
     loading.value = true
     try {
       token.value = await getExistingToken()
-      if (token.value) {
-        await checkServerToken()
+      if (token.value && isAuthenticated.value) {
+        await loadUserNotificationData()
       }
     } catch (error) {
       console.error('Error getting existing token:', error)
     } finally {
       loading.value = false
     }
+  } else if (isAuthenticated.value) {
+    // Load user notification data even without token to get preferences
+    await loadUserNotificationData()
   }
 
 
@@ -384,47 +509,12 @@ onMounted(async () => {
   startListening()
 })
 
-const saveNotificationSettings = async () => {
-  if (!canModifyNotifications.value) return
-
-  saving.value = true
-  saveMessage.value = ''
-
-  try {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    // In real app, save to backend with the synced token
-    console.log('Saving notification preferences:', notifications)
-    console.log('With token:', token.value)
-
-    saveMessage.value = 'Notification preferences saved successfully!'
-    setTimeout(() => {
-      saveMessage.value = ''
-    }, 3000)
-  } catch (error) {
-    console.error('Failed to save preferences:', error)
-    saveMessage.value = 'Failed to save preferences. Please try again.'
-  } finally {
-    saving.value = false
+// Watch for authentication changes
+watch(isAuthenticated, async (newVal) => {
+  if (newVal && token.value) {
+    await loadUserNotificationData()
   }
-}
-
-const enableNotifications = async () => {
-  loading.value = true
-  try {
-    token.value = await askPermission()
-    permissionStatus.value = getPermissionStatus()
-    console.log('Notification permission result:', permissionStatus.value, 'Token:', token.value)
-
-    if (token.value) {
-      await checkServerToken()
-    }
-  } catch (err) {
-    console.error('Notification permission error:', err)
-  } finally {
-    loading.value = false
-  }
-}
+}, { immediate: false })
 
 const showResetInstructions = () => {
   resetInstructions.value = resetPermissions()
