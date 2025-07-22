@@ -27,28 +27,41 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 }
 
-try {
-  const messaging = firebase.messaging()
+self.addEventListener('push', (event) => {
+  console.log('[sw.ts] 🔔 Raw Push event received.'); // This is the first log now
+  
+  // Prevent the browser's default notification display. THIS IS KEY!
+  event.preventDefault(); 
 
-  messaging.onBackgroundMessage((payload) => {
-    console.log('[sw.ts] 🔔 Background FCM received:', payload)
+  // Parse the data from the push event
+  const data = event.data?.json() || {};
+  console.log('[sw.ts] Push event data:', data);
 
-    const title = payload?.notification?.title || 'Notification'
-    const options = {
-      body: payload?.notification?.body || '',
-      // icon: payload?.notification?.icon || '/icons/icon-192x192.png',
-      tag: payload?.messageId || 'default-tag', // Use messageId as tag to prevent duplicates
-      requireInteraction: true,
-      data: payload?.data || {}
-    }
+  // Extract notification details. If your backend sends a 'notification' field, use it.
+  // Otherwise, you might construct it from 'data'.
+  const notificationPayload = data.notification || data; // Adjust if your data structure is different
 
-    // Only show notification if it's actually a background message
-    // (app is not visible/focused)
-    return self.registration.showNotification(title, options)
-  })
-} catch (err) {
-  console.error('[sw.ts] Firebase messaging init error:', err)
-}
+  if (!notificationPayload.title) {
+    console.warn('[sw.ts] Push event received without title, not showing notification.');
+    return; // Don't show a notification if there's no title
+  }
+
+  const title = notificationPayload.title || 'Notification';
+  const options = {
+    body: notificationPayload.body || '',
+    // Keep this icon line if you want an icon for your custom notification,
+    // or remove it if you prefer no icon.
+    icon: notificationPayload.icon || '/icons/icon-192x192.png', 
+    tag: notificationPayload.messageId || 'default-tag', // Use messageId for uniqueness
+    requireInteraction: true,
+    data: data // Pass original data for click handling
+  };
+
+  console.log('[sw.ts] Showing custom notification with options:', options);
+
+  // Display the notification
+  event.waitUntil(self.registration.showNotification(title, options));
+});
 
 // Handle notification clicks
 self.addEventListener('notificationclick', (event) => {
