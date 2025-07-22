@@ -36,7 +36,7 @@ try {
     const title = payload?.notification?.title || 'Notification'
     const options = {
       body: payload?.notification?.body || '',
-      icon: payload?.notification?.icon || '/icons/icon-192x192.png',
+      // icon: payload?.notification?.icon || '/icons/icon-192x192.png',
       tag: payload?.messageId || 'default-tag', // Use messageId as tag to prevent duplicates
       requireInteraction: true,
       data: payload?.data || {}
