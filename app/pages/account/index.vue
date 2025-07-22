@@ -40,7 +40,7 @@
         </div>
 
         <!-- Navigation Tabs -->
-        <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-2 mb-6">
+        <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-1 mb-6">
           <nav class="flex space-x-1">
 
             <button @click="activeTab = 'notifications'" :class="[

@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-6">
     <!-- Push Notifications -->
-    <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
+    <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-4">
       <div class="flex items-center justify-between mb-6">
         <div>
           <h3 class="text-lg font-semibold text-gray-900">Push Notifications</h3>
@@ -335,13 +335,10 @@ const loadUserNotificationData = async () => {
       // Load notification preferences if they exist
       if (userData.preferences) {
         Object.assign(notifications, userData.preferences)
-      }
-      
-      console.log('Loaded user notification data:', userData)
-      console.log('Current device server token:', serverToken.value)
+      }      
     }
   } catch (error) {
-    console.error('Failed to load user notification data:', error)
+    // Failed to load user notification data.
   }
 }
 
@@ -359,11 +356,9 @@ const syncToken = async () => {
     saveMessage.value = 'Device synchronized successfully!'
     setTimeout(() => {
       saveMessage.value = ''
-    }, 3000)
-    
-    console.log('Token synced to Firestore:', token.value)
+    }, 3000)    
   } catch (error) {
-    console.error('Failed to sync token:', error)
+    // Failed to sync token.
     errorMessage.value = 'Failed to sync device. Please try again.'
     setTimeout(() => {
       errorMessage.value = ''
@@ -391,10 +386,8 @@ const disableNotifications = async () => {
     setTimeout(() => {
       saveMessage.value = ''
     }, 3000)
-    
-    console.log('Notifications disabled')
   } catch (error) {
-    console.error('Failed to disable notifications:', error)
+    // Failed to disable notifications.
     errorMessage.value = 'Failed to disable notifications. Please try again.'
     setTimeout(() => {
       errorMessage.value = ''
@@ -420,9 +413,8 @@ const saveNotificationSettings = async () => {
       saveMessage.value = ''
     }, 3000)
     
-    console.log('Notification preferences saved:', notifications)
   } catch (error) {
-    console.error('Failed to save preferences:', error)
+    // Failed to Save Preferences
     errorMessage.value = 'Failed to save preferences. Please try again.'
     setTimeout(() => {
       errorMessage.value = ''
@@ -439,7 +431,6 @@ const enableNotifications = async () => {
   try {
     token.value = await askPermission()
     permissionStatus.value = getPermissionStatus()
-    console.log('Notification permission result:', permissionStatus.value, 'Token:', token.value)
 
     if (token.value && isAuthenticated.value) {
       // Automatically sync token when we get it
@@ -449,7 +440,7 @@ const enableNotifications = async () => {
       await loadUserNotificationData()
     }
   } catch (err) {
-    console.error('Notification permission error:', err)
+    // Notifications permissions error.
     errorMessage.value = 'Failed to enable notifications. Please try again.'
     setTimeout(() => {
       errorMessage.value = ''
@@ -466,7 +457,6 @@ onMounted(async () => {
 
   // Check permission status
   permissionStatus.value = getPermissionStatus()
-  console.log('Permission status:', permissionStatus.value)
 
   // If permission is granted, try to get existing token
   if (permissionStatus.value === 'granted') {
@@ -477,7 +467,7 @@ onMounted(async () => {
         await loadUserNotificationData()
       }
     } catch (error) {
-      console.error('Error getting existing token:', error)
+      // Failed to get existing token.
     } finally {
       loading.value = false
     }
