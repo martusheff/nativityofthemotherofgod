@@ -64,7 +64,9 @@ export const useNotificationsDb = () => {
       }
     }
 
-    await updateDocByPath(path, {
+    // Use setDocByPath instead of updateDocByPath to handle new documents
+    await setDocByPath(path, {
+      ...userData, // Preserve existing user data
       notifications: {
         ...existingNotifications,
         enabled: true,
@@ -80,6 +82,7 @@ export const useNotificationsDb = () => {
     if (!user.value) throw new Error('No user logged in')
 
     const targetDeviceId = deviceId || generateDeviceId()
+    console.log('Removing device token for deviceId:', targetDeviceId)
     const path = `users/${user.value.uid}`
     
     const userData = await getDocByPath(path)
@@ -88,9 +91,13 @@ export const useNotificationsDb = () => {
 
     // Remove the specific device token
     const updatedTokens: NotificationTokens = { ...existingTokens }
+    console.log('Before removal, existing tokens:', Object.keys(existingTokens))
     delete updatedTokens[targetDeviceId]
+    console.log('After removal, updated tokens:', Object.keys(updatedTokens))
 
-    await updateDocByPath(path, {
+    // Use setDocByPath to ensure the document exists
+    await setDocByPath(path, {
+      ...userData, // Preserve existing user data
       notifications: {
         ...existingNotifications,
         tokens: updatedTokens,
@@ -103,7 +110,11 @@ export const useNotificationsDb = () => {
     if (!user.value) throw new Error('No user logged in')
 
     const path = `users/${user.value.uid}`
-    await updateDocByPath(path, {
+    const userData = await getDocByPath(path)
+    
+    // Use setDocByPath to ensure the document exists
+    await setDocByPath(path, {
+      ...userData, // Preserve existing user data
       notifications: {
         enabled: false,
         tokens: {},
@@ -155,7 +166,9 @@ export const useNotificationsDb = () => {
       }
     }
 
-    await updateDocByPath(path, {
+    // Use setDocByPath to ensure the document exists
+    await setDocByPath(path, {
+      ...userData, // Preserve existing user data
       notifications: {
         ...existingNotifications,
         tokens: activeTokens,
@@ -172,7 +185,9 @@ export const useNotificationsDb = () => {
     const path = `users/${user.value.uid}`
     const userData = await getDocByPath(path)
     
-    await updateDocByPath(path, {
+    // Use setDocByPath to ensure the document exists
+    await setDocByPath(path, {
+      ...userData, // Preserve existing user data
       notifications: {
         ...userData?.notifications,
         preferences,
