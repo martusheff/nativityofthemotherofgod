@@ -8,7 +8,6 @@
           <p class="text-sm text-gray-600 mt-1">Stay updated with instant notifications on your device</p>
         </div>
       </div>
-
       <!-- Push notification status and controls -->
       <div class="space-y-4">
         <!-- Current Status -->
@@ -163,8 +162,6 @@
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
   </div>
@@ -221,7 +218,6 @@ const detectMobile = () => {
   const isMobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase())
   const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
   const isSmallScreen = window.innerWidth <= 768
-
   return isMobileUA || (isTouchDevice && isSmallScreen)
 }
 
@@ -383,6 +379,7 @@ onMounted(async () => {
     }
   }
 
+
   // Start push notification listener
   startListening()
 })
@@ -396,7 +393,6 @@ const saveNotificationSettings = async () => {
   try {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000))
-
     // In real app, save to backend with the synced token
     console.log('Saving notification preferences:', notifications)
     console.log('With token:', token.value)

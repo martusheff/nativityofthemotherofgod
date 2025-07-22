@@ -35,7 +35,6 @@
                 {{ user?.displayName || 'Welcome!' }}
               </h2>
               <p class="text-sm text-gray-600 truncate">{{ user?.email }}</p>
-
             </div>
 
           </div>
