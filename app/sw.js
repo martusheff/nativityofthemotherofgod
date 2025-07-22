@@ -31,7 +31,7 @@ try {
   const messaging = firebase.messaging()
 
   messaging.onBackgroundMessage((payload) => {
-    console.log('[sw.ts] 🔔 Background FCM received:', payload)
+    // console.log('[sw.ts] 🔔 Background FCM received:', payload)
 
     const title = payload?.notification?.title || 'Notification'
     const options = {
@@ -52,11 +52,7 @@ try {
 
 // Handle notification clicks
 self.addEventListener('notificationclick', (event) => {
-  console.log('[sw.ts] Notification click received.')
-  
   event.notification.close()
-  
-  // Handle click actions
   const urlToOpen = event.notification.data?.url || '/'
   
   event.waitUntil(
