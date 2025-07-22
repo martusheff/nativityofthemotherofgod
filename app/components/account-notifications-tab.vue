@@ -40,6 +40,15 @@
           </div>
         </div>
 
+        <!-- Save/Error Messages -->
+        <div v-if="notificationsStore.saveMessage" class="p-3 bg-green-50 border border-green-200 rounded-xl">
+          <p class="text-green-700 text-sm">{{ notificationsStore.saveMessage }}</p>
+        </div>
+
+        <div v-if="notificationsStore.error" class="p-3 bg-red-50 border border-red-200 rounded-xl">
+          <p class="text-red-700 text-sm">{{ notificationsStore.error }}</p>
+        </div>
+
         <!-- Service Reminders -->
         <div class="flex items-center justify-between p-4 rounded-xl border border-stone-200 bg-white gap-2">
           <div class="flex items-center">
@@ -89,14 +98,7 @@
           </p>
         </div>
 
-        <!-- Save/Error Messages -->
-        <div v-if="notificationsStore.saveMessage" class="p-3 bg-green-50 border border-green-200 rounded-xl">
-          <p class="text-green-700 text-sm">{{ notificationsStore.saveMessage }}</p>
-        </div>
 
-        <div v-if="notificationsStore.error" class="p-3 bg-red-50 border border-red-200 rounded-xl">
-          <p class="text-red-700 text-sm">{{ notificationsStore.error }}</p>
-        </div>
       </div>
     </div>
   </div>
