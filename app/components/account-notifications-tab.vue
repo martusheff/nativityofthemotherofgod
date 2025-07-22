@@ -8,55 +8,8 @@
           <p class="text-sm text-gray-600 mt-1">Stay updated with instant notifications on your device</p>
         </div>
       </div>
-      <!-- Push notification status and controls -->
+      
       <div class="space-y-4">
-        <!-- Current Status -->
-        <div class="p-4 rounded-xl border border-stone-200">
-          <div class="flex items-center justify-between gap-2">
-            <div class="flex items-center">
-              <div class="w-10 min-w-10 h-10 rounded-xl flex items-center justify-center mr-4" :class="getStatusBgClass()">
-                <Icon :name="getStatusIcon()" :class="getStatusIconClass()" class="w-5 h-5" />
-              </div>
-              <div>
-                <h4 class="font-medium text-gray-900">
-                  {{ getStatusTitle() }}
-                </h4>
-                <p class="text-sm text-gray-600">
-                  {{ getStatusDescription() }}
-                </p>
-              </div>
-            </div>
-            <div class="flex gap-2">
-              <button v-if="permissionStatus === 'granted' && !token" @click="enableNotifications" :disabled="loading"
-                class="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-4 py-2 rounded-xl hover:from-amber-600 hover:to-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium text-sm">
-                {{ loading ? 'Loading...' : 'Enable' }}
-              </button>
-
-              <button v-if="permissionStatus === 'default' || permissionStatus === 'denied'"
-                @click="enableNotifications" :disabled="loading"
-                class="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-4 py-2 rounded-xl hover:from-amber-600 hover:to-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium text-sm">
-                {{ loading ? 'Loading...' : 'Enable' }}
-              </button>
-
-              <button v-if="permissionStatus === 'denied'" @click="showResetInstructions"
-                class="bg-gray-500 text-white px-4 py-2 rounded-xl hover:bg-gray-600 transition-all font-medium text-sm">
-                Reset
-              </button>
-
-              <button v-if="token && !isTokenSynced" @click="syncToken" :disabled="syncing"
-                class="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-4 py-2 rounded-xl hover:from-amber-600 hover:to-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium text-sm">
-                {{ syncing ? 'Syncing...' : 'Sync' }}
-              </button>
-
-              <!-- Disable Notifications Button -->
-              <button v-if="token && isTokenSynced" @click="disableNotifications" :disabled="disabling"
-                class="bg-red-500 text-white px-4 py-2 rounded-xl hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium text-sm">
-                {{ disabling ? 'Disabling...' : 'Disable' }}
-              </button>
-            </div>
-          </div>
-        </div>
-
         <!-- Authentication Required Message -->
         <div v-if="!isAuthenticated" class="p-4 rounded-xl bg-yellow-50 border border-yellow-200">
           <div class="flex items-start">
@@ -72,424 +25,164 @@
           </div>
         </div>
 
-        <!-- Mobile Permission Guide -->
-        <div v-if="isMobile && (permissionStatus === 'denied' || permissionStatus === 'default')"
-          class="p-4 rounded-xl bg-blue-50 border border-blue-200">
-          <div class="flex items-start">
-            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
-              <Icon name="heroicons:device-phone-mobile" class="w-4 h-4 text-blue-600" />
-            </div>
-            <div class="flex-1">
-              <p class="text-sm font-medium text-blue-900">Mobile Device Detected</p>
-              <p class="text-xs text-blue-700 mt-1">{{ getMobileGuideText() }}</p>
-              <div v-if="permissionStatus === 'denied'" class="mt-2 p-2 bg-blue-100 rounded-lg">
-                <p class="text-xs text-blue-800 font-medium">{{ getMobileResetInstructions() }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Token Sync Status -->
-        <div v-if="token && !isTokenSynced" class="p-4 rounded-xl bg-red-100 border border-red-200">
+        <!-- Out of Sync Warning -->
+        <div v-if="notificationsStore.shouldShowOutOfSync" class="p-4 rounded-xl bg-red-100 border border-red-200">
           <div class="flex items-start">
             <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
               <Icon name="heroicons:exclamation-triangle" class="w-4 h-4 text-red-600" />
             </div>
             <div class="flex-1">
-              <p class="text-sm font-medium text-red-900">Notifications Need to Sync</p>
+              <p class="text-sm font-medium text-red-900">Notifications Out of Sync</p>
               <p class="text-xs text-red-700 mt-1">
-                Your device token has changed and needs to be synchronized with our servers to continue receiving
-                notifications.
-              </p>
-              <p class="text-xs text-red-700 mt-2">
-                Until synced, you won't receive any push notifications even if they're enabled below.
+                Your device needs to be synchronized to receive notifications.
               </p>
             </div>
           </div>
         </div>
 
-        <!-- Reset Instructions Modal -->
-        <div v-if="showInstructions" class="p-4 rounded-xl bg-amber-50 border border-amber-200">
-          <div class="flex items-start">
-            <div class="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
-              <Icon name="heroicons:exclamation-triangle" class="w-4 h-4 text-amber-600" />
+        <!-- Service Reminders -->
+        <div class="flex items-center justify-between p-4 rounded-xl border border-stone-200 bg-white gap-2">
+          <div class="flex items-center">
+            <div class="w-10 min-w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
+              <Icon name="heroicons:wrench-screwdriver" class="w-5 h-5 text-blue-600" />
             </div>
-            <div class="flex-1">
-              <p class="text-sm font-medium text-amber-900">Reset Notification Permissions</p>
-              <p class="text-xs text-amber-700 mt-1">{{ resetInstructions }}</p>
-              <div class="mt-2 p-2 bg-amber-100 rounded-lg">
-                <p class="text-xs text-amber-800 font-medium">
-                  If you're having trouble resetting your permissions, reinstall the app and try again.
-                </p>
-              </div>
-              <p class="text-xs text-amber-600 mt-2">After resetting, refresh this page and try enabling notifications
-                again.</p>
-              <button @click="showInstructions = false"
-                class="mt-3 text-xs bg-amber-600 text-white px-3 py-1 rounded-lg hover:bg-amber-700 transition-colors">
-                Got it
-              </button>
+            <div>
+              <h5 class="font-medium text-gray-900">Service Reminders</h5>
+              <p class="text-sm text-gray-600">Reminders for upcoming service appointments and maintenance</p>
             </div>
           </div>
-        </div>
-
-        <!-- Individual Notification Items -->
-        <div class="space-y-3">
-          <div class="flex items-center justify-between p-4 rounded-xl border border-stone-200 bg-white gap-2">
-            <div class="flex items-center">
-              <div class="w-10 min-w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
-                <Icon name="heroicons:wrench-screwdriver" class="w-5 h-5 text-blue-600" />
-              </div>
-              <div>
-                <h5 class="font-medium text-gray-900">Service Reminders</h5>
-                <p class="text-sm text-gray-600">Reminders for upcoming service appointments and maintenance</p>
-              </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input 
+              v-model="notificationsStore.preferences.serviceReminders" 
+              @change="notificationsStore.saveNotificationPreferences" 
+              type="checkbox"
+              class="sr-only peer" 
+              :disabled="!notificationsStore.canModifyNotifications"
+            >
+            <div
+              class="w-11 h-6 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all transition-colors"
+              :class="notificationsStore.canModifyNotifications
+                ? 'bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amber-300 peer-checked:bg-amber-600'
+                : 'bg-gray-100 peer-checked:bg-gray-300'">
             </div>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input v-model="notifications.serviceReminders" @change="saveNotificationSettings" type="checkbox"
-                class="sr-only peer" :disabled="!canModifyNotifications">
-              <div
-                class="w-11 h-6 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all transition-colors"
-                :class="canModifyNotifications
-                  ? 'bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amber-300 peer-checked:bg-amber-600'
-                  : 'bg-gray-100 peer-checked:bg-gray-300'">
-              </div>
-            </label>
-          </div>
-
+          </label>
         </div>
 
-        <!-- Save message display -->
-        <div v-if="saveMessage" class="p-3 bg-green-50 border border-green-200 rounded-xl">
-          <p class="text-green-700 text-sm">{{ saveMessage }}</p>
+        <!-- Multi-Purpose Notification Button -->
+        <div class="flex flex-col gap-2">
+          <!-- Enable/Sync/Disable Button -->
+          <button 
+            @click="handleNotificationAction" 
+            :disabled="getButtonDisabled()"
+            :class="getButtonClass()"
+            class="px-4 py-3 rounded-xl transition-all font-medium text-sm w-full">
+            {{ getButtonText() }}
+          </button>
+
+          <!-- Disabled State Info -->
+          <p v-if="notificationsStore.permissionStatus === 'denied'" class="text-xs text-gray-600 text-center">
+            Notifications are blocked. Please reset permissions in your browser settings to enable notifications.
+          </p>
+          
+          <p v-if="notificationsStore.permissionStatus === 'unsupported'" class="text-xs text-gray-600 text-center">
+            Your browser doesn't support push notifications.
+          </p>
         </div>
 
-        <!-- Error message display -->
-        <div v-if="errorMessage" class="p-3 bg-red-50 border border-red-200 rounded-xl">
-          <p class="text-red-700 text-sm">{{ errorMessage }}</p>
+        <!-- Save/Error Messages -->
+        <div v-if="notificationsStore.saveMessage" class="p-3 bg-green-50 border border-green-200 rounded-xl">
+          <p class="text-green-700 text-sm">{{ notificationsStore.saveMessage }}</p>
         </div>
 
+        <div v-if="notificationsStore.error" class="p-3 bg-red-50 border border-red-200 rounded-xl">
+          <p class="text-red-700 text-sm">{{ notificationsStore.error }}</p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted, computed, watch } from 'vue'
-import { useFirebasePush } from '#imports'
+import { onMounted, computed, watch } from 'vue'
 import { useFirebaseAuth } from '#imports'
-import { useNotificationsDb } from '#imports'
+import { useNotificationsStore } from '~/stores/notifications'
 
 // Composables
-const { askPermission, startListening, getExistingToken, getPermissionStatus, resetPermissions } = useFirebasePush()
-const { user, isAuthenticated } = useFirebaseAuth()
-const { saveUserToken, disableUserNotifications, getUserNotifications, saveUserNotificationPreferences, generateDeviceId, getCurrentDeviceToken } = useNotificationsDb()
+const { isAuthenticated } = useFirebaseAuth()
+const notificationsStore = useNotificationsStore()
 
-// Notification preferences (simplified to 1 type now)
-const notifications = reactive({
-  serviceReminders: true,
-  // articleUpdates: false // Commented out
-})
-
-const saving = ref(false)
-const saveMessage = ref('')
-const errorMessage = ref('')
-const loading = ref(false)
-const syncing = ref(false)
-const disabling = ref(false)
-
-// Push notification state
-const token = ref<string | null>(null)
-const serverToken = ref<string | null>(null)
-const permissionStatus = ref<'default' | 'granted' | 'denied' | 'unsupported'>('default')
-const showInstructions = ref(false)
-const resetInstructions = ref('')
-
-// Mobile detection
-const isMobile = ref(false)
-
-// Computed properties
-const isTokenSynced = computed(() => {
-  return token.value && serverToken.value && token.value === serverToken.value
-})
-
-const canModifyNotifications = computed(() => {
-  return permissionStatus.value === 'granted' && isTokenSynced.value && isAuthenticated.value
-})
-
-// Detect mobile device
-const detectMobile = () => {
-  const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera
-  const isMobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase())
-  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
-  const isSmallScreen = window.innerWidth <= 768
-  return isMobileUA || (isTouchDevice && isSmallScreen)
-}
-
-// Mobile-specific guidance
-const getMobileGuideText = () => {
-  const userAgent = navigator.userAgent.toLowerCase()
-
-  if (userAgent.includes('iphone') || userAgent.includes('ipad')) {
-    return 'On iOS, tap "Enable" and then "Allow" when Safari shows the notification prompt. You may need to check Settings > Safari > Notifications if blocked.'
-  } else if (userAgent.includes('android')) {
-    return 'On Android, tap "Enable" and select "Allow" when Chrome shows the notification prompt. Check browser settings if notifications seem blocked.'
-  } else {
-    return 'Tap "Enable" and allow notifications when your browser prompts you. Check your browser settings if notifications are blocked.'
-  }
-}
-
-const getMobileResetInstructions = () => {
-  const userAgent = navigator.userAgent.toLowerCase()
-
-  if (userAgent.includes('iphone') || userAgent.includes('ipad')) {
-    return 'iOS: Go to Settings > Safari > Notifications, find this site and change to "Allow"'
-  } else if (userAgent.includes('android')) {
-    return 'Android: Go to Chrome Settings > Site Settings > Notifications, find this site and enable'
-  } else {
-    return 'Check your browser settings to reset notification permissions for this site'
-  }
-}
-
-// Computed properties for UI status
-const getStatusBgClass = () => {
-  if (permissionStatus.value === 'granted' && token.value && isTokenSynced.value) {
-    return 'bg-green-100'
-  } else if (permissionStatus.value === 'granted' && token.value) {
-    return 'bg-amber-100'
-  } else if (permissionStatus.value === 'denied') {
-    return 'bg-red-100'
-  } else if (permissionStatus.value === 'unsupported') {
-    return 'bg-gray-100'
-  }
-  return 'bg-stone-100'
-}
-
-const getStatusIconClass = () => {
-  if (permissionStatus.value === 'granted' && token.value && isTokenSynced.value) {
-    return 'text-green-600'
-  } else if (permissionStatus.value === 'granted' && token.value) {
-    return 'text-amber-600'
-  } else if (permissionStatus.value === 'denied') {
-    return 'text-red-600'
-  } else if (permissionStatus.value === 'unsupported') {
-    return 'text-gray-500'
-  }
-  return 'text-stone-500'
-}
-
-const getStatusIcon = () => {
-  if (permissionStatus.value === 'granted' && token.value && isTokenSynced.value) {
-    return 'heroicons:bell'
-  } else if (permissionStatus.value === 'granted' && token.value) {
-    return 'heroicons:bell-alert'
-  } else if (permissionStatus.value === 'denied') {
-    return 'heroicons:bell-slash'
-  } else if (permissionStatus.value === 'unsupported') {
-    return 'heroicons:x-circle'
-  }
-  return 'heroicons:bell-slash'
-}
-
-const getStatusTitle = () => {
-  if (permissionStatus.value === 'granted' && token.value && isTokenSynced.value) {
-    return 'Push Notifications Ready'
-  } else if (permissionStatus.value === 'granted' && token.value) {
-    return 'Notifications Need to Sync'
-  } else if (permissionStatus.value === 'granted') {
-    return 'Permission Granted'
-  } else if (permissionStatus.value === 'denied') {
-    return 'Push Notifications Blocked'
-  } else if (permissionStatus.value === 'unsupported') {
-    return 'Push Notifications Not Supported'
-  }
-  return 'Push Notifications Disabled'
-}
-
-const getStatusDescription = () => {
-  if (permissionStatus.value === 'granted' && token.value && isTokenSynced.value) {
-    return 'All set! You\'ll receive notifications based on your preferences below'
-  } else if (permissionStatus.value === 'granted' && token.value) {
-    return 'Token needs to be synced with our servers to receive notifications'
-  } else if (permissionStatus.value === 'granted') {
-    return 'Permission granted, click "Get Token" to complete setup'
-  } else if (permissionStatus.value === 'denied') {
-    return 'Notifications are blocked. Click "Reset" for instructions to re-enable'
-  } else if (permissionStatus.value === 'unsupported') {
-    return 'Your browser doesn\'t support push notifications'
-  }
-  return 'Enable to get instant notifications on this device'
-}
-
-
-// Load user's notification data from Firestore
-const loadUserNotificationData = async () => {
-  if (!isAuthenticated.value) return
-
-  try {
-    const userData = await getUserNotifications()
-    if (userData) {
-      // Get the current device's token from the tokens object
-      const currentDeviceToken = await getCurrentDeviceToken()
-      serverToken.value = currentDeviceToken?.fcmToken || null
-      
-      // Load notification preferences if they exist
-      if (userData.preferences) {
-        Object.assign(notifications, userData.preferences)
-      }      
-    }
-  } catch (error) {
-    // Failed to load user notification data.
-  }
-}
-
-// Sync token with server using Firestore
-const syncToken = async () => {
-  if (!token.value || !isAuthenticated.value) return
-
-  syncing.value = true
-  errorMessage.value = ''
+// Button logic
+const getButtonText = () => {
+  if (notificationsStore.isLoading) return 'Loading...'
   
-  try {
-    await saveUserToken(token.value)
-    serverToken.value = token.value
-    
-    saveMessage.value = 'Device synchronized successfully!'
-    setTimeout(() => {
-      saveMessage.value = ''
-    }, 3000)    
-  } catch (error) {
-    // Failed to sync token.
-    errorMessage.value = 'Failed to sync device. Please try again.'
-    setTimeout(() => {
-      errorMessage.value = ''
-    }, 5000)
-  } finally {
-    syncing.value = false
+  if (notificationsStore.permissionStatus === 'denied' || notificationsStore.permissionStatus === 'unsupported') {
+    return 'Enable Notifications'
   }
-}
-
-// Disable notifications
-const disableNotifications = async () => {
-  if (!isAuthenticated.value) return
-
-  disabling.value = true
-  errorMessage.value = ''
-
-  try {
-    await disableUserNotifications()
-    
-    // Reset local state
-    token.value = null
-    serverToken.value = null
-    
-    saveMessage.value = 'Notifications disabled successfully!'
-    setTimeout(() => {
-      saveMessage.value = ''
-    }, 3000)
-  } catch (error) {
-    // Failed to disable notifications.
-    errorMessage.value = 'Failed to disable notifications. Please try again.'
-    setTimeout(() => {
-      errorMessage.value = ''
-    }, 5000)
-  } finally {
-    disabling.value = false
-  }
-}
-
-// Save notification preferences to Firestore
-const saveNotificationSettings = async () => {
-  if (!canModifyNotifications.value) return
-
-  saving.value = true
-  saveMessage.value = ''
-  errorMessage.value = ''
-
-  try {
-    await saveUserNotificationPreferences(notifications)
-
-    saveMessage.value = 'Notification preferences saved successfully!'
-    setTimeout(() => {
-      saveMessage.value = ''
-    }, 3000)
-    
-  } catch (error) {
-    // Failed to Save Preferences
-    errorMessage.value = 'Failed to save preferences. Please try again.'
-    setTimeout(() => {
-      errorMessage.value = ''
-    }, 5000)
-  } finally {
-    saving.value = false
-  }
-}
-
-const enableNotifications = async () => {
-  loading.value = true
-  errorMessage.value = ''
   
-  try {
-    token.value = await askPermission()
-    permissionStatus.value = getPermissionStatus()
+  if (notificationsStore.permissionStatus === 'default' || (notificationsStore.permissionStatus === 'granted' && !notificationsStore.token)) {
+    return 'Enable Notifications'
+  }
+  
+  if (notificationsStore.token && !notificationsStore.isTokenSynced) {
+    return 'Sync Notifications'
+  }
+  
+  if (notificationsStore.token && notificationsStore.isTokenSynced) {
+    return 'Disable Notifications'
+  }
+  
+  return 'Enable Notifications'
+}
 
-    if (token.value && isAuthenticated.value) {
-      // Automatically sync token when we get it
-      await syncToken()
-    } else if (token.value) {
-      // Load existing server token to compare
-      await loadUserNotificationData()
-    }
-  } catch (err) {
-    // Notifications permissions error.
-    errorMessage.value = 'Failed to enable notifications. Please try again.'
-    setTimeout(() => {
-      errorMessage.value = ''
-    }, 5000)
-  } finally {
-    loading.value = false
+const getButtonClass = () => {
+  const baseClass = 'disabled:opacity-50 disabled:cursor-not-allowed'
+  
+  if (notificationsStore.token && notificationsStore.isTokenSynced) {
+    return `${baseClass} bg-red-500 text-white hover:bg-red-600`
+  }
+  
+  return `${baseClass} bg-gradient-to-r from-amber-500 to-amber-600 text-white hover:from-amber-600 hover:to-amber-700`
+}
+
+const getButtonDisabled = () => {
+  return notificationsStore.isLoading || 
+         notificationsStore.permissionStatus === 'denied' || 
+         notificationsStore.permissionStatus === 'unsupported'
+}
+
+const handleNotificationAction = async () => {
+  // Enable notifications
+  if (notificationsStore.permissionStatus === 'default' || (notificationsStore.permissionStatus === 'granted' && !notificationsStore.token)) {
+    await notificationsStore.enableNotifications()
+  }
+  // Sync notifications
+  else if (notificationsStore.token && !notificationsStore.isTokenSynced) {
+    await notificationsStore.syncToken()
+  }
+  // Disable notifications
+  else if (notificationsStore.token && notificationsStore.isTokenSynced) {
+    await notificationsStore.disableNotifications()
   }
 }
 
-// Check existing permissions and token on mount
+// Initialize on mount
 onMounted(async () => {
-  // Detect mobile
-  isMobile.value = detectMobile()
-
-  // Check permission status
-  permissionStatus.value = getPermissionStatus()
-
-  // If permission is granted, try to get existing token
-  if (permissionStatus.value === 'granted') {
-    loading.value = true
-    try {
-      token.value = await getExistingToken()
-      if (token.value && isAuthenticated.value) {
-        await loadUserNotificationData()
-      }
-    } catch (error) {
-      // Failed to get existing token.
-    } finally {
-      loading.value = false
-    }
-  } else if (isAuthenticated.value) {
-    // Load user notification data even without token to get preferences
-    await loadUserNotificationData()
-  }
-
-
-  // Start push notification listener
-  startListening()
+  await notificationsStore.initializeNotifications()
 })
 
 // Watch for authentication changes
-watch(isAuthenticated, async (newVal) => {
-  if (newVal && token.value) {
-    await loadUserNotificationData()
+watch(isAuthenticated, async (newVal, oldVal) => {
+  if (newVal && !oldVal) {
+    // User just authenticated - refresh data if cache is stale
+    await notificationsStore.refreshIfStale()
+  } else if (!newVal && oldVal) {
+    // User just logged out - clear cache
+    notificationsStore.clearCache()
   }
 }, { immediate: false })
 
-const showResetInstructions = () => {
-  resetInstructions.value = resetPermissions()
-  showInstructions.value = true
-}
+// Refresh data when component becomes visible (optional)
+onActivated(async () => {
+  await notificationsStore.refreshIfStale()
+})
 </script>

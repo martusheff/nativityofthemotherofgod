@@ -150,6 +150,7 @@ export default defineNuxtConfig({
     'nuxt-swiper',
     'nuxt-gtag',
     '@nuxtjs/turnstile',
-    '@vite-pwa/nuxt'
+    '@vite-pwa/nuxt',
+    '@pinia/nuxt'
   ]
 })
