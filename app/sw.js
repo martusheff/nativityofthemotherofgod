@@ -31,7 +31,7 @@ try {
   const messaging = firebase.messaging()
 
   messaging.onBackgroundMessage((payload) => {
-    // console.log('[sw.ts] 🔔 Background FCM received:', payload)
+    console.log('[sw.ts] 🔔 Background FCM received:', payload)
 
     const title = payload?.notification?.title || 'Notification'
     const options = {
