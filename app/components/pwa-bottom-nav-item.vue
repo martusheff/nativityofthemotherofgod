@@ -7,7 +7,7 @@
   >
     <Icon 
       :name="rotateIcon ? iconActive : (isActive ? (isDirectory ? iconInactive : iconActive ) : iconInactive)"
-      class="w-6 h-6 mb-1 transition-all duration-[10ms]"
+      class="w-6 h-6 mb-1"
     />
     <span class="text-xs font-medium">{{ label }}</span>
   </component>
@@ -36,8 +36,7 @@ const navigationStore = useNavigationStore()
 
 const baseTabClasses = `
   flex flex-col items-center justify-center rounded-xl flex-1
-  transition-all duration-[0ms] ease-out py-2.5
-  min-w-0
+  py-2.5 min-w-0 h-15
 `
 
 const activeTabClasses = `
@@ -70,8 +69,8 @@ const handleClick = () => {
 </script>
 
 <style scoped>
+/* Fixed height and dimensions - NO TRANSITIONS */
 .component {
-  /* Fixed height to prevent layout shifts */
   height: 60px;
   min-height: 60px;
 }

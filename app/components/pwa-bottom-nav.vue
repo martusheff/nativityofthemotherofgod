@@ -1,3 +1,4 @@
+<!-- PwaBottomNav.vue -->
 <template>
   <div class="fixed bottom-0 left-0 right-0 h-20 pointer-events-none z-20 bg-gradient-to-t from-black/30 to-transparent" />
   <nav class="fixed bottom-4 left-4 right-4 z-100 safe-area-mb">
@@ -28,7 +29,7 @@
       </div>
     </div>
 
-    <!-- Directory menu transition -->
+    <!-- Directory menu transition (ONLY transition kept) -->
     <Transition 
       enter-active-class="transition-all duration-300 ease-out"
       enter-from-class="opacity-0 transform translate-y-4 scale-95"
