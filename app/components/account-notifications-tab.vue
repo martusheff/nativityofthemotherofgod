@@ -203,7 +203,7 @@ import { useNotificationsDb } from '#imports'
 // Composables
 const { askPermission, startListening, getExistingToken, getPermissionStatus, resetPermissions } = useFirebasePush()
 const { user, isAuthenticated } = useFirebaseAuth()
-const { saveUserToken, disableUserNotifications, getUserNotifications, saveUserNotificationPreferences } = useNotificationsDb()
+const { saveUserToken, disableUserNotifications, getUserNotifications, saveUserNotificationPreferences, generateDeviceId, getCurrentDeviceToken } = useNotificationsDb()
 
 // Notification preferences (simplified to 1 type now)
 const notifications = reactive({
@@ -342,6 +342,7 @@ const getStatusDescription = () => {
   return 'Enable to get instant notifications on this device'
 }
 
+
 // Load user's notification data from Firestore
 const loadUserNotificationData = async () => {
   if (!isAuthenticated.value) return
@@ -349,7 +350,9 @@ const loadUserNotificationData = async () => {
   try {
     const userData = await getUserNotifications()
     if (userData) {
-      serverToken.value = userData.fcmToken || null
+      // Get the current device's token from the tokens object
+      const currentDeviceToken = await getCurrentDeviceToken()
+      serverToken.value = currentDeviceToken?.fcmToken || null
       
       // Load notification preferences if they exist
       if (userData.preferences) {
@@ -357,6 +360,7 @@ const loadUserNotificationData = async () => {
       }
       
       console.log('Loaded user notification data:', userData)
+      console.log('Current device server token:', serverToken.value)
     }
   } catch (error) {
     console.error('Failed to load user notification data:', error)

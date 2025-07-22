@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    console.log('Starting cron job...')
+    console.log('Starting enhanced cron job with per-user tracking...')
     
     // Get notification statistics first
     const stats = await notificationTracker.getNotificationStats()
@@ -43,104 +43,112 @@ export default defineEventHandler(async (event) => {
 
     console.log(`Found ${upcomingEvents.length} upcoming events`)
 
-    // 3. Filter out events that already had notifications sent
-    const eventsToNotify = []
-    for (const event of upcomingEvents) {
-      const eventId = event.id ?? "12345678"
+    // 3. Process each event and find users who haven't been notified yet
+    const eventsToProcess = []
+    for (const eventItem of upcomingEvents) {
+      const eventId = eventItem.id ?? `event_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
       if (!eventId) {
-        console.warn('Event missing ID:', event.title)
+        console.warn('Event missing ID:', eventItem.title)
         continue
       }
 
-      // Note: You had "&& false" in your original code, which would always skip notifications
-      // I'm removing it, but you can add it back if you want to test without sending notifications
-      const alreadySent = await notificationTracker.wasNotificationSent(eventId)
-      if (!alreadySent) {
-        eventsToNotify.push({ ...event, eventId })
+      // Get users who haven't received this notification yet
+      const usersToNotify = await notificationTracker.getUsersNotNotified(eventId)
+      
+      if (usersToNotify.length > 0) {
+        eventsToProcess.push({ 
+          ...eventItem, 
+          eventId,
+          usersToNotify,
+          totalUsersToNotify: usersToNotify.length,
+          totalTokensToSend: usersToNotify.reduce((sum, user) => sum + user.tokens.length, 0)
+        })
+        console.log(`Event "${eventItem.title}": ${usersToNotify.length} users (${usersToNotify.reduce((sum, user) => sum + user.tokens.length, 0)} tokens) need notification`)
       } else {
-        console.log(`Skipping ${event.title} - notification already sent`)
+        // Get existing stats for this event
+        const eventStats = await notificationTracker.getEventNotificationStats(eventId)
+        console.log(`Event "${eventItem.title}": All eligible users already notified (${eventStats?.usersWithSuccessfulDelivery || 0} users)`)
       }
     }
 
-    if (eventsToNotify.length === 0) {
+    if (eventsToProcess.length === 0) {
       return { 
-        message: 'No new events to send notifications for',
+        message: 'All eligible users have already been notified for upcoming events',
         totalUpcomingEvents: upcomingEvents.length,
         stats
       }
     }
 
-    // 4. Get all users with FCM tokens (now supports multiple devices per user)
-    const fcmTokens = await notificationTracker.getUsersWithNotifications()
-
-    if (fcmTokens.length === 0) {
-      return { 
-        message: 'No users with FCM tokens found',
-        eventsToNotify: eventsToNotify.length,
-        stats
-      }
-    }
-
-    console.log(`Found ${fcmTokens.length} FCM tokens across ${stats.usersWithTokens} users`)
-
-    // 5. Send notifications and track them
+    // 4. Send notifications with per-user tracking
     const results = []
-    let totalSuccessCount = 0
-    let totalFailureCount = 0
-    let totalInvalidTokens = 0
+    let totalNewNotifications = 0
+    let totalNewUsers = 0
 
-    for (const event of eventsToNotify) {
+    for (const eventToProcess of eventsToProcess) {
       try {
-        const result = await notificationTracker.sendEventNotification(event, fcmTokens)
+        console.log(`Processing notifications for: ${eventToProcess.title}`)
         
-        // Mark as sent
-        await notificationTracker.markNotificationSent(event.eventId, {
-          title: event.title,
-          date: event.date,
-          notificationCount: result.successCount
-        })
+        // Send notifications to users who haven't received them yet
+        const result = await notificationTracker.sendEventNotificationWithTracking(
+          eventToProcess, 
+          eventToProcess.usersToNotify
+        )
+        
+        // Update tracking with detailed delivery information
+        await notificationTracker.updateEventNotificationTracking(
+          eventToProcess.eventId,
+          eventToProcess,
+          result.deliveries,
+          eventToProcess.usersToNotify
+        )
 
-        totalSuccessCount += result.successCount
-        totalFailureCount += result.failureCount
-        totalInvalidTokens += result.invalidTokens.length
+        totalNewNotifications += result.successCount
+        totalNewUsers += eventToProcess.usersToNotify.length
+
+        // Get updated event statistics
+        const eventStats = await notificationTracker.getEventNotificationStats(eventToProcess.eventId)
 
         results.push({
-          event: event.title,
-          eventId: event.eventId,
-          successCount: result.successCount,
-          failureCount: result.failureCount,
-          invalidTokenCount: result.invalidTokens.length
+          event: eventToProcess.title,
+          eventId: eventToProcess.eventId,
+          newNotifications: {
+            usersTargeted: eventToProcess.usersToNotify.length,
+            tokensTargeted: eventToProcess.totalTokensToSend,
+            successCount: result.successCount,
+            failureCount: result.failureCount,
+            invalidTokenCount: result.invalidTokens.length,
+            deliveryRate: eventToProcess.totalTokensToSend > 0 ? 
+              ((result.successCount / eventToProcess.totalTokensToSend) * 100).toFixed(1) + '%' : '0%'
+          },
+          overallStats: eventStats
         })
 
-        console.log(`Sent notification for: ${event.title} (${result.successCount} success, ${result.failureCount} failed)`)
+        console.log(`Completed notifications for: ${eventToProcess.title} (${result.successCount}/${eventToProcess.totalTokensToSend} successful)`)
       } catch (error) {
-        console.error(`Failed to send notification for ${event.title}:`, error)
+        console.error(`Failed to send notifications for ${eventToProcess.title}:`, error)
         results.push({
-          event: event.title,
-          eventId: event.eventId,
-          error: error || 'Unknown error'
+          event: eventToProcess.title,
+          eventId: eventToProcess.eventId,
+          error: error
         })
       }
     }
 
     const summary = {
-      message: 'Notifications processed',
-      eventsProcessed: eventsToNotify.length,
+      message: 'Enhanced notifications processed with per-user tracking',
+      eventsProcessed: eventsToProcess.length,
       totalUpcomingEvents: upcomingEvents.length,
-      totalTokensTargeted: fcmTokens.length,
-      totalSuccessfulNotifications: totalSuccessCount,
-      totalFailedNotifications: totalFailureCount,
-      totalInvalidTokensRemoved: totalInvalidTokens,
-      deliveryRate: fcmTokens.length > 0 ? ((totalSuccessCount / (fcmTokens.length * eventsToNotify.length)) * 100).toFixed(1) + '%' : '0%',
+      newNotificationsSent: totalNewNotifications,
+      newUsersNotified: totalNewUsers,
       stats,
       results
     }
 
-    console.log('Cron job completed:', summary)
+    console.log('Enhanced cron job completed:', summary)
     return summary
 
   } catch (error) {
-    console.error('Cron job error:', error)
+    console.error('Enhanced cron job error:', error)
     throw createError({
       statusCode: 500,
       statusMessage: `Internal server error: ${error}`
