@@ -4,9 +4,8 @@
     <!-- <PwaTopNav v-if="showBottomNav" /> -->
 
     <!-- Put pt-14 in thing below -->
-    <main :class="{ 'pb-24': showBottomNav, '': showBottomNav }">
+    <main :class="{ 'pb-24': showBottomNav }">
       <slot />
-      <div v-if="showBottomNav" class="pb-24"/>
     </main>
     <Footer v-if="!showBottomNav" />
     <PwaBottomNav v-if="showBottomNav" />

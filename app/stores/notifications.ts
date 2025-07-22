@@ -1,4 +1,4 @@
-// stores/notifications.ts - Refactored to use base store
+// stores/notifications.ts - Fixed to prevent out-of-sync flash
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { useBaseStore } from './baseStore'
@@ -23,6 +23,9 @@ export const useNotificationsStore = defineStore('notifications', () => {
   const token = ref<string | null>(null)
   const serverToken = ref<string | null>(null)
   const permissionStatus = ref<'default' | 'granted' | 'denied' | 'unsupported'>('default')
+  
+  // Track if we're in the middle of enabling/syncing to prevent false out-of-sync warnings
+  const isSyncing = ref(false)
 
   // Computed properties
   const { isAuthenticated } = useFirebaseAuth()
@@ -32,7 +35,12 @@ export const useNotificationsStore = defineStore('notifications', () => {
   })
   
   const shouldShowOutOfSync = computed(() => {
-    return baseStore.lastFetched.value !== null && token.value && !isTokenSynced.value
+    // Don't show out of sync if we're currently syncing or if we haven't fetched data yet
+    return baseStore.lastFetched.value !== null && 
+           token.value && 
+           !isTokenSynced.value && 
+           !isSyncing.value &&
+           !baseStore.isLoading.value // Don't show during loading states
   })
   
   const canModifyNotifications = computed(() => {
@@ -79,38 +87,50 @@ export const useNotificationsStore = defineStore('notifications', () => {
   const syncToken = async () => {
     if (!token.value || !isAuthenticated.value) return
 
-    return baseStore.executeAsync(
-      async () => {
-        const { saveUserToken } = useNotificationsDb()
-        await saveUserToken(token.value!)
-        serverToken.value = token.value
-        return true
-      },
-      {
-        successMessage: 'Device synchronized successfully!',
-        errorMessage: 'Failed to sync device. Please try again.'
-      }
-    )
+    isSyncing.value = true
+    
+    try {
+      return await baseStore.executeAsync(
+        async () => {
+          const { saveUserToken } = useNotificationsDb()
+          await saveUserToken(token.value!)
+          serverToken.value = token.value
+          return true
+        },
+        {
+          successMessage: 'Device synchronized successfully!',
+          errorMessage: 'Failed to sync device. Please try again.'
+        }
+      )
+    } finally {
+      isSyncing.value = false
+    }
   }
 
   const disableNotifications = async () => {
     if (!isAuthenticated.value) return
 
-    return baseStore.executeAsync(
-      async () => {
-        const { disableUserNotifications } = useNotificationsDb()
-        await disableUserNotifications()
-        
-        token.value = null
-        serverToken.value = null
-        
-        return true
-      },
-      {
-        successMessage: 'Notifications disabled successfully!',
-        errorMessage: 'Failed to disable notifications. Please try again.'
-      }
-    )
+    isSyncing.value = true
+    
+    try {
+      return await baseStore.executeAsync(
+        async () => {
+          const { disableUserNotifications } = useNotificationsDb()
+          await disableUserNotifications()
+          
+          token.value = null
+          serverToken.value = null
+          
+          return true
+        },
+        {
+          successMessage: 'Notifications disabled successfully!',
+          errorMessage: 'Failed to disable notifications. Please try again.'
+        }
+      )
+    } finally {
+      isSyncing.value = false
+    }
   }
 
   const saveNotificationPreferences = async () => {
@@ -130,25 +150,37 @@ export const useNotificationsStore = defineStore('notifications', () => {
   }
 
   const enableNotifications = async () => {
-    return baseStore.executeAsync(
-      async () => {
-        const { askPermission, getPermissionStatus } = useFirebasePush()
-        
-        token.value = await askPermission()
-        permissionStatus.value = getPermissionStatus()
+    isSyncing.value = true
+    
+    try {
+      return await baseStore.executeAsync(
+        async () => {
+          const { askPermission, getPermissionStatus } = useFirebasePush()
+          
+          token.value = await askPermission()
+          permissionStatus.value = getPermissionStatus()
 
-        if (token.value && isAuthenticated.value) {
-          await syncToken()
-        } else if (token.value) {
-          await loadUserNotificationData()
+          if (token.value && isAuthenticated.value) {
+            // Immediately sync the token to prevent out-of-sync flash
+            const { saveUserToken } = useNotificationsDb()
+            await saveUserToken(token.value)
+            serverToken.value = token.value
+            
+            // Load any existing preferences
+            await loadUserNotificationData()
+          } else if (token.value) {
+            await loadUserNotificationData()
+          }
+          
+          return token.value
+        },
+        {
+          errorMessage: 'Failed to enable notifications. Please try again.'
         }
-        
-        return token.value
-      },
-      {
-        errorMessage: 'Failed to enable notifications. Please try again.'
-      }
-    )
+      )
+    } finally {
+      isSyncing.value = false
+    }
   }
 
   const initializeNotifications = async () => {
@@ -189,6 +221,7 @@ export const useNotificationsStore = defineStore('notifications', () => {
   const clearNotificationCache = () => {
     serverToken.value = null
     preferences.value = { serviceReminders: true }
+    isSyncing.value = false
     baseStore.clearCache()
   }
 
@@ -201,6 +234,7 @@ export const useNotificationsStore = defineStore('notifications', () => {
     token,
     serverToken,
     permissionStatus,
+    isSyncing,
     
     // Computed
     isTokenSynced,

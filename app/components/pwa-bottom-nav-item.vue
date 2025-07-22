@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import { useNavigationStore } from '~/stores/navigation'
 
@@ -37,6 +37,7 @@ const navigationStore = useNavigationStore()
 const baseTabClasses = `
   flex flex-col items-center justify-center rounded-xl flex-1
   py-2.5 min-w-0 h-15
+  transition-colors duration-200 ease-in-out
 `
 
 const activeTabClasses = `
@@ -47,18 +48,18 @@ const inactiveTabClasses = `
   text-stone-600
 `
 
-const isActive = computed(() => {
+const isActive = ref(false)
+
+watchEffect(() => {
   if (props.authRoutes?.length) {
-    return props.authRoutes.some(path => route.path === path || route.path.startsWith(path + '/'))
+    isActive.value = props.authRoutes.some(path => route.path === path || route.path.startsWith(path + '/'))
+  } else if (props.isDirectory && props.directoryRoutes?.length) {
+    isActive.value = navigationStore.isDirectoryRoute
+  } else if (props.to === '/') {
+    isActive.value = route.path === '/'
+  } else {
+    isActive.value = route.path?.startsWith(props.to || '') ?? false
   }
-
-  if (props.isDirectory && props.directoryRoutes?.length) {
-    return navigationStore.isDirectoryRoute
-  }
-
-  if (props.to === '/') return route.path === '/'
-
-  return route.path?.startsWith(props.to || '') ?? false
 })
 
 const rotateIcon = computed(() => props.isButton && props.isMenuOpen)
@@ -69,12 +70,6 @@ const handleClick = () => {
 </script>
 
 <style scoped>
-/* Fixed height and dimensions - NO TRANSITIONS */
-.component {
-  height: 60px;
-  min-height: 60px;
-}
-
 /* Responsive adjustments for very small screens */
 @media (max-width: 360px) {
   .component {
