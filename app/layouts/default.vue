@@ -1,17 +1,20 @@
 <template>
   <div class="layout">
     <Header v-if="!showBottomNav"/>
-    <main :class="{ 'pb-24': showBottomNav }">
+    <!-- <PwaTopNav v-if="showBottomNav" /> -->
+
+    <!-- Put pt-14 in thing below -->
+    <main :class="{ 'pb-24': showBottomNav, '': showBottomNav }">
       <slot />
       <div v-if="showBottomNav" class="pb-24"/>
     </main>
     <Footer v-if="!showBottomNav" />
-    <BottomNav v-if="showBottomNav" />
+    <PwaBottomNav v-if="showBottomNav" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { Header, Footer, BottomNav } from '#components'
+import { Header, Footer, PwaTopNav, PwaBottomNav } from '#components'
 import { computed } from 'vue'
 
 const { $pwa } = useNuxtApp()

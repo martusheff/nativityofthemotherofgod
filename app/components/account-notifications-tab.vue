@@ -52,8 +52,8 @@
         <!-- Service Reminders -->
         <div class="flex items-center justify-between p-4 rounded-xl border border-stone-200 bg-white gap-2">
           <div class="flex items-center">
-            <div class="w-10 min-w-10 h-10 border bg-amber-50 border-amber-500 rounded-xl flex items-center justify-center mr-4">
-              <Icon name="heroicons:bell-alert" class="w-5 h-5 text-amber-600" />
+            <div class="w-10 min-w-10 h-10  bg-amber-100 rounded-xl flex items-center justify-center mr-4 text-xl">
+              <Icon name="heroicons:bell-alert" class="w-7 h-7 text-amber-600" />
             </div>
             <div>
               <h5 class="font-medium text-gray-900">Service Reminders</h5>
