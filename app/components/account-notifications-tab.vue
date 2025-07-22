@@ -8,18 +8,14 @@
           <p class="text-sm text-gray-600 mt-1">Stay updated with instant notifications on your device</p>
         </div>
       </div>
-      
       <!-- Push notification status and controls -->
       <div class="space-y-4">
         <!-- Current Status -->
         <div class="p-4 rounded-xl border border-stone-200">
           <div class="flex items-center justify-between">
             <div class="flex items-center">
-              <div class="w-10 h-10 rounded-xl flex items-center justify-center mr-4"
-                   :class="getStatusBgClass()">
-                <Icon :name="getStatusIcon()" 
-                      :class="getStatusIconClass()"
-                      class="w-5 h-5" />
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center mr-4" :class="getStatusBgClass()">
+                <Icon :name="getStatusIcon()" :class="getStatusIconClass()" class="w-5 h-5" />
               </div>
               <div>
                 <h4 class="font-medium text-gray-900">
@@ -31,38 +27,24 @@
               </div>
             </div>
             <div class="flex gap-2">
-              <button
-                v-if="permissionStatus === 'granted' && !token"
-                @click="enableNotifications"
-                :disabled="loading"
-                class="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-4 py-2 rounded-xl hover:from-amber-600 hover:to-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium text-sm"
-              >
+              <button v-if="permissionStatus === 'granted' && !token" @click="enableNotifications" :disabled="loading"
+                class="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-4 py-2 rounded-xl hover:from-amber-600 hover:to-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium text-sm">
                 {{ loading ? 'Loading...' : 'Get Token' }}
               </button>
-              
-              <button
-                v-if="permissionStatus === 'default' || permissionStatus === 'denied'"
-                @click="enableNotifications"
-                :disabled="loading"
-                class="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-4 py-2 rounded-xl hover:from-amber-600 hover:to-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium text-sm"
-              >
+
+              <button v-if="permissionStatus === 'default' || permissionStatus === 'denied'"
+                @click="enableNotifications" :disabled="loading"
+                class="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-4 py-2 rounded-xl hover:from-amber-600 hover:to-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium text-sm">
                 {{ loading ? 'Loading...' : 'Enable' }}
               </button>
-              
-              <button
-                v-if="permissionStatus === 'denied'"
-                @click="showResetInstructions"
-                class="bg-gray-500 text-white px-4 py-2 rounded-xl hover:bg-gray-600 transition-all font-medium text-sm"
-              >
+
+              <button v-if="permissionStatus === 'denied'" @click="showResetInstructions"
+                class="bg-gray-500 text-white px-4 py-2 rounded-xl hover:bg-gray-600 transition-all font-medium text-sm">
                 Reset
               </button>
-              
-              <button
-                v-if="token && !isTokenSynced"
-                @click="syncToken"
-                :disabled="syncing"
-                class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-xl hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium text-sm"
-              >
+
+              <button v-if="token && !isTokenSynced" @click="syncToken" :disabled="syncing"
+                class="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-4 py-2 rounded-xl hover:from-amber-600 hover:to-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium text-sm">
                 {{ syncing ? 'Syncing...' : 'Sync' }}
               </button>
             </div>
@@ -70,8 +52,8 @@
         </div>
 
         <!-- Mobile Permission Guide -->
-        <div v-if="isMobile && (permissionStatus === 'denied' || permissionStatus === 'default')" 
-             class="p-4 rounded-xl bg-blue-50 border border-blue-200">
+        <div v-if="isMobile && (permissionStatus === 'denied' || permissionStatus === 'default')"
+          class="p-4 rounded-xl bg-blue-50 border border-blue-200">
           <div class="flex items-start">
             <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
               <Icon name="heroicons:device-phone-mobile" class="w-4 h-4 text-blue-600" />
@@ -87,17 +69,18 @@
         </div>
 
         <!-- Token Sync Status -->
-        <div v-if="token && !isTokenSynced" class="p-4 rounded-xl bg-amber-50 border border-amber-200">
+        <div v-if="token && !isTokenSynced" class="p-4 rounded-xl bg-red-100 border border-red-200">
           <div class="flex items-start">
-            <div class="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
-              <Icon name="heroicons:exclamation-triangle" class="w-4 h-4 text-amber-600" />
+            <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+              <Icon name="heroicons:exclamation-triangle" class="w-4 h-4 text-red-600" />
             </div>
             <div class="flex-1">
-              <p class="text-sm font-medium text-amber-900">Notifications Need Sync</p>
-              <p class="text-xs text-amber-700 mt-1">
-                Your device token has changed and needs to be synchronized with our servers to continue receiving notifications.
+              <p class="text-sm font-medium text-red-900">Notifications Need to Sync</p>
+              <p class="text-xs text-red-700 mt-1">
+                Your device token has changed and needs to be synchronized with our servers to continue receiving
+                notifications.
               </p>
-              <p class="text-xs text-amber-600 mt-2">
+              <p class="text-xs text-red-700 mt-2">
                 Until synced, you won't receive any push notifications even if they're enabled below.
               </p>
             </div>
@@ -118,39 +101,12 @@
                   If you're having trouble resetting your permissions, reinstall the app and try again.
                 </p>
               </div>
-              <p class="text-xs text-amber-600 mt-2">After resetting, refresh this page and try enabling notifications again.</p>
-              <button 
-                @click="showInstructions = false"
-                class="mt-3 text-xs bg-amber-600 text-white px-3 py-1 rounded-lg hover:bg-amber-700 transition-colors"
-              >
+              <p class="text-xs text-amber-600 mt-2">After resetting, refresh this page and try enabling notifications
+                again.</p>
+              <button @click="showInstructions = false"
+                class="mt-3 text-xs bg-amber-600 text-white px-3 py-1 rounded-lg hover:bg-amber-700 transition-colors">
                 Got it
               </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Notification Preferences Header -->
-        <div class="p-4 bg-stone-50 border border-stone-200 rounded-xl">
-          <div class="flex items-center justify-between">
-            <div>
-              <h4 class="font-medium text-gray-900">Notification Types</h4>
-              <p class="text-sm text-gray-600">Choose which notifications you want to receive</p>
-            </div>
-            <div class="flex items-center gap-3">
-              <label class="relative inline-flex items-center cursor-pointer">
-                <input 
-                  v-model="allNotificationsToggle" 
-                  @change="toggleAllNotifications"
-                  type="checkbox" 
-                  class="sr-only peer"
-                  :disabled="!canModifyNotifications"
-                >
-                <div class="w-11 h-6 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all transition-colors"
-                     :class="canModifyNotifications 
-                       ? 'bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amber-300 peer-checked:bg-amber-600' 
-                       : 'bg-gray-100 peer-checked:bg-gray-300'">
-                </div>
-              </label>
             </div>
           </div>
         </div>
@@ -168,64 +124,22 @@
               </div>
             </div>
             <label class="relative inline-flex items-center cursor-pointer">
-              <input 
-                v-model="notifications.serviceReminders" 
-                @change="updateAllNotificationsToggle"
-                type="checkbox" 
-                class="sr-only peer"
-                :disabled="!canModifyNotifications"
-              >
-              <div class="w-11 h-6 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all transition-colors"
-                   :class="canModifyNotifications 
-                     ? 'bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amber-300 peer-checked:bg-amber-600' 
-                     : 'bg-gray-100 peer-checked:bg-gray-300'">
+              <input v-model="notifications.serviceReminders" @change="saveNotificationSettings" type="checkbox"
+                class="sr-only peer" :disabled="!canModifyNotifications">
+              <div
+                class="w-11 h-6 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all transition-colors"
+                :class="canModifyNotifications
+                  ? 'bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amber-300 peer-checked:bg-amber-600'
+                  : 'bg-gray-100 peer-checked:bg-gray-300'">
               </div>
             </label>
           </div>
 
-          <div class="flex items-center justify-between p-4 rounded-xl border border-stone-200 bg-white">
-            <div class="flex items-center">
-              <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center mr-4">
-                <Icon name="heroicons:newspaper" class="w-5 h-5 text-green-600" />
-              </div>
-              <div>
-                <h5 class="font-medium text-gray-900">Article Updates</h5>
-                <p class="text-sm text-gray-600">Get notified when new articles and content are published</p>
-              </div>
-            </div>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input 
-                v-model="notifications.articleUpdates" 
-                @change="updateAllNotificationsToggle"
-                type="checkbox" 
-                class="sr-only peer"
-                :disabled="!canModifyNotifications"
-              >
-              <div class="w-11 h-6 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all transition-colors"
-                   :class="canModifyNotifications 
-                     ? 'bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amber-300 peer-checked:bg-amber-600' 
-                     : 'bg-gray-100 peer-checked:bg-gray-300'">
-              </div>
-            </label>
-          </div>
         </div>
 
-        <!-- Save Button -->
-        <div class="pt-2">
-          <button
-            @click="saveNotificationSettings"
-            :disabled="saving || !canModifyNotifications"
-            class="w-full px-4 py-3 rounded-xl font-medium text-sm transition-all"
-            :class="canModifyNotifications 
-              ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white hover:from-amber-600 hover:to-amber-700 disabled:opacity-50' 
-              : 'bg-gray-200 text-gray-500 cursor-not-allowed'"
-          >
-            {{ saving ? 'Saving...' : 'Save Preferences' }}
-          </button>
-          
-          <div v-if="saveMessage" class="mt-3 p-3 bg-green-50 border border-green-200 rounded-xl">
-            <p class="text-green-700 text-sm">{{ saveMessage }}</p>
-          </div>
+        <!-- Save message display -->
+        <div v-if="saveMessage" class="p-3 bg-green-50 border border-green-200 rounded-xl">
+          <p class="text-green-700 text-sm">{{ saveMessage }}</p>
         </div>
 
         <!-- Token Display (for development) -->
@@ -248,21 +162,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Browser compatibility info -->
-        <div class="p-4 rounded-xl bg-blue-50 border border-blue-200">
-          <div class="flex items-start">
-            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
-              <Icon name="heroicons:information-circle" class="w-4 h-4 text-blue-600" />
-            </div>
-            <div>
-              <p class="text-sm font-medium text-blue-900">Browser Support</p>
-              <p class="text-xs text-blue-700 mt-1">
-                Push notifications work best in modern browsers. Make sure to allow notifications when prompted.
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -275,10 +174,10 @@ import { useFirebasePush } from '#imports'
 // Push notification composable
 const { askPermission, startListening, getExistingToken, getPermissionStatus, resetPermissions } = useFirebasePush()
 
-// Notification preferences (simplified to 2 types)
+// Notification preferences (simplified to 1 type now)
 const notifications = reactive({
   serviceReminders: true,
-  articleUpdates: false
+  // articleUpdates: false // Commented out
 })
 
 const saving = ref(false)
@@ -297,8 +196,8 @@ const resetInstructions = ref('')
 const isMobile = ref(false)
 const isDevelopment = ref(process.env.NODE_ENV === 'development')
 
-// All notifications toggle state
-const allNotificationsToggle = ref(false)
+// All notifications toggle state (commented out)
+// const allNotificationsToggle = ref(false)
 
 // Computed properties
 const isTokenSynced = computed(() => {
@@ -313,25 +212,19 @@ const allNotificationsEnabled = computed(() => {
   return Object.values(notifications).every(val => val)
 })
 
-// Update the all notifications toggle when individual items change
-const updateAllNotificationsToggle = () => {
-  allNotificationsToggle.value = allNotificationsEnabled.value
-}
-
 // Detect mobile device
 const detectMobile = () => {
   const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera
   const isMobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase())
   const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
   const isSmallScreen = window.innerWidth <= 768
-  
   return isMobileUA || (isTouchDevice && isSmallScreen)
 }
 
 // Mobile-specific guidance
 const getMobileGuideText = () => {
   const userAgent = navigator.userAgent.toLowerCase()
-  
+
   if (userAgent.includes('iphone') || userAgent.includes('ipad')) {
     return 'On iOS, tap "Enable" and then "Allow" when Safari shows the notification prompt. You may need to check Settings > Safari > Notifications if blocked.'
   } else if (userAgent.includes('android')) {
@@ -343,7 +236,7 @@ const getMobileGuideText = () => {
 
 const getMobileResetInstructions = () => {
   const userAgent = navigator.userAgent.toLowerCase()
-  
+
   if (userAgent.includes('iphone') || userAgent.includes('ipad')) {
     return 'iOS: Go to Settings > Safari > Notifications, find this site and change to "Allow"'
   } else if (userAgent.includes('android')) {
@@ -397,7 +290,7 @@ const getStatusTitle = () => {
   if (permissionStatus.value === 'granted' && token.value && isTokenSynced.value) {
     return 'Push Notifications Ready'
   } else if (permissionStatus.value === 'granted' && token.value) {
-    return 'Notifications Need Sync'
+    return 'Notifications Need to Sync'
   } else if (permissionStatus.value === 'granted') {
     return 'Permission Granted'
   } else if (permissionStatus.value === 'denied') {
@@ -427,10 +320,10 @@ const getStatusDescription = () => {
 const checkServerToken = async () => {
   // Simulate API call to check if token exists on server
   await new Promise(resolve => setTimeout(resolve, 500))
-  
+
   // For demo purposes, randomly decide if token is synced
   const isSync = Math.random() > 0.3 // 70% chance it's synced
-  
+
   if (isSync && token.value) {
     serverToken.value = token.value
   } else {
@@ -441,15 +334,15 @@ const checkServerToken = async () => {
 // Sync token with server
 const syncToken = async () => {
   if (!token.value) return
-  
+
   syncing.value = true
   try {
     // Simulate API call to register token
     await new Promise(resolve => setTimeout(resolve, 1500))
-    
+
     // In real app: await registerTokenWithServer(token.value)
     console.log('Syncing token with server:', token.value)
-    
+
     serverToken.value = token.value
     saveMessage.value = 'Device synchronized successfully!'
     setTimeout(() => {
@@ -462,28 +355,15 @@ const syncToken = async () => {
   }
 }
 
-// Toggle all notifications
-const toggleAllNotifications = () => {
-  if (!canModifyNotifications.value) return
-  
-  const newValue = allNotificationsToggle.value
-  Object.keys(notifications).forEach(key => {
-    notifications[key as keyof typeof notifications] = newValue
-  })
-}
-
 // Check existing permissions and token on mount
 onMounted(async () => {
   // Detect mobile
   isMobile.value = detectMobile()
-  
+
   // Check permission status
   permissionStatus.value = getPermissionStatus()
   console.log('Permission status:', permissionStatus.value)
-  
-  // Initialize the all notifications toggle
-  allNotificationsToggle.value = allNotificationsEnabled.value
-  
+
   // If permission is granted, try to get existing token
   if (permissionStatus.value === 'granted') {
     loading.value = true
@@ -498,25 +378,25 @@ onMounted(async () => {
       loading.value = false
     }
   }
-  
+
+
   // Start push notification listener
   startListening()
 })
 
 const saveNotificationSettings = async () => {
   if (!canModifyNotifications.value) return
-  
+
   saving.value = true
   saveMessage.value = ''
-  
+
   try {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000))
-    
     // In real app, save to backend with the synced token
     console.log('Saving notification preferences:', notifications)
     console.log('With token:', token.value)
-    
+
     saveMessage.value = 'Notification preferences saved successfully!'
     setTimeout(() => {
       saveMessage.value = ''
@@ -535,7 +415,7 @@ const enableNotifications = async () => {
     token.value = await askPermission()
     permissionStatus.value = getPermissionStatus()
     console.log('Notification permission result:', permissionStatus.value, 'Token:', token.value)
-    
+
     if (token.value) {
       await checkServerToken()
     }

@@ -2,29 +2,11 @@
   <div class="space-y-6">
     <!-- Support Summary -->
     <div class="bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl text-white p-6">
-      <div class="flex items-center justify-between">
-        <div>
-          <h3 class="text-xl font-semibold mb-2">Your Support Impact</h3>
-          <p class="text-amber-100 mb-4">Thank you for supporting our mission</p>
-          <div class="flex items-center space-x-6">
-            <div>
-              <p class="text-2xl font-bold">$125</p>
-              <p class="text-sm text-amber-100">Total Contributed</p>
-            </div>
-            <div>
-              <p class="text-2xl font-bold">3</p>
-              <p class="text-sm text-amber-100">Donations Made</p>
-            </div>
-          </div>
-        </div>
-        <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
-          <Icon name="heroicons:heart" class="w-8 h-8 text-white" />
-        </div>
-      </div>
+      <p class="text-center italic text-lg leading-tight">We will be ready to process donations once the IRS approves our 501c3 non-profit filing.</p>
     </div>
 
     <!-- Quick Donation Options -->
-    <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
+    <!-- <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
       <h3 class="text-lg font-semibold text-gray-900 mb-4">Make a Donation</h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
         <button
@@ -83,10 +65,10 @@
       <div v-if="donationSuccess" class="mt-3 p-3 bg-green-50 border border-green-200 rounded-xl">
         <p class="text-green-700 text-sm">{{ donationSuccess }}</p>
       </div>
-    </div>
+    </div> -->
 
     <!-- Donation History -->
-    <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
+    <!-- <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
       <h3 class="text-lg font-semibold text-gray-900 mb-4">Donation History</h3>
       <div class="space-y-3">
         <div
@@ -115,61 +97,8 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <!-- Monthly Support -->
-    <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
-      <div class="flex items-center justify-between mb-4">
-        <div>
-          <h3 class="text-lg font-semibold text-gray-900">Monthly Support</h3>
-          <p class="text-sm text-gray-600 mt-1">Set up recurring donations to provide consistent support</p>
-        </div>
-        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-          <Icon name="heroicons:arrow-path" class="w-6 h-6 text-purple-600" />
-        </div>
-      </div>
-
-      <div class="bg-purple-50 rounded-xl p-4 border border-purple-200">
-        <div class="flex items-center">
-          <Icon name="heroicons:information-circle" class="w-5 h-5 text-purple-600 mr-2 flex-shrink-0" />
-          <div>
-            <p class="text-sm font-medium text-purple-800">Coming Soon!</p>
-            <p class="text-xs text-purple-700 mt-1">Monthly recurring donations will be available soon. Get notified when it launches!</p>
-          </div>
-        </div>
-        <button class="mt-3 text-purple-600 text-sm font-medium hover:text-purple-700 transition-colors">
-          Notify Me →
-        </button>
-      </div>
-    </div>
-
-    <!-- Impact Stats -->
-    <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
-      <h3 class="text-lg font-semibold text-gray-900 mb-4">Community Impact</h3>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div class="text-center p-4 rounded-xl bg-blue-50 border border-blue-200">
-          <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3">
-            <Icon name="heroicons:users" class="w-6 h-6 text-blue-600" />
-          </div>
-          <p class="text-2xl font-bold text-blue-700">1,247</p>
-          <p class="text-sm text-blue-600">People Supported</p>
-        </div>
-        <div class="text-center p-4 rounded-xl bg-green-50 border border-green-200">
-          <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-3">
-            <Icon name="heroicons:academic-cap" class="w-6 h-6 text-green-600" />
-          </div>
-          <p class="text-2xl font-bold text-green-700">89</p>
-          <p class="text-sm text-green-600">Programs Funded</p>
-        </div>
-        <div class="text-center p-4 rounded-xl bg-amber-50 border border-amber-200">
-          <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mx-auto mb-3">
-            <Icon name="heroicons:heart" class="w-6 h-6 text-amber-600" />
-          </div>
-          <p class="text-2xl font-bold text-amber-700">$24K</p>
-          <p class="text-sm text-amber-600">Total Raised</p>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
