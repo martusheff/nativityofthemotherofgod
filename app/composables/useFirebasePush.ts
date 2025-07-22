@@ -82,7 +82,7 @@ export const useFirebasePush = () => {
 
   const startListening = () => {
     if (!process.client) return
-
+    
     const messaging = getMessaging(app)
     onMessage(messaging, (payload) => {
       console.log('✅ Foreground message:', payload)

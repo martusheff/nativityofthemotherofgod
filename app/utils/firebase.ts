@@ -18,6 +18,6 @@ const app: FirebaseApp = getApps().length > 0 ? getApps()[0]! : initializeApp(fi
 
 const auth = getAuth(app)
 const db = getFirestore(app)
-const messaging = process.client ? getMessaging(app) : null
+// const messaging = process.client ? getMessaging(app) : null
 
 export { app, auth, db, messaging }
