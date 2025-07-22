@@ -12,9 +12,9 @@
       <div class="space-y-4">
         <!-- Current Status -->
         <div class="p-4 rounded-xl border border-stone-200">
-          <div class="flex items-center justify-between">
+          <div class="flex items-center justify-between gap-2">
             <div class="flex items-center">
-              <div class="w-10 h-10 rounded-xl flex items-center justify-center mr-4" :class="getStatusBgClass()">
+              <div class="w-10 min-w-10 h-10 rounded-xl flex items-center justify-center mr-4" :class="getStatusBgClass()">
                 <Icon :name="getStatusIcon()" :class="getStatusIconClass()" class="w-5 h-5" />
               </div>
               <div>
@@ -134,9 +134,9 @@
 
         <!-- Individual Notification Items -->
         <div class="space-y-3">
-          <div class="flex items-center justify-between p-4 rounded-xl border border-stone-200 bg-white">
+          <div class="flex items-center justify-between p-4 rounded-xl border border-stone-200 bg-white gap-2">
             <div class="flex items-center">
-              <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
+              <div class="w-10 min-w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
                 <Icon name="heroicons:wrench-screwdriver" class="w-5 h-5 text-blue-600" />
               </div>
               <div>
