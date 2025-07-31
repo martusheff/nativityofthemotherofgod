@@ -8,7 +8,7 @@ description: >+
 
 heroImage: /images/uploads/greek.jpg
 heroImageDescription: Icon of the Nativity of the Mother of God
-heroPrimaryCTALabel: Contribute
+heroPrimaryCTALabel: Support
 heroPrimaryCTAURL: https://donate.nativityofthemotherofgod.com/b/14A6oJakr1TD3Zs7DBeQM00
 heroSecondaryCTALabel: Service Schedule
 heroSecondaryCTAURL: /schedule
