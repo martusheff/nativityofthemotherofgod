@@ -4,7 +4,7 @@
      <div class="w-full flex flex-col gap-4 p-4 border rounded-3xl border-stone-200 shadow-sm">
             <p class="text-center italic text-lg leading-tight">In app donations are coming soon. In the meantime, we are accepting donations with the link below.</p>
 
-    <NuxtLink to="https://donate.stripe.com/14A6oJakr1TD3Zs7DBeQM00"
+    <NuxtLink to="https://donate.nativityofthemotherofgod.com/b/14A6oJakr1TD3Zs7DBeQM00"
       class="text-xl text-center w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white px-8 py-3 h-auto rounded-full shadow-md hover:shadow-lg transform hover:-translate-y-0.5 font-medium">
       Donate
     </NuxtLink>
