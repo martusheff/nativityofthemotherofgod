@@ -171,10 +171,10 @@ onUnmounted(() => {
                     </template>
                 </div>
                 <!-- Donate button -->
-                <RouterLink to="https://donate.stripe.com/14A6oJakr1TD3Zs7DBeQM00"
+                <NuxtLink to="https://donate.stripe.com/14A6oJakr1TD3Zs7DBeQM00"
                     class="text-xl transition-all duration-300 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white px-8 py-3 h-auto rounded-full shadow-md hover:shadow-lg transform hover:-translate-y-0.5 font-medium">
                     Donate
-                </RouterLink>
+                </NuxtLink>
             </nav>
 
             <!-- Mobile Toggle -->
@@ -261,11 +261,11 @@ onUnmounted(() => {
 
                 <!-- Donate button -->
                 <div class="py-3 flex-shrink-0">
-                    <RouterLink to="https://donate.stripe.com/14A6oJakr1TD3Zs7DBeQM00"
+                    <NuxtLink to="https://donate.stripe.com/14A6oJakr1TD3Zs7DBeQM00"
                         class="w-full text-center text-lg font-medium bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white py-3 px-6 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 block"
                         @click="isOpen = false">
                         Donate
-                    </RouterLink>
+                </NuxtLink>
                 </div>
             </nav>
         </div>

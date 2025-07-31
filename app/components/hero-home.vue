@@ -30,11 +30,11 @@
 
           <!-- Buttons -->
           <div class="flex md:flex-row gap-4 p-4">
-            <RouterLink
+            <NuxtLink
               class="flex-1 w-full text-center flex justify-center bg-amber-500 text-lg hover:bg-amber-600 text-white font-medium py-3 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300"
               :to="home?.heroPrimaryCTAURL ?? '#'" >
               {{home?.heroPrimaryCTALabel}}
-            </RouterLink>
+            </NuxtLink>
             <RouterLink
               class="flex-1  w-full text-center flex justify-center bg-white border text-lg border-stone-300 hover:border-stone-400 text-stone-700 font-medium py-3 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300"
               :to="home?.heroSecondaryCTAURL ?? '#'" >
