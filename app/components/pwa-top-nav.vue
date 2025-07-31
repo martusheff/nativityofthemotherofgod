@@ -66,7 +66,7 @@ const pageConfigs: Record<string, PageConfig> = {
     subtitle: 'Welcome back',
     action: {
       icon: 'heroicons:bell',
-      onClick: () => console.log('Notifications clicked')
+      onClick: () => console.log('')
     }
   },
   '/schedule': {

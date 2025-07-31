@@ -9,7 +9,7 @@ export const useFirebasePush = () => {
 
     try {
       const registration = await navigator.serviceWorker.ready
-      console.log('✅ Service Worker registered:', registration)
+      // console.log('✅ Service Worker registered:', registration)
 
       const messaging = getMessaging(app)
       const permission = await Notification.requestPermission()
@@ -22,7 +22,7 @@ export const useFirebasePush = () => {
         vapidKey,
         serviceWorkerRegistration: registration,
       })
-      console.log('✅ FCM Token:', token)
+      // console.log('✅ FCM Token:', token)
       return token
     } catch (error) {
       console.error('Push permission error:', error)
@@ -47,7 +47,7 @@ export const useFirebasePush = () => {
         serviceWorkerRegistration: registration,
       })
       
-      console.log('✅ Existing FCM Token:', token)
+      // console.log('✅ Existing FCM Token:', token)
       return token
     } catch (error) {
       console.error('Error getting existing token:', error)
@@ -85,12 +85,12 @@ export const useFirebasePush = () => {
     
     const messaging = getMessaging(app)
     onMessage(messaging, (payload) => {
-      console.log('✅ Foreground message:', payload)
+      // console.log('✅ Foreground message:', payload)
       
       // Check if the page is actually visible/focused
       // onMessage should only fire when app is in foreground, but mobile browsers can be tricky
       if (document.hidden || document.visibilityState !== 'visible') {
-        console.log('Page not visible, letting service worker handle notification')
+        // console.log('Page not visible, letting service worker handle notification')
         return
       }
       

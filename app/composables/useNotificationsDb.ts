@@ -82,7 +82,7 @@ export const useNotificationsDb = () => {
     if (!user.value) throw new Error('No user logged in')
 
     const targetDeviceId = deviceId || generateDeviceId()
-    console.log('Removing device token for deviceId:', targetDeviceId)
+    // console.log('Removing device token for deviceId:', targetDeviceId)
     const path = `users/${user.value.uid}`
     
     const userData = await getDocByPath(path)
@@ -91,9 +91,9 @@ export const useNotificationsDb = () => {
 
     // Remove the specific device token
     const updatedTokens: NotificationTokens = { ...existingTokens }
-    console.log('Before removal, existing tokens:', Object.keys(existingTokens))
+    // console.log('Before removal, existing tokens:', Object.keys(existingTokens))
     delete updatedTokens[targetDeviceId]
-    console.log('After removal, updated tokens:', Object.keys(updatedTokens))
+    // console.log('After removal, updated tokens:', Object.keys(updatedTokens))
 
     // Use setDocByPath to ensure the document exists
     await setDocByPath(path, {

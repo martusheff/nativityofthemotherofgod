@@ -119,7 +119,7 @@ export const notificationTracker = {
         }
       })
 
-      console.log(`Found ${userMappings.length} users with ${userMappings.reduce((sum, user) => sum + user.tokens.length, 0)} total tokens`)
+      // console.log(`Found ${userMappings.length} users with ${userMappings.reduce((sum, user) => sum + user.tokens.length, 0)} total tokens`)
       return userMappings
     } catch (error) {
       console.error('Error getting users with notifications:', error)
@@ -304,7 +304,7 @@ export const notificationTracker = {
       }
 
       await trackingRef.set(trackingData)
-      console.log(`Updated notification tracking for event ${eventId}: ${summary.successCount} success, ${summary.failureCount} failed, ${summary.invalidTokenCount} invalid`)
+      // console.log(`Updated notification tracking for event ${eventId}: ${summary.successCount} success, ${summary.failureCount} failed, ${summary.invalidTokenCount} invalid`)
 
     } catch (error) {
       console.error('Error updating notification tracking:', error)
@@ -424,7 +424,7 @@ export const notificationTracker = {
     if (invalidTokens.length === 0) return
 
     try {
-      console.log(`Cleaning up ${invalidTokens.length} invalid tokens`)
+      // console.log(`Cleaning up ${invalidTokens.length} invalid tokens`)
 
       const usersSnapshot = await db.collection('users')
         .where('notifications.enabled', '==', true)
@@ -457,7 +457,7 @@ export const notificationTracker = {
             batchCount++
 
             if (batchCount >= 450) {
-              console.log('Batch limit approaching, committing current batch.')
+              // console.log('Batch limit approaching, committing current batch.')
               return
             }
           }
@@ -466,7 +466,7 @@ export const notificationTracker = {
 
       if (batchCount > 0) {
         await batch.commit()
-        console.log(`Successfully cleaned up invalid tokens from ${batchCount} user documents`)
+        // console.log(`Successfully cleaned up invalid tokens from ${batchCount} user documents`)
       }
     } catch (error) {
       console.error('Error cleaning up invalid tokens:', error)

@@ -28,14 +28,14 @@ if (!firebase.apps.length) {
 }
 
 self.addEventListener('push', (event) => {
-  console.log('[sw.ts] 🔔 Raw Push event received.'); // This is the first log now
+  // console.log('[sw.ts] 🔔 Raw Push event received.'); // This is the first log now
   
   // Prevent the browser's default notification display. THIS IS KEY!
   event.preventDefault(); 
 
   // Parse the data from the push event
   const data = event.data?.json() || {};
-  console.log('[sw.ts] Push event data:', data);
+  // console.log('[sw.ts] Push event data:', data);
 
   // Extract notification details. If your backend sends a 'notification' field, use it.
   // Otherwise, you might construct it from 'data'.
@@ -57,7 +57,7 @@ self.addEventListener('push', (event) => {
     data: data // Pass original data for click handling
   };
 
-  console.log('[sw.ts] Showing custom notification with options:', options);
+  // console.log('[sw.ts] Showing custom notification with options:', options);
 
   // Display the notification
   event.waitUntil(self.registration.showNotification(title, options));

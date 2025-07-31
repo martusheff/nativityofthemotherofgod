@@ -78,7 +78,7 @@ const authSubmitting = ref(false)
 // Redirect to account if already authenticated
 watch(isAuthenticated, (newValue) => {
   if (newValue) {
-    console.log('User is authenticated, redirecting to /account')
+    // console.log('User is authenticated, redirecting to /account')
     navigateTo('/account')
   }
 }, { immediate: true })
@@ -86,12 +86,12 @@ watch(isAuthenticated, (newValue) => {
 const handleSignIn = async () => {
   if (authSubmitting.value) return
   
-  console.log('Attempting Google sign-in')
+  // console.log('Attempting Google sign-in')
   authSubmitting.value = true
   
   try {
     await signInWithGoogle()
-    console.log('Sign-in successful, will redirect via watcher')
+    // console.log('Sign-in successful, will redirect via watcher')
     // Navigation will happen via the watcher above
   } catch (error: any) {
     console.error('Sign-in error:', error.message)

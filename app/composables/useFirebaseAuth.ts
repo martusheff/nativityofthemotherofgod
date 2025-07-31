@@ -23,7 +23,7 @@ const initializeAuth = () => {
   authStateInitialized = true
 
   onAuthStateChanged(auth, (firebaseUser) => {
-    console.log('Auth state changed:', firebaseUser ? 'User logged in' : 'User logged out')
+    // console.log('Auth state changed:', firebaseUser ? 'User logged in' : 'User logged out')
     user.value = firebaseUser
     loading.value = false
   }, (error) => {
@@ -50,7 +50,7 @@ export const useFirebaseAuth = () => {
       provider.addScope('email')
       
       const userCredential = await signInWithPopup(auth, provider)
-      console.log('Google sign-in successful:', userCredential.user.email)
+      // console.log('Google sign-in successful:', userCredential.user.email)
       return userCredential.user
     } catch (err: any) {
       console.error('Google sign-in error:', err)
@@ -64,7 +64,7 @@ export const useFirebaseAuth = () => {
     try {
       error.value = ''
       await firebaseSignOut(auth)
-      console.log('Sign out successful')
+      // console.log('Sign out successful')
     } catch (err: any) {
       console.error('Sign out error:', err)
       error.value = err.message
@@ -79,7 +79,7 @@ export const useFirebaseAuth = () => {
     try {
       error.value = ''
       await firebaseUpdateProfile(user.value, updates)
-      console.log('Profile updated successfully')
+      // console.log('Profile updated successfully')
     } catch (err: any) {
       console.error('Profile update error:', err)
       error.value = err.message
@@ -94,7 +94,7 @@ export const useFirebaseAuth = () => {
     try {
       error.value = ''
       await sendEmailVerification(user.value)
-      console.log('Verification email sent')
+      // console.log('Verification email sent')
     } catch (err: any) {
       console.error('Send verification error:', err)
       error.value = err.message

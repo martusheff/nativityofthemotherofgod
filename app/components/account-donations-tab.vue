@@ -168,10 +168,10 @@ const processDonation = async () => {
     await new Promise(resolve => setTimeout(resolve, 2000))
 
     // In real app, integrate with payment processor (Stripe, PayPal, etc.)
-    console.log('Processing donation:', {
-      amount,
-      message: donationMessage.value
-    })
+    // console.log('Processing donation:', {
+    //   amount,
+    //   message: donationMessage.value
+    // })
 
     // Add to history
     donationHistory.value.unshift({
