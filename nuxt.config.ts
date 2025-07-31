@@ -37,11 +37,15 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    stripeSecretKey: process.env.STRIPE_SECRET_KEY,
+    stripeWebhookSecretDonations: process.env.STRIPE_WEBHOOK_SECRET_DONATIONS,
+
     turnstile: {
       secretKey: process.env.TURNSTYLE_SECRETKEY,
     },
     public: {
       web3FormsAccessKey: process.env.WEB3_FORMS_ACCESS_KEY,
+      stripePublishableKey: process.env.NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
     }
   },
 
@@ -151,6 +155,7 @@ export default defineNuxtConfig({
     'nuxt-gtag',
     '@nuxtjs/turnstile',
     '@vite-pwa/nuxt',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    "@unlok-co/nuxt-stripe"
   ]
 })
