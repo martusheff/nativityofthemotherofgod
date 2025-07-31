@@ -1,9 +1,17 @@
 <template>
-  <div class="space-y-6">
+  <div class="flex flex-col gap-6">
     <!-- Support Summary -->
-    <div class="bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl text-white p-6">
-      <p class="text-center italic text-lg leading-tight">We will be ready to process donations once the IRS approves our 501c3 non-profit filing.</p>
-    </div>
+     <div class="w-full flex flex-col gap-4 p-4 border rounded-3xl border-stone-200 shadow-sm">
+            <p class="text-center italic text-lg leading-tight">In app donations are coming soon. In the meantime, we are accepting donations with the link below.</p>
+
+    <NuxtLink to="https://donate.stripe.com/14A6oJakr1TD3Zs7DBeQM00"
+      class="text-xl text-center w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white px-8 py-3 h-auto rounded-full shadow-md hover:shadow-lg transform hover:-translate-y-0.5 font-medium">
+      Donate
+    </NuxtLink>
+     </div>
+
+
+
 
     <!-- Quick Donation Options -->
     <!-- <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6">
@@ -179,7 +187,7 @@ const processDonation = async () => {
     })
 
     donationSuccess.value = `Thank you for your ${amount} donation! Your support means the world to us.`
-    
+
     // Reset form
     selectedAmount.value = null
     customAmount.value = ''
