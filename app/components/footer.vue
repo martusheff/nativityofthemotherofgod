@@ -27,6 +27,20 @@ import { RouterLink } from 'vue-router'
                             Join us for worship, fellowship, and spiritual growth in the heart of Woodburn.
                         </p>
                     </div>
+                    <div class="text-center sm:text-left space-y-2">
+                        <div class="flex items-center justify-center sm:justify-start gap-2 px-4">
+                            <Icon name="lucide:mail" class="text-xl text-amber-400" />
+                            <a href="mailto:roc.nativityofthemotherofgod@gmail.com" class="text-stone-600 leading-relaxed text-md hover:text-amber-400 transition-all duration-300">
+                                roc.nativityofthemotherofgod@gmail.com
+                            </a>
+                        </div>
+                        <div class="flex items-center justify-center sm:justify-start gap-2 px-4">
+                            <Icon name="lucide:phone" class="text-xl text-amber-400" />
+                            <a href="tel:5038816340" class="text-stone-600 leading-relaxed text-md hover:text-amber-400 transition-all duration-300">
+                                (503) 881-6340
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <!-- Navigation Links -->
                 <div

@@ -26,7 +26,7 @@ useSeoMeta({
 
 // Form data
 const form = ref({
-  access_key: config.public.web3FormsAccessKey, 
+  access_key: config.public.web3FormsAccessKey,
   subject: 'New Contact Submission from nativityofthemotherofgod.com',
   name: '',
   email: '',
@@ -150,7 +150,7 @@ const submitForm = async (): Promise<void> => {
 
 <template>
   <div class="min-h-screen">
-    <HeroLowImpact :title="contactPage?.title" :subtitle="contactPage?.subTitle"/>
+    <HeroLowImpact :title="contactPage?.title" :subtitle="contactPage?.subTitle" />
 
     <!-- Contact Section -->
     <section class="container mx-auto max-w-4xl px-4 py-12">
@@ -162,6 +162,13 @@ const submitForm = async (): Promise<void> => {
             <p class="text-lg text-stone-600 text-center">
               Fill out the form below and Fr. Nikita will get back to you as soon as possible.
             </p>
+            <div class="flex items-center justify-center gap-2 px-4">
+              <p>Or email us directly at: </p>
+              <a href="mailto:roc.nativityofthemotherofgod@gmail.com"
+                class="text-stone-600 leading-relaxed text-md hover:text-amber-400 transition-all duration-300">
+                roc.nativityofthemotherofgod@gmail.com
+              </a>
+            </div>
           </div>
 
           <!-- Success Message -->
@@ -171,6 +178,8 @@ const submitForm = async (): Promise<void> => {
                 <h3 class="text-2xl text-center pt-8">Message Sent</h3>
                 <p class="text-lg text-center pb-8">Thank you for contacting us. We'll respond when we receive your
                   message.</p>
+
+
               </div>
             </div>
           </div>
