@@ -40,6 +40,18 @@ import { RouterLink } from 'vue-router'
                                 (503) 881-6340
                             </a>
                         </div>
+
+                        <div class="flex items-center justify-center sm:justify-start gap-2 px-4">
+                            <Icon name="lucide:map-pin" class="text-xl text-amber-400" />
+                            <a
+                                href="https://www.google.com/maps/search/?api=1&query=1700+NE+Laurel+Ave,+Woodburn,+OR+97071"
+                                class="text-stone-600 leading-relaxed text-md hover:text-amber-400 transition-all duration-300"
+                                target="_blank"
+                            >
+                                1700 NE Laurel Ave, Woodburn OR, 97071
+                            </a>
+                        </div>
+
                     </div>
                 </div>
                 <!-- Navigation Links -->
