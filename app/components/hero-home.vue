@@ -1,87 +1,49 @@
 <template>
   <!-- Home Hero with Background -->
-  <div class="relative ">
-
+  <div class="relative">
     <!-- Content -->
     <div class="relative z-10 container mx-auto max-w-full md:max-w-7xl px-0 sm:px-8">
-      <!-- Mobile/Tablet Layout -->
-      <div class="md:hidden flex flex-col items-center text-center gap-8">
+      <!-- Single Responsive Layout -->
+      <div class="flex flex-col md:grid md:grid-cols-2 md:gap-12 md:items-center items-center text-center md:text-left gap-8 md:py-16">
+        
         <!-- Image Section -->
-        <div class="w-full">
+        <div class="w-full md:order-1">
           <NuxtImg 
             :src="home?.heroImage" 
-            class="w-full h-auto max-h-60 object-cover aspect-[4/3] shadow-md " 
+            class="w-full h-auto max-h-60 md:max-h-[600px] object-cover aspect-[4/3] md:aspect-auto shadow-md md:rounded-3xl" 
             loading="eager"
             alt="Icon of the Nativity of the Mother of God" 
           />
-        </div>
-
-        <!-- Content Section -->
-        <div class="space-y-4 px-0 md:px-0">
-          <h1 class="text-xl text-stone-800 font-bold leading-tight tracking-tighter px-2">
-            {{ home?.title }}
-          </h1>
-          <p class="text-xl text-amber-600 italic px-4">
-            {{ home?.subTitle }}
-          </p>
-          <p class="text-lg text-stone-600 leading-relaxed px-4">
-            {{ home?.description }}
-          </p>
-
-          <!-- Buttons -->
-          <div class="flex md:flex-row gap-4 p-4">
-            <NuxtLink
-              class="flex-1 w-full text-center flex justify-center bg-amber-500 text-lg hover:bg-amber-600 text-white font-medium py-3 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300"
-              :to="home?.heroPrimaryCTAURL ?? '#'" >
-              {{home?.heroPrimaryCTALabel}}
-            </NuxtLink>
-            <RouterLink
-              class="flex-1  w-full text-center flex justify-center bg-white border text-lg border-stone-300 hover:border-stone-400 text-stone-700 font-medium py-3 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300"
-              :to="home?.heroSecondaryCTAURL ?? '#'" >
-              {{home?.heroSecondaryCTALabel}}
-            </RouterLink>
-          </div>
-        </div>
-      </div>
-
-      <!-- Desktop Layout -->
-      <div class="hidden md:grid md:grid-cols-2 gap-12 items-center py-16">
-        <!-- Image Section -->
-        <div>
-          <NuxtImg 
-            :src="home?.heroImage" 
-            class="w-full h-auto max-h-[600px] object-cover rounded-3xl shadow-md"
-            loading="eager" 
-            alt="Icon of the Nativity of the Mother of God" 
-          />
-          <p class="text-stone-600 italic mt-4 text-center">
+          <p class="text-stone-600 italic mt-4 text-center hidden md:block">
             {{home?.heroImageDescription}}
           </p>
         </div>
 
         <!-- Content Section -->
-        <div class="space-y-6">
-          <h1 class="text-6xl text-stone-800 font-black leading-tight tracking-tight">
+        <div class="space-y-4 md:space-y-6 px-0 md:px-0 md:order-2">
+          <h1 class="text-xl md:text-6xl text-stone-800 font-bold md:font-black leading-tight tracking-tighter md:tracking-tight px-2 md:px-0">
             {{ home?.title }}
           </h1>
-          <p class="text-3xl text-amber-600 italic">
+          <p class="text-xl md:text-3xl text-amber-600 italic px-4 md:px-0">
             {{ home?.subTitle }}
           </p>
-          <p class="text-xl text-stone-600 leading-relaxed">
+          <p class="text-lg md:text-xl text-stone-600 leading-relaxed px-4 md:px-0">
             {{ home?.description }}
           </p>
 
           <!-- Buttons -->
-          <div class="flex gap-6 pt-8">
-            <RouterLink
-              :v-if="home?.heroPrimaryCTALabel && home?.heroPrimaryCTAURL" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-medium py-5 px-10 rounded-full shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 text-xl tracking-wide group"
+          <div class="flex gap-4 md:gap-6 p-4 md:p-0 md:pt-8">
+            <NuxtLink
+              v-if="home?.heroPrimaryCTALabel && home?.heroPrimaryCTAURL"
+              class="flex-1 md:flex-none w-full md:w-auto text-center flex justify-center bg-amber-500 md:bg-gradient-to-r md:from-amber-500 md:to-amber-600 text-lg md:text-xl hover:bg-amber-600 md:hover:from-amber-600 md:hover:to-amber-700 text-white font-medium py-3 md:py-5 px-6 md:px-10 rounded-full shadow-md md:shadow-lg hover:shadow-lg md:hover:shadow-2xl md:transform md:hover:-translate-y-2 transition-all duration-300 md:tracking-wide group"
               :to="home?.heroPrimaryCTAURL ?? '#'">
-              <span class="group-hover:scale-105 transition-transform duration-300">{{home?.heroPrimaryCTALabel}}</span>
-            </RouterLink>
+              <span class="md:group-hover:scale-105 md:transition-transform md:duration-300">{{home?.heroPrimaryCTALabel}}</span>
+            </NuxtLink>
             <RouterLink
-              :v-if="home?.heroSecondaryCTALabel && home?.heroSecondaryCTAURL" class="bg-white/90 backdrop-blur-sm border border-slate-200 hover:border-slate-300 text-slate-700 hover:text-slate-800 font-medium py-5 px-10 rounded-full shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 text-xl tracking-wide group"
+              v-if="home?.heroSecondaryCTALabel && home?.heroSecondaryCTAURL"
+              class="flex-1 md:flex-none w-full md:w-auto text-center flex justify-center bg-white md:bg-white/90 md:backdrop-blur-sm border border-stone-300 md:border-slate-200 hover:border-stone-400 md:hover:border-slate-300 text-stone-700 md:text-slate-700 md:hover:text-slate-800 font-medium py-3 md:py-5 px-6 md:px-10 rounded-full shadow-md md:shadow-lg hover:shadow-lg md:hover:shadow-2xl md:transform md:hover:-translate-y-2 transition-all duration-300 text-lg md:text-xl md:tracking-wide group"
               :to="home?.heroSecondaryCTAURL ?? '#'">
-              <span class="group-hover:scale-105 transition-transform duration-300 text-lg">{{home?.heroSecondaryCTALabel}}</span>
+              <span class="md:group-hover:scale-105 md:transition-transform md:duration-300">{{home?.heroSecondaryCTALabel}}</span>
             </RouterLink>
           </div>
         </div>

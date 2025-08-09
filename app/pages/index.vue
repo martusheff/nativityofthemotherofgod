@@ -10,8 +10,8 @@ const { data: home } = await useAsyncData(() =>
 );
 
 useSeoMeta({
-  title: home.value?.title,
-  description: home.value?.description,
+  title: "Nativity of the Mother of God Russian Orthodox Church | Woodburn, OR",
+  description: "Worship at Nativity of the Mother of God Russian Orthodox Church in Woodburn, Oregon. Faithful services, traditional liturgy, and community fellowship.",
 });
 
 </script>
