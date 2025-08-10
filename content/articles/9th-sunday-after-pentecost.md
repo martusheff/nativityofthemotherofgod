@@ -1,6 +1,6 @@
 ---
 title: What are we afraid of? Keep your focus on Christ.
-description: What are you afraid of? Keep your focus on Christ.
+description: 9th Sunday after Pentecost.
 author: Fr Nikita
 date: 2025-08-10T14:52:00.000-07:00
 image: /images/uploads/image_4_2.png
