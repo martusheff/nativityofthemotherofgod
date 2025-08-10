@@ -4,6 +4,7 @@ description: What are you afraid of? Keep your focus on Christ.
 author: Fr Nikita
 date: 2025-08-10T14:52:00.000-07:00
 image: /images/uploads/image_4_2.png
+youtubeurl: https://www.youtube.com/watch?v=MnVeZ_j3Cls
 signature: May the Blessing of the Lord help our focus and strengthen us!
 ---
 Dear Brothers and Sisters. The church is
