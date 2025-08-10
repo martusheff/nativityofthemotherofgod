@@ -1,5 +1,5 @@
 ---
-title: 9th Sunday after Pentecost
+title: What are we afraid of? Keep your focus on Christ.
 description: What are you afraid of? Keep your focus on Christ.
 author: Fr Nikita
 date: 2025-08-10T14:52:00.000-07:00
@@ -7,7 +7,7 @@ image: /images/uploads/image_4_2.png
 youtubeurl: https://www.youtube.com/watch?v=MnVeZ_j3Cls
 signature: May the Blessing of the Lord help our focus and strengthen us!
 ---
-Dear Brothers and Sisters. The church is
+**Dear Brothers and Sisters.** The church is
 likened to a ship. You have heard me repeat this many times. It will experience
 stormy weather and waves, but if its gaze is on Christ. If it is faithful, it
 will overcome all things. Jesus constrains His disciples (the church) to get
@@ -80,10 +80,6 @@ blessed Peter did not doubt, and looked to Christ, he was lifted by the sea,
 despite the weight of his body; for the power of the word overcame the body’s
 natural heaviness.” Gods power is above nature itself and that is how it is
 able to do this.
-
- 
-
- 
 
 **What** are we afraid of? Are we afraid that
 the world will look at us funny if we follow Christ? Are we scared of what
