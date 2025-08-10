@@ -56,10 +56,7 @@
 import { useAsyncData, useSeoMeta } from 'nuxt/app';
 
 const { data: home } = await useAsyncData(() => queryCollection('pages').path('/pages/home').first())
-useSeoMeta({
-  title: home.value?.title,
-  description: home.value?.description
-})
+
 </script>
 
 <style>
