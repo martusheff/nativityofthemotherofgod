@@ -36,8 +36,8 @@ import { RouterLink } from 'vue-router'
                         </div>
                         <div class="flex items-center justify-center sm:justify-start gap-2 px-4">
                             <Icon name="lucide:phone" class="text-xl text-amber-400" />
-                            <a href="tel:5038816340" class="text-stone-600 leading-relaxed text-md hover:text-amber-400 transition-all duration-300">
-                                (503) 881-6340
+                            <a href="tel:5039102992" class="text-stone-600 leading-relaxed text-md hover:text-amber-400 transition-all duration-300">
+                                (503) 910-2992
                             </a>
                         </div>
 
