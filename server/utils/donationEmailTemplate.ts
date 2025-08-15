@@ -1,4 +1,3 @@
-// server/utils/emailTemplates.ts
 export function generateDonationReceiptHTML(
   amount: number, 
   sessionId: string, 
@@ -12,8 +11,8 @@ export function generateDonationReceiptHTML(
     day: 'numeric'
   });
   
-  // Extract just the trailing numbers from sessionId
-const referenceId = (sessionId.split('_').pop()?.slice(0, 12).toUpperCase() || sessionId.slice(0, 12).toUpperCase());
+  // Reference ID: first 12 chars after last underscore, uppercase
+  const referenceId = (sessionId.split('_').pop()?.slice(0, 12).toUpperCase() || sessionId.slice(0, 12).toUpperCase());
   
   return `
 <!DOCTYPE html>
@@ -23,10 +22,13 @@ const referenceId = (sessionId.split('_').pop()?.slice(0, 12).toUpperCase() || s
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Donation Receipt</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+    body, h1, h3, p, div, span, a {
+      font-family: 'Crimson Text', Georgia, serif !important;
+    }
   </style>
 </head>
-<body style="margin: 0; padding: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background-color: #ffffff; line-height: 1.6;">
+<body style="margin: 0; padding: 0; background-color: #ffffff; line-height: 1.6;">
   
   <!-- Main Container -->
   <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
@@ -40,7 +42,7 @@ const referenceId = (sessionId.split('_').pop()?.slice(0, 12).toUpperCase() || s
       </div>
       
       <!-- Title -->
-      <h1 style="font-family: 'Crimson Text', Georgia, serif; color: #1c1917; margin: 0 0 16px 0; font-size: 36px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2;">
+      <h1 style="color: #1c1917; margin: 0 0 16px 0; font-size: 36px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2;">
         Thank You
       </h1>
       
@@ -55,7 +57,7 @@ const referenceId = (sessionId.split('_').pop()?.slice(0, 12).toUpperCase() || s
       
       <!-- Greeting -->
       <div style="text-align: center; margin-bottom: 48px;">
-        <p style="font-family: 'Crimson Text', Georgia, serif; font-size: 22px; color: #57534e; margin: 0; font-style: italic;">
+        <p style="font-size: 22px; color: #57534e; margin: 0; font-style: italic;">
           ${donorName ? `Dear ${donorName},` : 'Dear Friend,'}
         </p>
       </div>
@@ -65,7 +67,7 @@ const referenceId = (sessionId.split('_').pop()?.slice(0, 12).toUpperCase() || s
         
         <!-- Amount -->
         <div style="margin-bottom: 24px;">
-          <div style="font-size: 48px; font-weight: 700; color: #1c1917; margin-bottom: 8px; font-family: 'Inter', sans-serif;">${formattedAmount}</div>
+          <div style="font-size: 48px; font-weight: 700; color: #1c1917; margin-bottom: 8px;">${formattedAmount}</div>
           <div style="color: #78716c; font-size: 16px;">Donation Amount</div>
         </div>
         
@@ -77,7 +79,7 @@ const referenceId = (sessionId.split('_').pop()?.slice(0, 12).toUpperCase() || s
           </div>
           <div style="display: flex; justify-content: space-between;">
             <span style="color: #78716c; font-size: 14px;">Reference:</span>
-            <span style="color: #1c1917; font-size: 12px; font-family: 'SF Mono', Monaco, monospace; background-color: #f5f5f4; padding: 4px 8px; border-radius: 6px;">${referenceId}</span>
+            <span style="color: #1c1917; font-size: 12px; background-color: #f5f5f4; padding: 4px 8px; border-radius: 6px;">${referenceId}</span>
           </div>
         </div>
         
@@ -85,14 +87,14 @@ const referenceId = (sessionId.split('_').pop()?.slice(0, 12).toUpperCase() || s
       
       <!-- Message -->
       <div style="text-align: center; margin-bottom: 40px;">
-        <p style="font-family: 'Crimson Text', Georgia, serif; font-size: 20px; color: #44403c; line-height: 1.6; margin: 0 0 32px 0;">
+        <p style="font-size: 20px; color: #44403c; line-height: 1.6; margin: 0 0 32px 0;">
           Thank you for your gift of <strong style="color: #d97706;">${formattedAmount}</strong> to the Church of the Nativity of the Mother of God. Your generosity and support is very much appreciated. May the Blessings of the Lord be upon you!!!
         </p>
         
         <!-- Elegant quote attribution -->
         <div style="text-align: center; margin-top: 24px;">
           <div style="width: 40px; height: 1px; background: linear-gradient(90deg, #f59e0b, #d97706); margin: 0 auto 16px;"></div>
-          <p style="font-family: 'Crimson Text', Georgia, serif; font-size: 16px; color: #78716c; margin: 0; font-style: italic;">
+          <p style="font-size: 16px; color: #78716c; margin: 0; font-style: italic;">
             Fr. Nikita Toran
           </p>
         </div>
@@ -122,7 +124,7 @@ const referenceId = (sessionId.split('_').pop()?.slice(0, 12).toUpperCase() || s
     <div style="text-align: center; padding: 40px; border-top: 1px solid #f5f5f4; background-color: #fafaf9;">
       
       <div style="margin-bottom: 20px;">
-        <h3 style="font-family: 'Crimson Text', Georgia, serif; color: #1c1917; font-size: 24px; font-weight: 600; margin: 0 0 8px 0;">
+        <h3 style="color: #1c1917; font-size: 24px; font-weight: 600; margin: 0 0 8px 0;">
           Nativity of the Mother of God
         </h3>
         <p style="color: #78716c; font-size: 16px; margin: 0; font-style: italic;">
