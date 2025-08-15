@@ -50,7 +50,7 @@ export default defineEventHandler(async (event) => {
         const emailHTML = generateDonationReceiptHTML(amount, session.id, donorName, new Date());
 
         const emailResponse = await resend.emails.send({
-          from: 'NMOG Receipts <no-reply@receipts.nmog.org>',
+          from: 'Church of the Nativity of the Mother of God <no-reply@receipts.nmog.org>',
           to: donorEmail,
           subject: 'Thank you for your donation!',
           html: emailHTML,
