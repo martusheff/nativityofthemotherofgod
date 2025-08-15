@@ -2,9 +2,9 @@ import { defineNuxtRouteMiddleware } from '#imports'
 import { useFirebaseAuth } from '~/composables/useFirebaseAuth'
 import { navigateTo } from '#app'
 
-export default defineNuxtRouteMiddleware(async (to, from) => {
+export default defineNuxtRouteMiddleware(async () => {
   // Skip middleware on server side
-  if (process.server) return
+  if (import.meta.server) return
 
   const { isAuthenticated, loading } = useFirebaseAuth()
 

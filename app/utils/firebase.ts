@@ -1,7 +1,6 @@
 import { initializeApp, getApps, type FirebaseApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
-import { getMessaging } from 'firebase/messaging'
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDBMCkuDPNJDHNqN1hPjzgkE2kKF9ehkuM",
@@ -18,6 +17,5 @@ const app: FirebaseApp = getApps().length > 0 ? getApps()[0]! : initializeApp(fi
 
 const auth = getAuth(app)
 const db = getFirestore(app)
-// const messaging = process.client ? getMessaging(app) : null
 
 export { app, auth, db, messaging }

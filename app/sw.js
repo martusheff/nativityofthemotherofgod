@@ -28,38 +28,34 @@ if (!firebase.apps.length) {
 }
 
 self.addEventListener('push', (event) => {
-  // console.log('[sw.ts] 🔔 Raw Push event received.'); // This is the first log now
+  // console.log('[sw.ts] Push event received.'); // This is the first log now
   
-  // Prevent the browser's default notification display. THIS IS KEY!
+  // Prevent the browser's default notification display. 
+  // This prevents multiple notifications from being sent.
   event.preventDefault(); 
 
-  // Parse the data from the push event
   const data = event.data?.json() || {};
   // console.log('[sw.ts] Push event data:', data);
-
-  // Extract notification details. If your backend sends a 'notification' field, use it.
-  // Otherwise, you might construct it from 'data'.
-  const notificationPayload = data.notification || data; // Adjust if your data structure is different
+  const notificationPayload = data.notification || data;
 
   if (!notificationPayload.title) {
     console.warn('[sw.ts] Push event received without title, not showing notification.');
     return; // Don't show a notification if there's no title
   }
 
-  const title = notificationPayload.title || 'Notification';
+  const title = notificationPayload.title;
+
   const options = {
     body: notificationPayload.body || '',
-    // Keep this icon line if you want an icon for your custom notification,
-    // or remove it if you prefer no icon.
     icon: notificationPayload.icon || '/icons/icon-192x192.png', 
-    tag: notificationPayload.messageId || 'default-tag', // Use messageId for uniqueness
+    tag: notificationPayload.messageId || 'default-tag',
     requireInteraction: true,
-    data: data // Pass original data for click handling
+    data: data
   };
 
   // console.log('[sw.ts] Showing custom notification with options:', options);
 
-  // Display the notification
+  // Display the notification.
   event.waitUntil(self.registration.showNotification(title, options));
 });
 
