@@ -164,12 +164,12 @@ const submitForm = async (): Promise<void> => {
             </p>
             <div class="flex items-center justify-center gap-2 px-4">
               <p>Or email us directly at: </p>
-              <a href="mailto:roc.nativityofthemotherofgod@gmail.com"
+              <a href="mailto:support@nativityofthemotherofgod.com"
                 class="text-stone-600 leading-relaxed text-md hover:text-amber-400 transition-all duration-300">
-                roc.nativityofthemotherofgod@gmail.com
+                support@nativityofthemotherofgod.com
               </a>
             </div>
-            
+
           </div>
 
           <!-- Success Message -->
