@@ -33,11 +33,11 @@ export default defineEventHandler(async (event) => {
     return { error: 'Invalid signature', status: 400 };
   }
 
-  if (stripeEvent.type === 'payment_intent.succeeded') {
-    const paymentIntent = stripeEvent.data.object;
-    const donorEmail = paymentIntent.receipt_email;
-    const amount = (paymentIntent.amount || 0) / 100;
-    console.log('Payment:', { id: paymentIntent.id, email: donorEmail, amount });
+  if (stripeEvent.type === 'checkout.session.completed') {
+    const session = stripeEvent.data.object;
+    const donorEmail = session.customer_details?.email;
+    const amount = (session.amount_total || 0) / 100;
+    console.log('Checkout Session:', { id: session.id, email: donorEmail, amount });
 
     if (donorEmail) {
       try {
@@ -52,7 +52,7 @@ export default defineEventHandler(async (event) => {
         console.error('Email error:', error);
       }
     } else {
-      console.log('No email in payment');
+      console.log('No email in session');
     }
   } else {
     console.log('Other event:', stripeEvent.type);
