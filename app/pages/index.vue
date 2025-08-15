@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import Timeline from './timeline/_components/timeline.vue';
-import Articles from './articles/_components/articles.vue';
-import About from './about/_components/about.vue';
-import Events from './schedule/_components/events.vue';
 import Divider from '../components/divider.vue';
 
 const { data: home } = await useAsyncData(() =>

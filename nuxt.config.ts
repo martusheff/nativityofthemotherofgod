@@ -166,6 +166,9 @@ export default defineNuxtConfig({
     '@nuxtjs/turnstile',
     '@vite-pwa/nuxt',
     '@pinia/nuxt',
-    "@unlok-co/nuxt-stripe"
+    "@unlok-co/nuxt-stripe",
+    "@nuxtjs/sitemap",
+    "@nuxtjs/robots",
+    "@nuxtjs/seo"
   ]
 })

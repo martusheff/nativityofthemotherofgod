@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import EventRow from './_components/event-row.vue';
 
 const { data: scheduleEvents } = await useAsyncData(() =>
   queryCollection('events').all()

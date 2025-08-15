@@ -87,7 +87,6 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import TimelineCard from './timeline-card.vue';
 
 // Props
 interface Props {

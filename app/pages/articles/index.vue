@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { useRouter, useRoute } from '#app'
-import ArticleCard from './_components/article-card.vue';
 
 const { data: articles } = await useAsyncData(() => queryCollection('articles').all())
 const { data: articlePage } = await useAsyncData(() =>

@@ -8,6 +8,5 @@
 </template>
 
 <script lang="ts" setup>
-import About from './_components/about.vue';
 const { $pwa } = useNuxtApp()
 </script>
