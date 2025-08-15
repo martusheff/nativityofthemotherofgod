@@ -1,61 +1,66 @@
-import { buffer } from 'micro'
-import { useServerStripe } from '#stripe/server'
-import { Resend } from 'resend'
-import type Stripe from 'stripe'
+import { buffer } from 'micro';
+import { useServerStripe } from '#stripe/server';
+import { Resend } from 'resend';
 
-const runtimeConfig = useRuntimeConfig()
-const resend = new Resend(runtimeConfig.resendApiKey)
+const runtimeConfig = useRuntimeConfig();
+const resend = new Resend(runtimeConfig.resendApiKey);
 
 export default defineEventHandler(async (event) => {
-//   if (event.node.req.method !== 'POST') {
-//     setResponseStatus(event, 405)
-//     return { error: 'Method not allowed' }
-//   }
+  console.log('Request received:', event.node.req.method, event.node.req.url);
 
-//   const stripe = await useServerStripe(event)
+  if (event.node.req.method !== 'POST') {
+    console.log('Invalid method:', event.node.req.method);
+    return { error: 'Method not allowed', status: 405 };
+  }
 
-//   const signature = getHeader(event, 'stripe-signature')
-//   if (!signature) {
-//     setResponseStatus(event, 400)
-//     return { error: 'Missing Stripe signature' }
-//   }
+  const stripe = await useServerStripe(event);
+  const signature = getHeader(event, 'stripe-signature');
+  if (!signature) {
+    console.log('No signature');
+    return { error: 'Missing signature', status: 400 };
+  }
 
-//   let stripeEvent
-//   try {
-//     const rawBody = await buffer(event.node.req)
-//     stripeEvent = stripe.webhooks.constructEvent(
-//       rawBody,
-//       signature!,
-//       runtimeConfig.stripeDonationWebhookSecretKey
-//     )
-//   } catch (err: any) {
-//     console.error('⚠️ Stripe webhook verification failed:', err.message)
-//     setResponseStatus(event, 400)
-//     return { error: 'Invalid signature' }
-//   }
+  let stripeEvent;
+  try {
+    const rawBody = await buffer(event.node.req);
+    stripeEvent = stripe.webhooks.constructEvent(
+      rawBody,
+      signature,
+      runtimeConfig.stripeDonationWebhookSecretKey
+    );
+    console.log('Event:', stripeEvent.type);
+  } catch (err) {
+    return { error: 'Invalid signature', status: 400 };
+  }
 
-// if (stripeEvent.type === 'payment_intent.succeeded') {
-//   const paymentIntent = stripeEvent.data.object as Stripe.PaymentIntent
-//   const donorEmail = paymentIntent.receipt_email
-//   const amount = (paymentIntent.amount ?? 0) / 100
+  if (stripeEvent.type === 'payment_intent.succeeded') {
+    const paymentIntent = stripeEvent.data.object;
+    const donorEmail = paymentIntent.receipt_email;
+    const amount = (paymentIntent.amount || 0) / 100;
+    console.log('Payment:', { id: paymentIntent.id, email: donorEmail, amount });
 
-//   if (donorEmail) {
-//     await resend.emails.send({
-//       from: 'NMOG Receipts <no-reply@receipts.nmog.org>',
-//       to: donorEmail,
-//       subject: 'Thank you for your donation!',
-//       html: `<p>We received your donation of <strong>$${amount.toFixed(
-//         2
-//       )}</strong>.</p>`,
-//     })
-//   }
-// }
+    if (donorEmail) {
+      try {
+        const emailResponse = await resend.emails.send({
+          from: 'NMOG Receipts <no-reply@receipts.nmog.org>',
+          to: donorEmail,
+          subject: 'Thank you for your donation!',
+          html: `<p>We received your donation of <strong>$${amount.toFixed(2)}</strong>.</p>`,
+        });
+        console.log('Email sent:', emailResponse);
+      } catch (error) {
+        console.error('Email error:', error);
+      }
+    } else {
+      console.log('No email in payment');
+    }
+  } else {
+    console.log('Other event:', stripeEvent.type);
+  }
 
-
-  setResponseStatus(event, 200)
-  return { received: true }
-})
+  return { received: true };
+});
 
 export const config = {
-  api: { bodyParser: false }, // keep this for Stripe signature verification
-}
+  api: { bodyParser: false },
+};
