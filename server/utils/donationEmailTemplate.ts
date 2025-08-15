@@ -13,7 +13,7 @@ export function generateDonationReceiptHTML(
   });
   
   // Extract just the trailing numbers from sessionId
-  const referenceId = sessionId.split('_').pop() || sessionId;
+const referenceId = (sessionId.split('_').pop()?.slice(0, 12).toUpperCase() || sessionId.slice(0, 12).toUpperCase());
   
   return `
 <!DOCTYPE html>
