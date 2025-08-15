@@ -101,7 +101,7 @@ const referenceId = (sessionId.split('_').pop()?.slice(0, 12).toUpperCase() || s
       <!-- Tax Information -->
       <div style="border: 1px solid #e7e5e4; border-radius: 12px; padding: 20px; margin-bottom: 40px; text-align: center;">
         <p style="font-size: 13px; color: #78716c; margin: 0; line-height: 1.4;">
-          Nativity of the Mother of God Orthodox Church is a 501(c)(3) nonprofit organization. Your donation may be tax-deductible. No goods or services were provided in return for these contributions.
+          The Russian Orthodox Church of the Nativity of the Mother of God is a 501(c)(3) nonprofit organization. Your donation may be tax-deductible. No goods or services were provided in return for these contributions.
         </p>
         <div style="margin-top: 12px; font-size: 12px; color: #78716c;">
           <strong>Tax ID:</strong> 39-2222243 • <strong>Receipt Date:</strong> ${formattedDate}
