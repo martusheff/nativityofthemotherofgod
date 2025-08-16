@@ -32,6 +32,13 @@ export default defineNuxtConfig({
     port: 3000
   },
 
+  nitro: {
+    prerender: {
+      crawlLinks: true, // Crawl all links to prerender pages
+      routes: ['/'], // Specify key pages to prerender
+    },
+  },
+
   css: ['~/assets/css/main.css'],
 
   tailwindcss: {
@@ -60,15 +67,32 @@ export default defineNuxtConfig({
   },
 
   image: {
-    provider: 'ipx', // Use Nuxt's default provider for optimization
+    provider: 'ipx',
     presets: {
       seo: {
         modifiers: {
-          format: 'webp', // Use WebP for faster loading
-          quality: 80, // Balance quality and size
-          width: 1200, // Optimize for typical display sizes
+          format: 'webp',
+          quality: 80,
+          width: 1200,
+          fit: 'cover', // Ensure proper scaling
         },
       },
+      mobile: {
+        modifiers: {
+          format: 'webp',
+          quality: 80,
+          width: 600, // Smaller size for mobile
+          fit: 'cover',
+        },
+      },
+    },
+    screens: {
+      xs: 320,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      xxl: 1536,
     },
   },
 
