@@ -86,6 +86,14 @@ export default defineNuxtConfig({
         },
       },
     },
+    placeholder: {
+      modifiers: {
+        format: 'webp',
+        quality: 10, // Low quality for fast loading
+        width: 100, // Small size for placeholder
+        blur: 5, // Add blur for LQIP effect
+      },
+    },
     screens: {
       xs: 320,
       sm: 640,
