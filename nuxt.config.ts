@@ -2,27 +2,27 @@
 export default defineNuxtConfig({
 
   app: {
-  head: {
-    title: 'Nativity of the Mother of God', // Default site title
-    htmlAttrs: {
-      lang: 'en', // Set language for accessibility and SEO
+    head: {
+      title: 'Nativity of the Mother of God', // Default site title
+      htmlAttrs: {
+        lang: 'en', // Set language for accessibility and SEO
+      },
+      meta: [
+        { charset: 'utf-8' }, // Ensure charset is explicitly set
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' }, // Ensure responsive viewport
+        { name: 'description', content: 'ROCOR Old Rite Russian Orthodox Church in Woodburn, OR' }, // Default meta description
+        { name: 'keywords', content: 'Russian Orthodox Church, Nativity of the Mother of God, ROCOR, Old Rite, Woodburn, Oregon' }, // Relevant keywords
+        { property: 'og:site_name', content: 'Nativityhalbof the Mother of God' }, // Open Graph site name
+        { property: 'og:type', content: 'website' }, // Open Graph type
+        { property: 'og:image', content: 'https://www.nmog.org/icons/icon-512x512.png' }, // Default social image
+        { name: 'twitter:card', content: 'summary_large_image' }, // Twitter card type
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }, // Favicon
+        { rel: 'canonical', href: 'https://www.nmog.org' }, // Canonical URL for the homepage
+      ],
     },
-    meta: [
-      { charset: 'utf-8' }, // Ensure charset is explicitly set
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' }, // Ensure responsive viewport
-      { name: 'description', content: 'ROCOR Old Rite Russian Orthodox Church in Woodburn, OR' }, // Default meta description
-      { name: 'keywords', content: 'Russian Orthodox Church, Nativity of the Mother of God, ROCOR, Old Rite, Woodburn, Oregon' }, // Relevant keywords
-      { property: 'og:site_name', content: 'Nativityhalbof the Mother of God' }, // Open Graph site name
-      { property: 'og:type', content: 'website' }, // Open Graph type
-      { property: 'og:image', content: 'https://www.nmog.org/icons/icon-512x512.png' }, // Default social image
-      { name: 'twitter:card', content: 'summary_large_image' }, // Twitter card type
-    ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }, // Favicon
-      { rel: 'canonical', href: 'https://www.nmog.org' }, // Canonical URL for the homepage
-    ],
   },
-},
 
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
