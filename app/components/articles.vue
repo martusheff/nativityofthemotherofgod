@@ -6,16 +6,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-const { data: home } = await useAsyncData(() =>
-  queryCollection('pages').path('/pages/home').first()
-);
-
 const { data: articles } = await useAsyncData(() => queryCollection('articles').all())
 
-useSeoMeta({
-  title: home.value?.title,
-  description: home.value?.description,
-});
 
 const swiperModules = [Autoplay, Navigation, Pagination, Mousewheel];
 
