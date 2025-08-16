@@ -52,7 +52,6 @@ const navItems = [
 
 // Function to check if a route is active
 const isActiveRoute = (href) => {
-    // Handle home route - check for both '/' and '/home'
     if (href === '/home') {
         return route.path === '/' || route.path === '/home';
     }
@@ -82,7 +81,7 @@ watch(isOpen, (newValue) => {
     } else {
         document.body.classList.remove('menu-open');
         document.body.style.overflow = '';
-        openMobileSection.value = null; // Close all subsections when menu closes
+        openMobileSection.value = null;
     }
 });
 
@@ -103,12 +102,17 @@ onUnmounted(() => {
         <div class="px-4 flex h-20 items-center">
             <!-- Logo and title section -->
             <div class="flex items-center flex-shrink-0">
-                <RouterLink to="/" class="flex justify-center ">
-
-                    <img src="/logo.png" class="h-[4.25rem] pr-2 sm:pr-4 object-contain self-center" alt="Logo" />
+                <RouterLink to="/" class="flex justify-center">
+                    <NuxtImg 
+                        src="/logo.png" 
+                        class="h-[4.25rem] pr-2 sm:pr-4 object-contain self-center"
+                        alt="Nativity of the Mother of God Logo"
+                        preset="seo"
+                        sizes="sm:48px md:68px"
+                        
+                        loading="eager"
+                    />
                     <div class="flex flex-col justify-center">
-
-
                         <span
                             class="text-base sm:text-lg md:text-2xl font-bold tracking-tight line-clamp-1 text-stone-800">
                             Nativity of the Mother of God
@@ -207,7 +211,7 @@ onUnmounted(() => {
         ]">
             <nav class="py-2 px-4 flex flex-col space-y-1 overflow-y-auto max-h-[calc(100vh-5rem)]">
                 <template v-for="(item, index) in navItems" :key="item.label">
-                    <div class="border-b border-stone-200/40 pb-1 ">
+                    <div class="border-b border-stone-200/40 pb-1">
                         <UButton v-if="item.subsections.length > 0" :class="[
                             'w-full text-left text-xl font-medium py-3 px-3 rounded-lg transition-all duration-200 flex items-center justify-between group',
                             hasActiveSubsection(item.subsections) ? 'text-amber-600' : 'text-stone-800'
@@ -222,7 +226,7 @@ onUnmounted(() => {
                         </UButton>
                         <RouterLink v-else :to="item.href" :class="[
                             'w-full text-left text-xl font-medium py-3 px-3 rounded-lg hover:text-amber-600 transition-all duration-200 block',
-                            isActiveRoute(item.href) ? 'text-amber-600 ' : 'text-stone-800'
+                            isActiveRoute(item.href) ? 'text-amber-600' : 'text-stone-800'
                         ]" @click="isOpen = false">
                             {{ item.label }}
                         </RouterLink>
@@ -265,7 +269,7 @@ onUnmounted(() => {
                         class="w-full text-center text-lg font-medium bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white py-3 px-6 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 block"
                         @click="isOpen = false">
                         Donate
-                </NuxtLink>
+                    </NuxtLink>
                 </div>
             </nav>
         </div>

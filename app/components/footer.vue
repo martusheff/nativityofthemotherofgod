@@ -1,5 +1,5 @@
 <script setup>
-import { RouterLink } from 'vue-router'
+import { RouterLink } from 'vue-router';
 </script>
 
 <template>
@@ -10,7 +10,15 @@ import { RouterLink } from 'vue-router'
                 <!-- Parish Info -->
                 <div class="space-y-6">
                     <div class="flex flex-col md:flex-row items-center md:items-start gap-4">
-                        <img src="/logo.png" class="h-14 object-contain" alt="Parish Logo" />
+                        <NuxtImg 
+                            src="/logo.png" 
+                            class="h-14 object-contain"
+                            alt="Nativity of the Mother of God Logo"
+                            preset="seo"
+                            sizes="sm:56px md:56px"
+                            placeholder
+                            loading="lazy"
+                        />
                         <div class="text-center md:text-left">
                             <h3 class="text-2xl font-bold text-stone-800 leading-tight">
                                 Nativity of the Mother of God
@@ -40,7 +48,6 @@ import { RouterLink } from 'vue-router'
                                 (503) 910-2992
                             </a>
                         </div>
-
                         <div class="flex items-center justify-center sm:justify-start gap-2 px-4">
                             <Icon name="lucide:map-pin" class="text-xl text-amber-400" />
                             <a
@@ -51,12 +58,11 @@ import { RouterLink } from 'vue-router'
                                 1700 NE Laurel Ave, Woodburn OR, 97071
                             </a>
                         </div>
-
                     </div>
                 </div>
                 <!-- Navigation Links -->
                 <div
-                    class="space-y-6  w-full md:w-64 flex flex-col justify-center items-center md:items-end md:justify-end text-center md:text-right  ">
+                    class="space-y-6 w-full md:w-64 flex flex-col justify-center items-center md:items-end md:justify-end text-center md:text-right">
                     <h4 class="text-lg font-semibold text-stone-800">Quick Links</h4>
                     <nav class="space-y-3">
                         <RouterLink to="/"
@@ -83,11 +89,8 @@ import { RouterLink } from 'vue-router'
                             class="block text-stone-600 hover:text-amber-600 transition-colors duration-300 text-lg">
                             Contact Us
                         </RouterLink>
-
                     </nav>
                 </div>
-
-
             </div>
             <!-- Bottom Bar -->
             <div class="border-t border-stone-200 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
