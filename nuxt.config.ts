@@ -1,5 +1,29 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+
+  app: {
+  head: {
+    title: 'Nativity of the Mother of God', // Default site title
+    htmlAttrs: {
+      lang: 'en', // Set language for accessibility and SEO
+    },
+    meta: [
+      { charset: 'utf-8' }, // Ensure charset is explicitly set
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' }, // Ensure responsive viewport
+      { name: 'description', content: 'ROCOR Old Rite Russian Orthodox Church in Woodburn, OR' }, // Default meta description
+      { name: 'keywords', content: 'Russian Orthodox Church, Nativity of the Mother of God, ROCOR, Old Rite, Woodburn, Oregon' }, // Relevant keywords
+      { property: 'og:site_name', content: 'Nativityhalbof the Mother of God' }, // Open Graph site name
+      { property: 'og:type', content: 'website' }, // Open Graph type
+      { property: 'og:image', content: 'https://www.nmog.org/icons/icon-512x512.png' }, // Default social image
+      { name: 'twitter:card', content: 'summary_large_image' }, // Twitter card type
+    ],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }, // Favicon
+      { rel: 'canonical', href: 'https://www.nmog.org' }, // Canonical URL for the homepage
+    ],
+  },
+},
+
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
 
@@ -29,7 +53,23 @@ export default defineNuxtConfig({
   },
 
   gtag: {
+    config: {
+      send_page_view: true,
+    },
     id: process.env.GA4ID
+  },
+
+  image: {
+    provider: 'ipx', // Use Nuxt's default provider for optimization
+    presets: {
+      seo: {
+        modifiers: {
+          format: 'webp', // Use WebP for faster loading
+          quality: 80, // Balance quality and size
+          width: 1200, // Optimize for typical display sizes
+        },
+      },
+    },
   },
 
   turnstile: {
@@ -149,6 +189,28 @@ export default defineNuxtConfig({
       type: 'module'
     }
   },
+
+  site: {
+    url: 'https://www.nmog.org',
+    name: 'Russian Orthodox Church of the Nativity of the Mother of God',
+    description: 'ROCOR Old Rite Russian Orthodox Church in Woodburn, OR',
+    indexable: true,
+    defaultLocale: 'en',
+  },
+
+  sitemap: {
+    sources: [
+      '/api/__sitemap__/urls',
+    ]
+  },
+
+  robots: {
+    enabled: true,
+    allow: ['/'],
+    sitemap: 'https://www.nmog.org/sitemap.xml',
+  },
+
+
 
   modules: [
     '@nuxt/content',
