@@ -104,7 +104,7 @@ onUnmounted(() => {
             <div class="flex items-center flex-shrink-0">
                 <RouterLink to="/" class="flex justify-center">
                     <NuxtImg 
-                        src="/logo.png" 
+                        src="/logo.webp" 
                         class="h-[4.25rem] pr-2 sm:pr-4 object-contain self-center"
                         alt="Nativity of the Mother of God Logo"
                         preset="seo"

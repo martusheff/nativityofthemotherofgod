@@ -25,14 +25,14 @@
           </p>
         </div>
         <div class="md:col-span-2 w-full flex justify-center">
-          <NuxtImg src="/parish.jpg" class="w-80 h-80 object-cover rounded-full shadow-lg" loading="lazy"
+          <NuxtImg src="/parish.webp" class="w-80 h-80 object-cover rounded-full shadow-lg" loading="lazy"
             alt="Orthodox Old Rite Church" />
         </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12 md:items-center bg-white/80  p-8 md:p-12 md:px-16 rounded-4xl shadow-lg/2">
         <div class="md:col-span-2 w-full order-2 md:order-1 flex justify-center">
-          <NuxtImg src="/community.jpg" class="w-80 h-80 object-cover rounded-full shadow-lg" loading="lazy"
+          <NuxtImg src="/community.webp" class="w-80 h-80 object-cover rounded-full shadow-lg" loading="lazy"
             alt="Our Community Gathering" />
         </div>
         <div class="md:col-span-3 space-y-2 order-1 md:order-2 text-center md:text-left">

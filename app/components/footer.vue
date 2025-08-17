@@ -11,7 +11,7 @@ import { RouterLink } from 'vue-router';
                 <div class="space-y-6">
                     <div class="flex flex-col md:flex-row items-center md:items-start gap-4">
                         <NuxtImg 
-                            src="/logo.png" 
+                            src="/logo.webp" 
                             class="h-14 object-contain"
                             alt="Nativity of the Mother of God Logo"
                             preset="seo"
