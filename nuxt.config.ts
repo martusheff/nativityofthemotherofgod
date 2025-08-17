@@ -1,7 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 
-
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
 
@@ -209,6 +208,14 @@ export default defineNuxtConfig({
   // Use app.head for favicon and canonical links since @nuxtjs/seo doesn't handle them
   app: {
     head: {
+
+      htmlAttrs: {
+        lang: 'en',
+      },
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'canonical', href: 'https://www.nmog.org' },
+      ],
       meta: [
         { property: 'og:title', content: 'Nativity of the Mother of God Russian Orthodox Church' },
         { property: 'og:description', content: 'Old Rite Russian Orthodox Church in Woodburn, OR' },
@@ -217,52 +224,44 @@ export default defineNuxtConfig({
         { property: 'og:type', content: 'website' },
       ]
     },
-    htmlAttrs: {
-      lang: 'en',
-    },
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'canonical', href: 'https://www.nmog.org' },
-    ]
   },
-},
 
   // Global SEO defaults - these will be used across all pages
   seo: {
-  fallbackTitle: false, // Don't append site name to titles
-},
+    fallbackTitle: false, // Don't append site name to titles
+  },
 
   sitemap: {
-  sources: [
-    '/api/__sitemap__/urls',
-  ]
-},
+    sources: [
+      '/api/__sitemap__/urls',
+    ]
+  },
 
   robots: {
-  enabled: true,
-  allow: ['/'],
-  sitemap: 'https://www.nmog.org/sitemap.xml',
-},
+    enabled: true,
+    allow: ['/'],
+    sitemap: 'https://www.nmog.org/sitemap.xml',
+  },
 
   modules: [
-  '@nuxt/content',
-  '@nuxt/eslint',
-  '@nuxt/fonts',
-  '@nuxt/icon',
-  '@nuxt/image',
-  '@nuxt/scripts',
-  '@nuxt/test-utils',
-  '@nuxt/ui',
-  '@nuxtjs/tailwindcss',
-  'vue3-carousel-nuxt',
-  'nuxt-swiper',
-  'nuxt-gtag',
-  '@nuxtjs/turnstile',
-  '@vite-pwa/nuxt',
-  '@pinia/nuxt',
-  "@unlok-co/nuxt-stripe",
-  "@nuxtjs/sitemap",
-  "@nuxtjs/robots",
-  "@nuxtjs/seo" // This should be last or near the end
-]
+    '@nuxt/content',
+    '@nuxt/eslint',
+    '@nuxt/fonts',
+    '@nuxt/icon',
+    '@nuxt/image',
+    '@nuxt/scripts',
+    '@nuxt/test-utils',
+    '@nuxt/ui',
+    '@nuxtjs/tailwindcss',
+    'vue3-carousel-nuxt',
+    'nuxt-swiper',
+    'nuxt-gtag',
+    '@nuxtjs/turnstile',
+    '@vite-pwa/nuxt',
+    '@pinia/nuxt',
+    "@unlok-co/nuxt-stripe",
+    "@nuxtjs/sitemap",
+    "@nuxtjs/robots",
+    "@nuxtjs/seo" // This should be last or near the end
+  ]
 })
