@@ -1,43 +1,4 @@
 <script setup lang="ts">
-import Divider from '../components/divider.vue';
-
-// Set up SEO meta tags for the homepage
-useSeoMeta({
-  title: 'Nativity of the Mother of God Russian Orthodox Church | Woodburn, OR',
-  description: 'ROCOR Old Rite Russian Orthodox Church in Woodburn, OR. Faithful services, traditional liturgy, and community fellowship.',
-  keywords: 'Russian Orthodox Church, Nativity of the Mother of God, ROCOR, Old Rite, Woodburn, Oregon',
-  
-  // Open Graph tags for social media and Google
-  ogTitle: 'Nativity of the Mother of God Russian Orthodox Church',
-  ogDescription: 'ROCOR Old Rite Russian Orthodox Church in Woodburn, OR',
-  ogImage: 'https://www.nmog.org/icons/icon-512x512.png',
-  ogImageAlt: 'Nativity of the Mother of God Church Icon',
-  ogImageWidth: 512,
-  ogImageHeight: 512,
-  ogUrl: 'https://www.nmog.org',
-  ogSiteName: 'Nativity of the Mother of God',
-  ogType: 'website',  
-})
-
-// Set structured data for Google
-useSchemaOrg([
-  defineOrganization({
-    name: 'Nativity of the Mother of God Russian Orthodox Church',
-    url: 'https://www.nmog.org',
-    logo: 'https://www.nmog.org/icons/icon-512x512.png',
-    description: 'ROCOR Old Rite Russian Orthodox Church in Woodburn, OR',
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Woodburn',
-      addressRegion: 'OR',
-      addressCountry: 'US'
-    },
-    sameAs: [
-      "https://www.instagram.com/nativityofthemotherofgod",
-      "https://www.facebook.com/rocnmog"
-    ]
-  })
-])
 </script>
 
 <template>
