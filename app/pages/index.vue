@@ -1,14 +1,8 @@
 <script setup lang="ts">
 import Divider from '../components/divider.vue';
 
-const { data: home } = await useAsyncData(() =>
-  queryCollection('pages').path('/pages/home').first()
-);
 
-useSeoMeta({
-  title: "Nativity of the Mother of God Russian Orthodox Church | Woodburn, OR",
-  description: "Worship at Nativity of the Mother of God Russian Orthodox Church in Woodburn, Oregon. Faithful services, traditional liturgy, and community fellowship.",
-});
+
 
 </script>
 

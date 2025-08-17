@@ -222,6 +222,14 @@ export default defineNuxtConfig({
     }
   },
 
+  site: {
+    url: 'https://www.nmog.org',
+    name: "Nativity of the Mother of God Russian Orthodox Church | Woodburn, OR",
+    description: "Worship at Nativity of the Mother of God Russian Orthodox Church in Woodburn, Oregon. Faithful services, traditional liturgy, and community fellowship.",
+    indexable: true,
+    defaultLocale: 'en',
+  },
+
   sitemap: {
     sources: [
       '/api/__sitemap__/urls',
