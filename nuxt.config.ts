@@ -224,8 +224,8 @@ export default defineNuxtConfig({
 
   site: {
     url: 'https://www.nmog.org',
-    name: 'Russian Orthodox Church of the Nativity of the Mother of God',
-    description: 'ROCOR Old Rite Russian Orthodox Church in Woodburn, OR',
+    // name: 'Russian Orthodox Church of the Nativity of the Mother of God',
+    // description: 'ROCOR Old Rite Russian Orthodox Church in Woodburn, OR',
     indexable: true,
     defaultLocale: 'en',
   },
