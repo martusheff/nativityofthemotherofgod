@@ -1,29 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 
-  app: {
-    head: {
-      title: 'Nativity of the Mother of God', // Default site title
-      htmlAttrs: {
-        lang: 'en', // Set language for accessibility and SEO
-      },
-      meta: [
-        { charset: 'utf-8' }, // Ensure charset is explicitly set
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' }, // Ensure responsive viewport
-        { name: 'description', content: 'ROCOR Old Rite Russian Orthodox Church in Woodburn, OR' }, // Default meta description
-        { name: 'keywords', content: 'Russian Orthodox Church, Nativity of the Mother of God, ROCOR, Old Rite, Woodburn, Oregon' }, // Relevant keywords
-        { property: 'og:site_name', content: 'Nativityhalbof the Mother of God' }, // Open Graph site name
-        { property: 'og:type', content: 'website' }, // Open Graph type
-        { property: 'og:image', content: 'https://www.nmog.org/icons/icon-512x512.png' }, // Default social image
-        { name: 'twitter:card', content: 'summary_large_image' }, // Twitter card type
-      ],
-      link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }, // Favicon
-        { rel: 'canonical', href: 'https://www.nmog.org' }, // Canonical URL for the homepage
-      ],
-    },
-  },
-
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
 
@@ -34,8 +11,8 @@ export default defineNuxtConfig({
 
   nitro: {
     prerender: {
-      crawlLinks: true, // Crawl all links to prerender pages
-      routes: ['/'], // Specify key pages to prerender
+      crawlLinks: true,
+      routes: ['/'],
     },
   },
 
@@ -74,14 +51,14 @@ export default defineNuxtConfig({
           format: 'webp',
           quality: 80,
           width: 1200,
-          fit: 'cover', // Ensure proper scaling
+          fit: 'cover',
         },
       },
       mobile: {
         modifiers: {
           format: 'webp',
           quality: 80,
-          width: 600, // Smaller size for mobile
+          width: 600,
           fit: 'cover',
         },
       },
@@ -89,9 +66,9 @@ export default defineNuxtConfig({
     placeholder: {
       modifiers: {
         format: 'webp',
-        quality: 10, // Low quality for fast loading
-        width: 100, // Small size for placeholder
-        blur: 5, // Add blur for LQIP effect
+        quality: 10,
+        width: 100,
+        blur: 5,
       },
     },
     screens: {
@@ -130,7 +107,6 @@ export default defineNuxtConfig({
     },
   },
 
-
   pwa: {
     registerType: 'autoUpdate',
     strategies: 'injectManifest',
@@ -140,7 +116,6 @@ export default defineNuxtConfig({
       name: 'Nativity of the Mother of God',
       short_name: 'NMOG',
       description: 'ROCOR Old Rite Russian Orthodox Church in Woodburn, OR',
-
       theme_color: '#ffffff',
       background_color: '#ffffff',
       display: 'standalone',
@@ -154,7 +129,7 @@ export default defineNuxtConfig({
         },
         {
           "src": "icons/icon-72x72.png",
-          "sizes": "app/72x72",
+          "sizes": "72x72",
           "type": "image/png"
         },
         {
@@ -222,12 +197,30 @@ export default defineNuxtConfig({
     }
   },
 
+  // Centralized SEO configuration using @nuxtjs/seo
   site: {
     url: 'https://www.nmog.org',
-    name: "Nativity of the Mother of God Russian Orthodox Church | Woodburn, OR",
+    name: "Nativity of the Mother of God Russian Orthodox Church",
     description: "Worship at Nativity of the Mother of God Russian Orthodox Church in Woodburn, Oregon. Faithful services, traditional liturgy, and community fellowship.",
-    indexable: true,
     defaultLocale: 'en',
+  },
+
+  // Use app.head for favicon and canonical links since @nuxtjs/seo doesn't handle them
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: 'en',
+      },
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'canonical', href: 'https://www.nmog.org' },
+      ]
+    },
+  },
+
+  // Global SEO defaults - these will be used across all pages
+  seo: {
+    fallbackTitle: false, // Don't append site name to titles
   },
 
   sitemap: {
@@ -241,8 +234,6 @@ export default defineNuxtConfig({
     allow: ['/'],
     sitemap: 'https://www.nmog.org/sitemap.xml',
   },
-
-
 
   modules: [
     '@nuxt/content',
@@ -263,6 +254,6 @@ export default defineNuxtConfig({
     "@unlok-co/nuxt-stripe",
     "@nuxtjs/sitemap",
     "@nuxtjs/robots",
-    "@nuxtjs/seo"
+    "@nuxtjs/seo" // This should be last or near the end
   ]
 })
