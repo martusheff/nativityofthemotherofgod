@@ -53,7 +53,6 @@ import { RouterLink } from 'vue-router';
                             <a
                                 href="https://www.google.com/maps/search/?api=1&query=1700+NE+Laurel+Ave,+Woodburn,+OR+97071"
                                 class="text-stone-600 leading-relaxed text-md hover:text-amber-400 transition-all duration-300"
-                                target="_blank"
                             >
                                 1700 NE Laurel Ave, Woodburn OR, 97071
                             </a>
