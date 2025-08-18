@@ -38,7 +38,7 @@ export default defineNuxtConfig({
 
   gtag: {
     config: {
-      send_page_view: true,
+      send_page_view: false,
     },
     id: process.env.GA4ID
   },
@@ -241,6 +241,19 @@ export default defineNuxtConfig({
     enabled: true,
     allow: ['/'],
     sitemap: 'https://www.nmog.org/sitemap.xml',
+  },
+
+  vite: {
+    build: {
+      target: 'esnext',
+      minify: 'esbuild',
+      rollupOptions: { treeshake: true },
+    },
+  },
+  experimental: {
+    treeshakeClientOnly: true,   // removes unused client-only code
+    payloadExtraction: true,     // separates JSON payloads from JS
+    renderJsonPayloads: true,
   },
 
   modules: [
