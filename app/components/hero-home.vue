@@ -4,13 +4,15 @@
       <div class="flex flex-col md:grid md:grid-cols-2 md:gap-12 md:items-center items-center text-center md:text-left gap-8 md:py-16">
         <div class="w-full md:order-1">
           <NuxtImg 
+          
             :src="home?.heroImage" 
             preset="seo"
             :modifiers="{ mobile: { preset: 'mobile' } }"
             sizes="sm:600px md:1200px"
             loading="eager"
+            fetchpriority="high"
             alt="Icon of the Nativity of the Mother of God"
-            class="w-full h-auto max-h-60 md:max-h-[600px] object-cover aspect-[4/3] md:aspect-auto shadow-md md:rounded-3xl"
+            class="w-full h-auto max-h-60 md:max-h-[600px] object-cover aspect-[4/3] md:aspect-auto shadow-md md:rounded-3xl "
           />
           <p class="text-stone-600 italic mt-4 text-center hidden md:block">
             {{ home?.heroImageDescription }}
