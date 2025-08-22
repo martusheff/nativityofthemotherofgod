@@ -27,7 +27,7 @@ useSeoMeta({
 // Form data
 const form = ref({
   access_key: config.public.web3FormsAccessKey,
-  subject: 'New Contact Submission from nativityofthemotherofgod.com',
+  subject: 'New Contact Submission from nmog.org',
   name: '',
   email: '',
   phone: '',
