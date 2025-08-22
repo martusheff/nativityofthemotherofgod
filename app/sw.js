@@ -62,7 +62,7 @@ self.addEventListener('push', (event) => {
 // Handle notification clicks
 self.addEventListener('notificationclick', (event) => {
   event.notification.close()
-  const urlToOpen = event.notification.data?.url || '/'
+  const urlToOpen = '/schedule'
   
   event.waitUntil(
     clients.matchAll({

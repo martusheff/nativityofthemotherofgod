@@ -81,7 +81,7 @@ export const useFirebasePush = () => {
   }
 
   const startListening = () => {
-    if (!process.client) return
+    if (!import.meta.client) return
     
     const messaging = getMessaging(app)
     onMessage(messaging, (payload) => {
@@ -113,7 +113,7 @@ export const useFirebasePush = () => {
           
           // Handle any click actions based on payload.data
           if (payload.data?.url) {
-            window.location.href = payload.data.url
+            window.location.href = "/schedule"
           }
         }
       }

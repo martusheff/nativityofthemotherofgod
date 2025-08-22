@@ -38,8 +38,8 @@ import { RouterLink } from 'vue-router';
                     <div class="text-center sm:text-left space-y-2">
                         <div class="flex items-center justify-center sm:justify-start gap-2 px-4">
                             <Icon name="lucide:mail" class="text-xl text-amber-400" />
-                            <a href="mailto:support@nativityofthemotherofgod.com" class="text-stone-600 leading-relaxed text-md hover:text-amber-400 transition-all duration-300">
-                                support@nativityofthemotherofgod.com
+                            <a href="mailto:frnikita@nmog.org" class="text-stone-600 leading-relaxed text-md hover:text-amber-400 transition-all duration-300">
+                                frnikita@nmog.org
                             </a>
                         </div>
                         <div class="flex items-center justify-center sm:justify-start gap-2 px-4">

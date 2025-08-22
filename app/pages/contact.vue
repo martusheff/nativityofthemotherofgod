@@ -162,13 +162,7 @@ const submitForm = async (): Promise<void> => {
             <p class="text-lg text-stone-600 text-center">
               Fill out the form below and Fr. Nikita will get back to you as soon as possible.
             </p>
-            <div class="flex items-center justify-center gap-2 px-4">
-              <p>Or email us directly at: </p>
-              <a href="mailto:support@nativityofthemotherofgod.com"
-                class="text-stone-600 leading-relaxed text-md hover:text-amber-400 transition-all duration-300">
-                support@nativityofthemotherofgod.com
-              </a>
-            </div>
+
 
           </div>
 

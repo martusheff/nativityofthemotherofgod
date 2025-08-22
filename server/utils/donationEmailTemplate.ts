@@ -136,7 +136,7 @@ export function generateDonationReceiptHTML(
       
       <p style="color: #78716c; font-size: 14px; margin: 0; line-height: 1.5;">
         Questions about your donation?<br>
-        Contact us at <a href="mailto:support@nativityofthemotherofgod.com" style="color: #d97706; text-decoration: none; font-weight: 500;">support@nativityofthemotherofgod.com</a>
+        Contact us at <a href="mailto:support@nmog.org" style="color: #d97706; text-decoration: none; font-weight: 500;">support@nativityofthemotherofgod.com</a>
       </p>
       
     </div>

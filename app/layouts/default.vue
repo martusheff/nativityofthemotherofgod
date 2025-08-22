@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { Header, Footer, PwaTopNav, PwaBottomNav } from '#components'
+import { Header, Footer, PwaBottomNav } from '#components'
 import { computed } from 'vue'
 
 const { $pwa } = useNuxtApp()
