@@ -6,9 +6,7 @@ date: 2025-10-02T13:21:00.000-07:00
 image: /images/uploads/greek.webp
 signature: Through the Prayers of the Mother of God, May God have mercy on us.
 ---
-
-
-The Mother of Godis a mystery. This means that no matter how much we try to reason and learn who
+The Mother of God is a mystery. This means that no matter how much we try to reason and learn who
 she is, we will never be able to fully understand or comprehend her part in the
 salvation of man. Why is this? Because we cannot fully comprehend God who made
 her. With everything humanity has, we cannot even find out what is on this
@@ -22,8 +20,6 @@ first describes her as a ladder, the second as a gate, the third as a temple.
 It starts like this, “Wisdom hath built herself a temple.” In other words, the
 wisdom of God built, for Himself, a dwelling place here on earth and what the wisdom
 of God has built, we will never be able to fully comprehend and that’s ok.
-
- 
 
 What did the
 wisdom of God create and form? A dwelling place for Himself. Listen to the
@@ -43,8 +39,6 @@ and since it was the Wisdom of God that fashioned the living temple of the
 Word, a perfect temple was fashioned for a perfect God, a most radiant palace
 for the most radiant King.” This is who was born on this day that Orthodox
 Christians celebrate.
-
- 
 
 Why is this
 necessary for us or for our salvation? The Mother of God is like a bridal
@@ -66,8 +60,6 @@ She is there also. A bridal chamber most pure and undefiled was prepared; for
 the spotless Lamb, an unsullied dwelling place. She is described in Songs of
 Solomon, Ch 4, “Thou art all fair, my love; there is no spot in thee.” 
 
- 
-
 Through this we
 see that, the first step, of God’s plan of salvation, has been set in motion
 with the nativity of His mother. The plan, that from the moment Adam and Eve
@@ -85,8 +77,6 @@ greet and ask for her intercessions. We humans have this grace, but only in
 part and that is sufficient for us to follow a life after God, but Mary had
 this grace in its fullness, through the wisdom of God, the master builder. And
 through this grace she lived a life holier than anyone who was born. 
-
- 
 
 For this reason
 the church honors this feast day and celebrates the Nativity of Mary, the
