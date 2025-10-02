@@ -6,7 +6,7 @@ date: 2025-10-02T13:21:00.000-07:00
 image: /images/uploads/greek.webp
 signature: Through the Prayers of the Mother of God, May God have mercy on us.
 ---
-The Mother of God is a mystery. This means that no matter how much we try to reason and learn who
+**The Mother of God is a mystery.** This means that no matter how much we try to reason and learn who
 she is, we will never be able to fully understand or comprehend her part in the
 salvation of man. Why is this? Because we cannot fully comprehend God who made
 her. With everything humanity has, we cannot even find out what is on this
@@ -21,8 +21,8 @@ It starts like this, “Wisdom hath built herself a temple.” In other words, t
 wisdom of God built, for Himself, a dwelling place here on earth and what the wisdom
 of God has built, we will never be able to fully comprehend and that’s ok.
 
-What did the
-wisdom of God create and form? A dwelling place for Himself. Listen to the
+**What did the
+wisdom of God create and form?** A dwelling place for Himself. Listen to the
 first words of a homily in the Lives of the Saints, “The Lord, Who dwells in
 the heavens, wishing to appear on earth and abide with men, first prepared a
 dwelling place for His glory: His most pure Mother.” God rested in the temple
@@ -40,8 +40,8 @@ Word, a perfect temple was fashioned for a perfect God, a most radiant palace
 for the most radiant King.” This is who was born on this day that Orthodox
 Christians celebrate.
 
-Why is this
-necessary for us or for our salvation? The Mother of God is like a bridal
+**Why is this
+necessary for us or for our salvation?** The Mother of God is like a bridal
 chamber. A bridal chamber is a room that is prepared and after the wedding
 service, the bridegroom and bride enter and the marriage is consummated and the
 two become as one. What two things have become consummated and become as one?
@@ -60,8 +60,8 @@ She is there also. A bridal chamber most pure and undefiled was prepared; for
 the spotless Lamb, an unsullied dwelling place. She is described in Songs of
 Solomon, Ch 4, “Thou art all fair, my love; there is no spot in thee.” 
 
-Through this we
-see that, the first step, of God’s plan of salvation, has been set in motion
+**Through this we
+see that, the first step, of God’s plan of salvation**, has been set in motion
 with the nativity of His mother. The plan, that from the moment Adam and Eve
 transgressed Gods commandment and ate the fruit that He did not allow them, had
 begun. The plan that God told Satan, “And I will put enmity between you and the
@@ -78,8 +78,8 @@ part and that is sufficient for us to follow a life after God, but Mary had
 this grace in its fullness, through the wisdom of God, the master builder. And
 through this grace she lived a life holier than anyone who was born. 
 
-For this reason
-the church honors this feast day and celebrates the Nativity of Mary, the
+**For this reason
+the church honors this feast day** and celebrates the Nativity of Mary, the
 Mother of God. She is no ordinary women as some would have you believe. When we
 think or contemplate her nativity, we see a church or temple being born. A
 temple that would contain Christ, through whom the forgiveness of sin and the
